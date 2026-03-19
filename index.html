@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daniel Púa · @devploit · Head of Security</title>
+  <meta name="description" content="Head of Security at Freepik. Offensive security, CTF player. Creator of nomore403. Real-world infosec, no hype.">
+
+  <!-- OG / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Daniel Púa · @devploit">
+  <meta property="og:description" content="Head of Security at Freepik. Offensive security & CTF.">
+  <meta property="og:url" content="https://devploit.dev">
+  <meta property="og:image" content="https://devploit.dev/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@devploit">
+  <meta name="twitter:title" content="Daniel Púa · @devploit">
+  <meta name="twitter:description" content="Head of Security at Freepik. Offensive security & CTF.">
+  <meta name="twitter:image" content="https://devploit.dev/og-image.png">
+
+  <link rel="canonical" href="https://devploit.dev">
+
+  <!-- Favicon (inline SVG) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230c0c0e'/><text x='4' y='24' font-family='monospace' font-size='22' font-weight='bold' fill='%23e88c40'>%3E_</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Daniel Púa",
+    "alternateName": "devploit",
+    "url": "https://devploit.dev",
+    "jobTitle": "Head of Security",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Freepik"
+    },
+    "sameAs": [
+      "https://github.com/devploit",
+      "https://twitter.com/devploit",
+      "https://www.linkedin.com/in/daniel-pua/",
+      "https://blog.devploit.dev"
+    ],
+    "knowsAbout": ["Offensive Security", "Penetration Testing", "CTF", "Application Security"]
+  }
+  </script>
+
+  <style>
+    :root {
+      --color-bg:        #0c0c0e;
+      --color-surface:   #18181c;
+      --color-border:    #1e1e24;
+      --color-border-md: #2a2a30;
+      --color-text:      #f0ede6;
+      --color-muted:     #888780;
+      --color-subtle:    #666660;
+      --color-accent:    #e88c40;
+      --color-accent-dim:#7a4a20;
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: 'Syne', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Focus visible for keyboard nav */
+    :focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 2px;
+    }
+
+    /* Scroll offset for sticky nav */
+    [id] {
+      scroll-margin-top: 72px;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 56px;
+    }
+
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--color-accent);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--color-muted);
+      transition: color 150ms;
+    }
+
+    .nav-links a:hover {
+      color: var(--color-text);
+    }
+
+    .nav-links a.active {
+      color: var(--color-accent);
+    }
+
+    .lang-toggle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-subtle);
+      background: none;
+      border: 1px solid var(--color-border-md);
+      border-radius: 4px;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: color 150ms, border-color 150ms;
+    }
+
+    .lang-toggle:hover {
+      color: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 72px 48px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+      animation-delay: 0s;
+    }
+
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 60px;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      color: var(--color-text);
+      margin-bottom: 4px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+      animation-delay: 0.1s;
+    }
+
+    .hero-handle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      color: var(--color-subtle);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    .hero-tagline {
+      font-size: 18px;
+      color: var(--color-muted);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+      animation-delay: 0.3s;
+    }
+
+    .hero-tagline em {
+      color: var(--color-accent);
+      font-style: italic;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+      animation-delay: 0.4s;
+    }
+
+    .pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 6px 14px;
+      border: 1px solid var(--color-border-md);
+      border-radius: 4px;
+      color: var(--color-muted);
+      transition: border-color 150ms;
+    }
+
+    .pill:hover {
+      border-color: var(--color-accent);
+    }
+
+    .pill--accent {
+      border-color: var(--color-accent-dim);
+      color: var(--color-accent);
+    }
+
+    .pill--accent:hover {
+      border-color: var(--color-accent);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── MAIN GRID ── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .main-grid > .col-left {
+      padding: 48px;
+      border-right: 1px solid var(--color-border);
+    }
+
+    .main-grid > .col-right {
+      padding: 48px;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--color-subtle);
+      margin-bottom: 32px;
+    }
+
+    /* ── PROOF OF WORK ── */
+    .proof-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 14px 12px;
+      border-radius: 6px;
+      transition: background 150ms;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .proof-item:last-child {
+      border-bottom: none;
+    }
+
+    .proof-item:hover {
+      background: var(--color-surface);
+    }
+
+    .proof-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-md);
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--color-accent);
+    }
+
+    .proof-text h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--color-text);
+      line-height: 1.4;
+    }
+
+    .proof-text p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--color-muted);
+      line-height: 1.4;
+    }
+
+    /* ── LATEST POSTS ── */
+    .post-item {
+      display: block;
+      padding: 16px 12px;
+      border-radius: 6px;
+      transition: background 150ms;
+    }
+
+    .post-item:hover {
+      background: var(--color-surface);
+    }
+
+    .post-item:hover .post-title {
+      color: var(--color-accent);
+    }
+
+    .post-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-accent);
+      margin-bottom: 4px;
+    }
+
+    .post-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--color-text);
+      line-height: 1.4;
+      transition: color 150ms;
+    }
+
+    .post-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-subtle);
+      margin-top: 4px;
+    }
+
+    .posts-all {
+      display: inline-block;
+      margin-top: 24px;
+      margin-left: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--color-accent);
+      transition: color 150ms;
+    }
+
+    .posts-all:hover {
+      color: var(--color-text);
+    }
+
+    /* ── POST SKELETON ── */
+    .post-skeleton {
+      padding: 16px 12px;
+    }
+
+    .skeleton-line {
+      height: 12px;
+      background: var(--color-surface);
+      border-radius: 3px;
+      margin-bottom: 8px;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .skeleton-line:nth-child(1) {
+      width: 30%;
+    }
+
+    .skeleton-line:nth-child(2) {
+      width: 80%;
+      height: 16px;
+    }
+
+    .skeleton-line:nth-child(3) {
+      width: 20%;
+    }
+
+    .post-skeleton + .post-skeleton .skeleton-line {
+      animation-delay: 0.15s;
+    }
+
+    .post-skeleton + .post-skeleton + .post-skeleton .skeleton-line {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* ── TOOLS ── */
+    .tools-section {
+      padding: 48px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .tool-card {
+      display: block;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 24px;
+      transition: border-color 150ms, transform 150ms;
+    }
+
+    .tool-card:hover {
+      border-color: var(--color-border-md);
+      transform: translateY(-2px);
+    }
+
+    .tool-card:hover .tool-name {
+      color: var(--color-accent);
+    }
+
+    .tool-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .tool-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--color-text);
+      transition: color 150ms;
+    }
+
+    .tool-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-accent);
+      border: 1px solid var(--color-accent-dim);
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+
+    .tool-desc {
+      font-size: 13px;
+      color: var(--color-muted);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tool-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 3px 10px;
+      border: 1px solid var(--color-border-md);
+      border-radius: 3px;
+      color: var(--color-muted);
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding: 48px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .footer-left h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--color-text);
+      margin-bottom: 8px;
+    }
+
+    .footer-left a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--color-accent);
+      transition: color 150ms;
+    }
+
+    .footer-left a:hover {
+      color: var(--color-text);
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-socials a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-subtle);
+      transition: color 150ms;
+    }
+
+    .footer-socials a:hover {
+      color: var(--color-accent);
+    }
+
+    .footer-bottom {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--color-border);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-subtle);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav {
+        padding: 0 20px;
+      }
+
+      .nav-right {
+        gap: 16px;
+      }
+
+      .nav-links {
+        gap: 16px;
+      }
+
+      .nav-links a {
+        font-size: 12px;
+      }
+
+      .hero {
+        padding: 40px 24px;
+      }
+
+      .hero-name {
+        font-size: 40px;
+        letter-spacing: -1px;
+      }
+
+      .hero-tagline {
+        font-size: 16px;
+      }
+
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .main-grid > .col-left {
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+        padding: 32px 24px;
+      }
+
+      .main-grid > .col-right {
+        padding: 32px 24px;
+      }
+
+      .tools-section {
+        padding: 32px 24px;
+      }
+
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer {
+        padding: 32px 24px;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 24px;
+      }
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      :root {
+        --color-bg: #fff;
+        --color-surface: #f5f5f5;
+        --color-border: #ddd;
+        --color-border-md: #ccc;
+        --color-text: #111;
+        --color-muted: #555;
+        --color-subtle: #777;
+        --color-accent: #c06a20;
+        --color-accent-dim: #c06a20;
+      }
+
+      body {
+        font-size: 12pt;
+      }
+
+      .nav {
+        position: static;
+        background: none;
+        border-bottom: 2px solid #111;
+      }
+
+      .lang-toggle {
+        display: none;
+      }
+
+      .hero-label, .hero-name, .hero-handle, .hero-tagline, .hero-pills,
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+
+      .main-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .tool-card {
+        break-inside: avoid;
+      }
+
+      .footer-socials a::after {
+        content: " (" attr(href) ")";
+        font-size: 9pt;
+        color: #777;
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="#" class="nav-logo" aria-label="devploit - back to top">~/devploit</a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#work" data-i18n="nav.work" data-nav="work">work</a>
+        <a href="https://blog.devploit.dev" target="_blank" rel="noopener" aria-label="Blog (opens in new tab)">blog</a>
+        <a href="#tools" data-i18n="nav.tools" data-nav="tools">tools</a>
+        <a href="#contact" data-i18n="nav.contact" data-nav="contact">contact</a>
+      </div>
+      <button class="lang-toggle" id="lang-toggle" aria-label="Switch language">EN</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="work">
+    <div class="hero-label" data-i18n="hero.label">&gt; Head of Security · CTF Player</div>
+    <h1 class="hero-name">Daniel Púa</h1>
+    <div class="hero-handle">@devploit</div>
+    <p class="hero-tagline" data-i18n-html="hero.tagline">
+      Real-world infosec, no hype.<br>
+      <em>Never trust a fox.</em>
+    </p>
+    <div class="hero-pills" role="list" aria-label="Roles">
+      <span class="pill pill--accent" role="listitem">Head of Security @ Freepik</span>
+      <span class="pill" role="listitem" data-i18n="hero.pill.pentest">Penetration Testing</span>
+      <span class="pill" role="listitem">Hack&amp;Beers Málaga</span>
+      <span class="pill" role="listitem">ECSC Spain 2021</span>
+      <span class="pill" role="listitem">ripp3rsCTF / SFPE</span>
+    </div>
+  </section>
+
+  <!-- MAIN GRID -->
+  <section class="main-grid">
+    <div class="col-left reveal">
+      <div class="section-label" data-i18n="section.proof">// proof of work</div>
+
+      <div class="proof-item">
+        <div class="proof-icon" aria-hidden="true">FP</div>
+        <div class="proof-text">
+          <h3>Head of Security · Freepik</h3>
+          <p data-i18n="proof.fp.sub">Managing security at scale · Málaga</p>
+        </div>
+      </div>
+
+      <div class="proof-item">
+        <div class="proof-icon" aria-hidden="true">{;}</div>
+        <div class="proof-text">
+          <h3>nomore403 · +1000 ★ GitHub</h3>
+          <p data-i18n="proof.nm.sub">Tool to bypass 403/40X responses</p>
+        </div>
+      </div>
+
+      <div class="proof-item">
+        <div class="proof-icon" aria-hidden="true">DC</div>
+        <div class="proof-text">
+          <h3>DEFCON Quals · Navaja Negra · Google CTF</h3>
+          <p data-i18n="proof.dc.sub">CTF competitor since 2017</p>
+        </div>
+      </div>
+
+      <div class="proof-item">
+        <div class="proof-icon" aria-hidden="true">ES</div>
+        <div class="proof-text">
+          <h3>ECSC Spain 2021 · Mentor 2022</h3>
+          <p data-i18n="proof.es.sub">Spain's national cybersecurity team</p>
+        </div>
+      </div>
+
+      <div class="proof-item">
+        <div class="proof-icon" aria-hidden="true">HB</div>
+        <div class="proof-text">
+          <h3 data-i18n="proof.hb.title">Hack&amp;Beers Málaga Organizer</h3>
+          <p data-i18n="proof.hb.sub">Security community</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-right reveal">
+      <div class="section-label" data-i18n="section.posts">// latest posts</div>
+      <div id="posts-container">
+        <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
+        <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
+        <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
+      </div>
+      <a href="https://blog.devploit.dev" target="_blank" rel="noopener" class="posts-all" data-i18n="posts.viewAll" aria-label="View all blog posts (opens in new tab)">→ view all posts</a>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section class="tools-section reveal" id="tools">
+    <div class="section-label" data-i18n="section.tools">// tools &amp; projects</div>
+    <div class="tools-grid">
+
+      <a href="https://github.com/devploit/nomore403" target="_blank" rel="noopener" class="tool-card" aria-label="nomore403 on GitHub (opens in new tab)">
+        <div class="tool-header">
+          <span class="tool-name">nomore403</span>
+          <span class="tool-badge">+1000 ★</span>
+        </div>
+        <p class="tool-desc" data-i18n="tool.nomore.desc">Tool to bypass 403/40X HTTP responses</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Go</span>
+          <span class="tool-tag">ctf</span>
+        </div>
+      </a>
+
+      <a href="https://pwny.cc" target="_blank" rel="noopener" class="tool-card" aria-label="pwny.cc (opens in new tab)">
+        <div class="tool-header">
+          <span class="tool-name">pwny.cc</span>
+        </div>
+        <p class="tool-desc" data-i18n="tool.pwny.desc">Payload repository for security researchers</p>
+        <div class="tool-tags">
+          <span class="tool-tag">reference</span>
+          <span class="tool-tag">payloads</span>
+        </div>
+      </a>
+
+      <a href="https://github.com/devploit/awesome-ctf-resources" target="_blank" rel="noopener" class="tool-card" aria-label="awesome-ctf-resources on GitHub (opens in new tab)">
+        <div class="tool-header">
+          <span class="tool-name">awesome-ctf-resources</span>
+          <span class="tool-badge">+700 ★</span>
+        </div>
+        <p class="tool-desc" data-i18n="tool.awesome.desc">CTF frameworks, libraries, resources and software for CTF players</p>
+        <div class="tool-tags">
+          <span class="tool-tag">reference</span>
+          <span class="tool-tag">ctf</span>
+        </div>
+      </a>
+
+      <a href="https://github.com/devploit/debugHunter" target="_blank" rel="noopener" class="tool-card" aria-label="debugHunter on GitHub (opens in new tab)">
+        <div class="tool-header">
+          <span class="tool-name">debugHunter</span>
+          <span class="tool-badge">+200 ★</span>
+        </div>
+        <p class="tool-desc" data-i18n="tool.debug.desc">Discover hidden debugging parameters and uncover web application secrets</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Go</span>
+          <span class="tool-tag">recon</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer reveal" id="contact">
+    <div class="footer-content">
+      <div class="footer-left">
+        <h3 data-i18n="footer.cta">Working on something interesting?</h3>
+        <a href="#" id="email-link" aria-label="Send email to daniel@devploit.dev">daniel@devploit.dev</a>
+      </div>
+      <nav class="footer-socials" aria-label="Social links">
+        <a href="https://github.com/devploit" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://twitter.com/devploit" target="_blank" rel="noopener">Twitter</a>
+        <a href="https://www.linkedin.com/in/daniel-pua/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://blog.devploit.dev" target="_blank" rel="noopener">Blog</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">© Daniel Púa · @devploit</div>
+  </footer>
+
+  <script>
+    (function () {
+      /* ── i18n ── */
+      var translations = {
+        en: {
+          'nav.work': 'work',
+          'nav.tools': 'tools',
+          'nav.contact': 'contact',
+          'hero.label': '> Head of Security · CTF Player',
+          'hero.tagline': 'Real-world infosec, no hype.<br><em>Never trust a fox.</em>',
+          'hero.pill.pentest': 'Penetration Testing',
+          'section.proof': '// proof of work',
+          'section.posts': '// latest posts',
+          'section.tools': '// tools & projects',
+          'proof.fp.sub': 'Managing security at scale · Málaga',
+          'proof.nm.sub': 'Tool to bypass 403/40X responses',
+          'proof.dc.sub': 'CTF competitor since 2017',
+          'proof.es.sub': "Spain's national cybersecurity team",
+          'proof.hb.title': 'Hack&Beers Málaga Organizer',
+          'proof.hb.sub': 'Security community',
+          'posts.viewAll': '→ view all posts',
+          'tool.nomore.desc': 'Tool to bypass 403/40X HTTP responses',
+          'tool.pwny.desc': 'Payload repository for security researchers',
+          'tool.awesome.desc': 'CTF frameworks, libraries, resources and software for CTF players',
+          'tool.debug.desc': 'Discover hidden debugging parameters and uncover web application secrets',
+          'footer.cta': 'Working on something interesting?'
+        },
+        es: {
+          'nav.work': 'trabajo',
+          'nav.tools': 'herramientas',
+          'nav.contact': 'contacto',
+          'hero.label': '> Head of Security · CTF Player',
+          'hero.tagline': 'Real-world infosec, no hype.<br><em>Never trust a fox.</em>',
+          'hero.pill.pentest': 'Pentesting',
+          'section.proof': '// trayectoria',
+          'section.posts': '// últimos posts',
+          'section.tools': '// herramientas y proyectos',
+          'proof.fp.sub': 'Gestionando seguridad a escala · Málaga',
+          'proof.nm.sub': 'Herramienta para evadir respuestas 403/40X',
+          'proof.dc.sub': 'Competidor CTF desde 2017',
+          'proof.es.sub': 'Selección nacional de ciberseguridad',
+          'proof.hb.title': 'Organizador Hack&Beers Málaga',
+          'proof.hb.sub': 'Comunidad de seguridad',
+          'posts.viewAll': '→ ver todos los posts',
+          'tool.nomore.desc': 'Herramienta para evadir respuestas HTTP 403/40X',
+          'tool.pwny.desc': 'Repositorio de payloads para investigadores de seguridad',
+          'tool.awesome.desc': 'Frameworks, librerías, recursos y software para jugadores de CTF',
+          'tool.debug.desc': 'Descubre parámetros de debugging ocultos y secretos en aplicaciones web',
+          'footer.cta': '¿Trabajando en algo interesante?'
+        }
+      };
+
+      var currentLang = 'en';
+
+      function detectLang() {
+        var stored = localStorage.getItem('lang');
+        if (stored && translations[stored]) return stored;
+        var nav = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+        return nav.startsWith('es') ? 'es' : 'en';
+      }
+
+      function applyLang(lang) {
+        currentLang = lang;
+        document.documentElement.lang = lang;
+        localStorage.setItem('lang', lang);
+
+        var t = translations[lang];
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n');
+          if (t[key] !== undefined) el.textContent = t[key];
+        });
+        document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n-html');
+          if (t[key] !== undefined) el.innerHTML = t[key];
+        });
+
+        var toggle = document.getElementById('lang-toggle');
+        toggle.textContent = lang === 'en' ? 'ES' : 'EN';
+        toggle.setAttribute('aria-label', lang === 'en' ? 'Cambiar a español' : 'Switch to English');
+      }
+
+      document.getElementById('lang-toggle').addEventListener('click', function () {
+        applyLang(currentLang === 'en' ? 'es' : 'en');
+      });
+
+      applyLang(detectLang());
+
+      /* ── Active nav (IntersectionObserver) ── */
+      var navLinks = document.querySelectorAll('[data-nav]');
+      var sections = document.querySelectorAll('#work, #tools, #contact');
+
+      var navObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            navLinks.forEach(function (link) { link.classList.remove('active'); });
+            var active = document.querySelector('[data-nav="' + entry.target.id + '"]');
+            if (active) active.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-30% 0px -60% 0px' });
+
+      sections.forEach(function (s) { navObserver.observe(s); });
+
+      /* ── Scroll reveal (IntersectionObserver) ── */
+      var reveals = document.querySelectorAll('.reveal');
+      var revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      reveals.forEach(function (el) { revealObserver.observe(el); });
+
+      /* ── RSS ── */
+      var container = document.getElementById('posts-container');
+      var MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var MONTHS_ES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+      var fallbackPosts = [
+        { tag: 'CTF · Exploitation', title: 'DEFCON Quals 2025 — Memory Bank writeup', date: 'Apr 2025', link: 'https://blog.devploit.dev' },
+        { tag: 'AI Security', title: 'Cracking Gandalf: the Lakera AI challenge', date: 'Jul 2024', link: 'https://blog.devploit.dev' },
+        { tag: 'AI Security', title: 'Hacking the Mind of AI: Pentesting LLMs', date: 'Jun 2024', link: 'https://blog.devploit.dev' }
+      ];
+
+      function formatDate(dateStr) {
+        var d = new Date(dateStr);
+        if (isNaN(d)) return dateStr;
+        var months = currentLang === 'es' ? MONTHS_ES : MONTHS_EN;
+        return months[d.getMonth()] + ' ' + d.getFullYear();
+      }
+
+      function renderPosts(posts) {
+        container.innerHTML = '';
+        posts.forEach(function (p) {
+          var a = document.createElement('a');
+          a.href = p.link;
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.className = 'post-item';
+          a.innerHTML =
+            '<div class="post-tag">' + escapeHtml(p.tag) + '</div>' +
+            '<div class="post-title">' + escapeHtml(p.title) + '</div>' +
+            '<div class="post-date">' + escapeHtml(p.date) + '</div>';
+          container.appendChild(a);
+        });
+      }
+
+      function escapeHtml(str) {
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function loadRSS() {
+        var rssUrl = 'https://blog.devploit.dev/feed.xml';
+        var proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(rssUrl);
+
+        fetch(proxyUrl)
+          .then(function (res) { return res.json(); })
+          .then(function (data) {
+            if (!data || !data.contents) throw new Error('No contents');
+            var parser = new DOMParser();
+            var xml = parser.parseFromString(data.contents, 'text/xml');
+            var items = xml.querySelectorAll('item');
+            if (!items.length) items = xml.querySelectorAll('entry');
+            if (!items.length) throw new Error('No items');
+
+            var posts = [];
+            for (var i = 0; i < Math.min(items.length, 4); i++) {
+              var item = items[i];
+              var title = item.querySelector('title');
+              var link = item.querySelector('link');
+              var pubDate = item.querySelector('pubDate') || item.querySelector('published') || item.querySelector('updated');
+              var category = item.querySelector('category');
+
+              var linkHref = '';
+              if (link) {
+                linkHref = link.textContent || link.getAttribute('href') || '';
+              }
+
+              posts.push({
+                tag: category ? (category.textContent || category.getAttribute('term') || '') : '',
+                title: title ? title.textContent : '',
+                date: pubDate ? formatDate(pubDate.textContent) : '',
+                link: linkHref || 'https://blog.devploit.dev'
+              });
+            }
+
+            if (posts.length) {
+              renderPosts(posts);
+            } else {
+              renderPosts(fallbackPosts);
+            }
+          })
+          .catch(function () {
+            renderPosts(fallbackPosts);
+          });
+      }
+
+      loadRSS();
+
+      /* ── Email obfuscation ── */
+      var emailLink = document.getElementById('email-link');
+      var u = 'daniel'; var d = 'devploit.dev';
+      emailLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.location.href = 'mai' + 'lto:' + u + '@' + d;
+      });
+
+      /* ── Dynamic GitHub stars ── */
+      var starRepos = [
+        { repo: 'devploit/nomore403', selector: 'a[href*="nomore403"] .tool-badge' },
+        { repo: 'devploit/awesome-ctf-resources', selector: 'a[href*="awesome-ctf-resources"] .tool-badge' },
+        { repo: 'devploit/debugHunter', selector: 'a[href*="debugHunter"] .tool-badge' }
+      ];
+
+      starRepos.forEach(function (item) {
+        fetch('https://api.github.com/repos/' + item.repo)
+          .then(function (res) { return res.json(); })
+          .then(function (data) {
+            if (data && typeof data.stargazers_count === 'number') {
+              var badge = document.querySelector(item.selector);
+              if (badge) {
+                var count = data.stargazers_count;
+                var display = count >= 1000 ? (Math.floor(count / 100) / 10) + 'k' : count;
+                badge.textContent = display + ' ★';
+              }
+            }
+          })
+          .catch(function () {});
+      });
+    })();
+  </script>
+
+</body>
+</html>
