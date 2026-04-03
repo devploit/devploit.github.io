@@ -3,26 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com https://api.allorigins.win; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="accelerometer=(), autoplay=(), camera=(), display-capture=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
   <title>Daniel Púa · @devploit · Head of Security · Security Researcher</title>
   <meta name="description" content="Head of Security at Freepik. Security Researcher. Offensive security, CTF player. Creator of nomore403. Real-world infosec, no hype.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Daniel Púa">
+  <meta name="theme-color" content="#0c0c0e">
 
   <!-- OG / Facebook -->
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="devploit">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="es_ES">
   <meta property="og:title" content="Daniel Púa · @devploit">
   <meta property="og:description" content="Head of Security at Freepik. Security Researcher. Offensive security & CTF.">
   <meta property="og:url" content="https://devploit.dev">
   <meta property="og:image" content="https://devploit.dev/og-image.png">
+  <meta property="og:image:alt" content="Daniel Púa / devploit">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@devploit">
+  <meta name="twitter:creator" content="@devploit">
   <meta name="twitter:title" content="Daniel Púa · @devploit">
   <meta name="twitter:description" content="Head of Security at Freepik. Security Researcher. Offensive security & CTF.">
   <meta name="twitter:image" content="https://devploit.dev/og-image.png">
 
   <link rel="canonical" href="https://devploit.dev">
+  <link rel="alternate" type="application/rss+xml" title="devploit blog feed" href="https://blog.devploit.dev/feed.xml">
 
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
@@ -32,8 +44,6 @@
   <link rel="mask-icon" href="/assets/img/favicons/safari-pinned-tab.svg" color="#e88c40">
   <meta name="msapplication-TileImage" content="/assets/img/favicons/mstile-150x150.png">
   <meta name="msapplication-TileColor" content="#0c0c0e">
-  <meta name="theme-color" content="#0c0c0e">
-
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,6 +57,7 @@
     "name": "Daniel Púa",
     "alternateName": "devploit",
     "url": "https://devploit.dev",
+    "image": "https://devploit.dev/assets/img/favicons/avatar.png",
     "jobTitle": ["Head of Security", "Security Researcher"],
     "worksFor": {
       "@type": "Organization",
@@ -66,13 +77,20 @@
     :root {
       --color-bg:        #0c0c0e;
       --color-surface:   #18181c;
+      --color-surface-hi:#1d1d22;
+      --color-panel:     #131317;
       --color-border:    #1e1e24;
       --color-border-md: #2a2a30;
       --color-text:      #f0ede6;
-      --color-muted:     #888780;
-      --color-subtle:    #666660;
+      --color-muted:     #aaa79f;
+      --color-subtle:    #8a867d;
       --color-accent:    #e88c40;
+      --color-accent-soft: rgba(232, 140, 64, 0.16);
       --color-accent-dim:#7a4a20;
+      --page-max:        1180px;
+      --hero-max:        760px;
+      --glow-soft:       radial-gradient(circle at top left, rgba(232, 140, 64, 0.14), transparent 46%);
+      --grid-bg:         linear-gradient(180deg, rgba(255,255,255,0.015), transparent 38%);
     }
 
     *, *::before, *::after {
@@ -92,11 +110,38 @@
       font-weight: 400;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      background-image:
+        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+        radial-gradient(circle at top left, rgba(232, 140, 64, 0.08), transparent 28%);
+      background-size: 100% 32px, 32px 100%, auto;
     }
 
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 16px;
+      top: -48px;
+      z-index: 200;
+      background: var(--color-accent);
+      color: var(--color-bg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    .shell {
+      width: min(calc(100% - 48px), var(--page-max));
+      margin: 0 auto;
     }
 
     /* Focus visible for keyboard nav */
@@ -115,13 +160,17 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: var(--color-surface);
+      background: rgba(24, 24, 28, 0.88);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--color-border);
+    }
+
+    .nav-shell {
+      min-height: 56px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 48px;
-      height: 56px;
+      gap: 24px;
     }
 
     .nav-logo {
@@ -129,6 +178,7 @@
       font-size: 15px;
       font-weight: 500;
       color: var(--color-accent);
+      white-space: nowrap;
     }
 
     .nav-right {
@@ -143,41 +193,106 @@
     }
 
     .nav-links a {
+      position: relative;
       font-family: 'JetBrains Mono', monospace;
       font-size: 13px;
       color: var(--color-muted);
       transition: color 150ms;
     }
 
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 100%;
+      height: 1px;
+      background: var(--color-accent);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 150ms;
+    }
+
     .nav-links a:hover {
       color: var(--color-text);
     }
 
+    .nav-links a:hover::after,
     .nav-links a.active {
       color: var(--color-accent);
+    }
+
+    .nav-links a.active::after,
+    .nav-links a:hover::after {
+      transform: scaleX(1);
     }
 
     .lang-toggle {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       color: var(--color-subtle);
-      background: none;
+      background: rgba(255,255,255,0.01);
       border: 1px solid var(--color-border-md);
       border-radius: 4px;
       padding: 4px 10px;
       cursor: pointer;
-      transition: color 150ms, border-color 150ms;
+      transition: color 150ms, border-color 150ms, background 150ms;
     }
 
     .lang-toggle:hover {
       color: var(--color-accent);
       border-color: var(--color-accent);
+      background: rgba(232, 140, 64, 0.08);
     }
 
     /* ── HERO ── */
     .hero {
-      padding: 72px 48px;
+      position: relative;
+      overflow: hidden;
+      padding: 96px 0 78px;
       border-bottom: 1px solid var(--color-border);
+      background:
+        linear-gradient(180deg, rgba(24,24,28,0.56), transparent 60%),
+        var(--glow-soft);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(232, 140, 64, 0.06), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,0.02), transparent 30%);
+      pointer-events: none;
+    }
+
+    .hero-shell {
+      position: relative;
+      z-index: 1;
+      max-width: var(--hero-max);
+      display: block;
+    }
+
+    .hero-copy {
+      max-width: 700px;
+    }
+
+    .hero-divider {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      margin-top: -22px;
+      margin-bottom: 18px;
+    }
+
+    .hero-divider-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--color-border-md));
+    }
+
+    .hero-divider-line--accent {
+      background: linear-gradient(90deg, var(--color-accent), transparent 80%);
+      opacity: 0.7;
     }
 
     .hero-label {
@@ -195,38 +310,42 @@
     .hero-name {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: 60px;
+      font-size: clamp(48px, 8vw, 76px);
       letter-spacing: -2px;
-      line-height: 1.1;
+      line-height: 0.92;
       color: var(--color-text);
-      margin-bottom: 4px;
+      margin-bottom: 8px;
       opacity: 0;
       animation: fadeUp 0.5s ease forwards;
       animation-delay: 0.1s;
+      text-wrap: balance;
     }
 
     .hero-handle {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 16px;
-      color: var(--color-subtle);
-      margin-bottom: 20px;
+      font-size: 15px;
+      color: var(--color-accent);
+      margin-bottom: 24px;
       opacity: 0;
       animation: fadeUp 0.5s ease forwards;
       animation-delay: 0.2s;
     }
 
     .hero-tagline {
-      font-size: 18px;
+      max-width: 28ch;
+      font-size: clamp(18px, 2.8vw, 22px);
       color: var(--color-muted);
-      margin-bottom: 28px;
+      line-height: 1.5;
+      margin-bottom: 32px;
       opacity: 0;
       animation: fadeUp 0.5s ease forwards;
       animation-delay: 0.3s;
+      text-wrap: balance;
     }
 
     .hero-tagline em {
       color: var(--color-accent);
-      font-style: italic;
+      font-style: normal;
     }
 
     .hero-pills {
@@ -245,11 +364,15 @@
       border: 1px solid var(--color-border-md);
       border-radius: 4px;
       color: var(--color-muted);
-      transition: border-color 150ms;
+      background: rgba(255,255,255,0.01);
+      transition: border-color 150ms, transform 150ms, color 150ms, background 150ms;
     }
 
     .pill:hover {
       border-color: var(--color-accent);
+      color: var(--color-text);
+      background: rgba(232, 140, 64, 0.06);
+      transform: translateY(-1px);
     }
 
     .pill--accent {
@@ -288,42 +411,64 @@
     .main-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      background: var(--grid-bg);
       border-bottom: 1px solid var(--color-border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main-grid::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(232, 140, 64, 0.04), transparent 24%, transparent 76%, rgba(232, 140, 64, 0.04));
+      pointer-events: none;
     }
 
     .main-grid > .col-left {
-      padding: 48px;
+      padding: 64px 56px 56px 48px;
       border-right: 1px solid var(--color-border);
     }
 
     .main-grid > .col-right {
-      padding: 48px;
+      padding: 112px 48px 56px 56px;
     }
 
     .section-label {
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
       color: var(--color-subtle);
-      margin-bottom: 32px;
+      margin-bottom: 28px;
+      letter-spacing: 0.08em;
     }
 
     /* ── PROOF OF WORK ── */
+    .proof-list {
+      display: grid;
+      gap: 12px;
+    }
+
     .proof-item {
       display: flex;
       align-items: flex-start;
       gap: 16px;
-      padding: 14px 12px;
-      border-radius: 6px;
-      transition: background 150ms;
-      border-bottom: 1px solid var(--color-border);
+      padding: 18px 16px;
+      border-radius: 10px;
+      transition: background 150ms, border-color 150ms, transform 150ms, box-shadow 150ms;
+      border: 1px solid var(--color-border);
+      background: rgba(255,255,255,0.015);
     }
 
-    .proof-item:last-child {
-      border-bottom: none;
+    .proof-item.is-link {
+      cursor: pointer;
     }
 
-    .proof-item:hover {
-      background: var(--color-surface);
+    .proof-item:hover,
+    .proof-item.is-link:hover {
+      background: linear-gradient(180deg, rgba(232, 140, 64, 0.05), var(--color-surface) 38%);
+      border-color: rgba(232, 140, 64, 0.18);
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.22);
     }
 
     .proof-icon {
@@ -333,21 +478,35 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--color-surface);
+      background: linear-gradient(180deg, rgba(232, 140, 64, 0.1), var(--color-surface) 70%);
       border: 1px solid var(--color-border-md);
-      border-radius: 4px;
+      border-radius: 8px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       font-weight: 500;
       color: var(--color-accent);
     }
 
+    .proof-meta {
+      display: inline-flex;
+      margin-bottom: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--color-accent);
+      border: 1px solid var(--color-accent-dim);
+      border-radius: 999px;
+      padding: 2px 8px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
     .proof-text h3 {
       font-family: 'Syne', sans-serif;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 15px;
       color: var(--color-text);
       line-height: 1.4;
+      margin-bottom: 3px;
     }
 
     .proof-text p {
@@ -357,16 +516,41 @@
       line-height: 1.4;
     }
 
+    .proof-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-subtle);
+      transition: color 150ms;
+    }
+
+    .proof-link::after {
+      content: '↗';
+      color: var(--color-accent);
+    }
+
+    .proof-item:hover .proof-link,
+    .proof-item.is-link:hover .proof-link {
+      color: var(--color-text);
+    }
+
     /* ── LATEST POSTS ── */
     .post-item {
       display: block;
-      padding: 16px 12px;
-      border-radius: 6px;
-      transition: background 150ms;
+      padding: 18px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--color-border);
+      background: rgba(255,255,255,0.015);
+      transition: background 150ms, border-color 150ms, transform 150ms;
     }
 
     .post-item:hover {
-      background: var(--color-surface);
+      background: linear-gradient(180deg, rgba(232, 140, 64, 0.05), var(--color-surface) 38%);
+      border-color: rgba(232, 140, 64, 0.18);
+      transform: translate(4px, -2px);
     }
 
     .post-item:hover .post-title {
@@ -396,10 +580,33 @@
       margin-top: 4px;
     }
 
+    .posts-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-subtle);
+    }
+
+    .posts-status::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--color-accent-dim);
+      box-shadow: 0 0 0 4px rgba(232, 140, 64, 0.06);
+    }
+
+    .posts-status.is-live::before {
+      background: var(--color-accent);
+    }
+
     .posts-all {
       display: inline-block;
       margin-top: 24px;
-      margin-left: 12px;
+      margin-left: 4px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 13px;
       color: var(--color-accent);
@@ -451,39 +658,69 @@
 
     /* ── TOOLS ── */
     .tools-section {
-      padding: 48px;
+      padding: 56px 0;
       border-bottom: 1px solid var(--color-border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tools-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 85% 12%, rgba(232, 140, 64, 0.08), transparent 26%);
+      pointer-events: none;
     }
 
     .tools-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 18px;
     }
 
     .tool-card {
+      position: relative;
       display: block;
-      background: var(--color-surface);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)), var(--color-surface);
       border: 1px solid var(--color-border);
-      border-radius: 6px;
-      padding: 24px;
+      border-radius: 12px;
+      padding: 26px 24px 24px;
       transition: border-color 150ms, transform 150ms;
+      overflow: hidden;
+    }
+
+    .tool-card::after {
+      content: '↗';
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--color-subtle);
+      transition: transform 150ms, color 150ms;
     }
 
     .tool-card:hover {
-      border-color: var(--color-border-md);
-      transform: translateY(-2px);
+      border-color: var(--color-accent-dim);
+      transform: translateY(-4px) rotate(-0.25deg);
+      background: linear-gradient(180deg, rgba(232, 140, 64, 0.07), rgba(24, 24, 28, 1) 36%);
     }
 
     .tool-card:hover .tool-name {
       color: var(--color-accent);
     }
 
+    .tool-card:hover::after {
+      color: var(--color-accent);
+      transform: translate(2px, -2px);
+    }
+
     .tool-header {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      padding-right: 26px;
     }
 
     .tool-name {
@@ -500,7 +737,7 @@
       color: var(--color-accent);
       border: 1px solid var(--color-accent-dim);
       padding: 2px 8px;
-      border-radius: 3px;
+      border-radius: 999px;
     }
 
     .tool-desc {
@@ -521,14 +758,24 @@
       font-size: 11px;
       padding: 3px 10px;
       border: 1px solid var(--color-border-md);
-      border-radius: 3px;
+      border-radius: 999px;
       color: var(--color-muted);
+      background: rgba(255,255,255,0.02);
     }
 
     /* ── FOOTER ── */
     .footer {
-      padding: 48px;
+      padding: 56px 0 48px;
       border-bottom: 1px solid var(--color-border);
+      position: relative;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(232, 140, 64, 0.04), transparent 30%);
+      pointer-events: none;
     }
 
     .footer-content {
@@ -540,9 +787,20 @@
     .footer-left h3 {
       font-family: 'Syne', sans-serif;
       font-weight: 700;
-      font-size: 20px;
+      font-size: 24px;
       color: var(--color-text);
       margin-bottom: 8px;
+      max-width: 15ch;
+      line-height: 1.2;
+    }
+
+    .footer-kicker {
+      max-width: 42ch;
+      margin-bottom: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--color-muted);
+      line-height: 1.6;
     }
 
     .footer-left a {
@@ -583,15 +841,26 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .nav {
-        padding: 0 20px;
+      .shell {
+        width: min(calc(100% - 32px), var(--page-max));
+      }
+
+      .nav-shell {
+        min-height: auto;
+        padding: 12px 0;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
       }
 
       .nav-right {
+        width: 100%;
+        justify-content: space-between;
         gap: 16px;
       }
 
       .nav-links {
+        flex-wrap: wrap;
         gap: 16px;
       }
 
@@ -600,16 +869,25 @@
       }
 
       .hero {
-        padding: 40px 24px;
+        padding: 56px 0 44px;
+      }
+
+      .hero-shell {
+        display: block;
+      }
+
+      .hero-divider {
+        gap: 10px;
+        margin-top: -6px;
       }
 
       .hero-name {
-        font-size: 40px;
         letter-spacing: -1px;
       }
 
       .hero-tagline {
         font-size: 16px;
+        max-width: 28ch;
       }
 
       .main-grid {
@@ -619,15 +897,15 @@
       .main-grid > .col-left {
         border-right: none;
         border-bottom: 1px solid var(--color-border);
-        padding: 32px 24px;
+        padding: 36px 24px;
       }
 
       .main-grid > .col-right {
-        padding: 32px 24px;
+        padding: 36px 24px;
       }
 
       .tools-section {
-        padding: 32px 24px;
+        padding: 36px 0;
       }
 
       .tools-grid {
@@ -635,13 +913,37 @@
       }
 
       .footer {
-        padding: 32px 24px;
+        padding: 36px 0;
       }
 
       .footer-content {
         flex-direction: column;
         gap: 24px;
       }
+
+      .footer-socials {
+        flex-wrap: wrap;
+        gap: 16px 20px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .nav-right {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .lang-toggle {
+        padding: 6px 10px;
+      }
+
+      .proof-item,
+      .post-item,
+      .tool-card {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
     }
 
     /* ── PRINT ── */
@@ -656,6 +958,7 @@
         --color-subtle: #777;
         --color-accent: #c06a20;
         --color-accent-dim: #c06a20;
+        --color-surface-hi: #eee;
       }
 
       body {
@@ -665,6 +968,7 @@
       .nav {
         position: static;
         background: none;
+        backdrop-filter: none;
         border-bottom: 2px solid #111;
       }
 
@@ -714,175 +1018,207 @@
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
 
   <!-- NAV -->
   <nav class="nav" role="navigation" aria-label="Main navigation">
-    <a href="#" class="nav-logo" aria-label="devploit - back to top">~/devploit</a>
-    <div class="nav-right">
-      <div class="nav-links">
-        <a href="#work" data-i18n="nav.work" data-nav="work">work</a>
-        <a href="https://blog.devploit.dev" target="_blank" rel="noopener" aria-label="Blog (opens in new tab)">blog</a>
-        <a href="#tools" data-i18n="nav.tools" data-nav="tools">tools</a>
-        <a href="#contact" data-i18n="nav.contact" data-nav="contact">contact</a>
+    <div class="shell nav-shell">
+      <a href="#" class="nav-logo" aria-label="devploit - back to top">~/devploit</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#work" data-i18n="nav.work" data-nav="work">work</a>
+          <a href="https://blog.devploit.dev" target="_blank" rel="noopener" aria-label="Blog (opens in new tab)">blog</a>
+          <a href="#tools" data-i18n="nav.tools" data-nav="tools">tools</a>
+          <a href="#contact" data-i18n="nav.contact" data-nav="contact">contact</a>
+        </div>
+        <button class="lang-toggle" id="lang-toggle" aria-label="Switch language">EN</button>
       </div>
-      <button class="lang-toggle" id="lang-toggle" aria-label="Switch language">EN</button>
     </div>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero" id="work">
-    <div class="hero-label" data-i18n="hero.label">&gt; Head of Security · Security Researcher · CTF Player</div>
-    <h1 class="hero-name">Daniel Púa</h1>
-    <div class="hero-handle">@devploit</div>
-    <p class="hero-tagline" data-i18n-html="hero.tagline">
-      Real-world infosec, no hype.<br>
-      <em>Never trust a fox.</em>
-    </p>
-    <div class="hero-pills" role="list" aria-label="Roles">
-      <span class="pill pill--accent" role="listitem">Head of Security @ Freepik</span>
-      <span class="pill pill--accent" role="listitem">Security Researcher</span>
-      <span class="pill" role="listitem" data-i18n="hero.pill.pentest">Penetration Testing</span>
-      <span class="pill" role="listitem">Hack&amp;Beers Málaga</span>
-      <span class="pill" role="listitem">ECSC Spain 2021</span>
-      <span class="pill" role="listitem">ripp3rsCTF / SFPE</span>
-    </div>
-  </section>
+  <main id="main-content">
+    <!-- HERO -->
+    <section class="hero" id="work">
+      <div class="shell hero-shell">
+        <div class="hero-copy">
+          <div class="hero-label" data-i18n="hero.label">&gt; Head of Security · Security Researcher · CTF Player</div>
+          <h1 class="hero-name">Daniel Púa</h1>
+          <div class="hero-handle">@devploit</div>
+          <p class="hero-tagline" data-i18n-html="hero.tagline">
+            Real-world infosec, no hype.<br>
+            <em>Never trust a fox.</em>
+          </p>
+          <div class="hero-pills" role="list" aria-label="Roles">
+            <span class="pill pill--accent" role="listitem">Head of Security @ Freepik</span>
+            <span class="pill pill--accent" role="listitem">Security Researcher</span>
+            <span class="pill" role="listitem" data-i18n="hero.pill.pentest">Penetration Testing</span>
+            <span class="pill" role="listitem">Hack&amp;Beers Málaga</span>
+            <span class="pill" role="listitem">ECSC Spain 2021</span>
+            <span class="pill" role="listitem">ripp3rsCTF / SFPE</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- MAIN GRID -->
-  <section class="main-grid">
-    <div class="col-left reveal">
-      <div class="section-label" data-i18n="section.proof">// proof of work</div>
+    <section class="shell" aria-hidden="true">
+      <div class="hero-divider">
+        <div class="hero-divider-line hero-divider-line--accent"></div>
+        <div class="hero-divider-line"></div>
+      </div>
+    </section>
 
-      <div class="proof-item">
-        <div class="proof-icon" aria-hidden="true">FP</div>
-        <div class="proof-text">
-          <h3>Head of Security · Freepik</h3>
-          <p data-i18n="proof.fp.sub">Managing security at scale · Málaga</p>
+    <!-- MAIN GRID -->
+    <section class="shell main-grid">
+      <div class="col-left reveal">
+        <div class="section-label" data-i18n="section.proof">// proof of work</div>
+        <div class="proof-list">
+          <div class="proof-item">
+            <div class="proof-icon" aria-hidden="true">FP</div>
+            <div class="proof-text">
+              <div class="proof-meta" data-i18n="proof.fp.meta">role</div>
+              <h3>Head of Security · Freepik</h3>
+              <p data-i18n="proof.fp.sub">Managing security at scale · Málaga</p>
+              <a class="proof-link" href="https://www.freepik.com" target="_blank" rel="noopener" data-i18n="proof.linkCompany">visit company</a>
+            </div>
+          </div>
+
+          <div class="proof-item is-link">
+            <div class="proof-icon" aria-hidden="true">SR</div>
+            <div class="proof-text">
+              <div class="proof-meta" data-i18n="proof.sr.meta">research</div>
+              <h3 data-i18n="proof.sr.title">Security Researcher · Freelance</h3>
+              <p data-i18n="proof.sr.sub">Bug Bounty · Penetration Testing · Consulting</p>
+              <a class="proof-link" href="#contact" data-i18n="proof.linkContact">get in touch</a>
+            </div>
+          </div>
+
+          <div class="proof-item is-link">
+            <div class="proof-icon" aria-hidden="true">{;}</div>
+            <div class="proof-text">
+              <div class="proof-meta" data-i18n="proof.nm.meta">project</div>
+              <h3>nomore403 · +1000 ★ GitHub</h3>
+              <p data-i18n="proof.nm.sub">Tool to bypass 403/40X responses</p>
+              <a class="proof-link" href="https://github.com/devploit/nomore403" target="_blank" rel="noopener" data-i18n="proof.linkProject">open project</a>
+            </div>
+          </div>
+
+          <div class="proof-item">
+            <div class="proof-icon" aria-hidden="true">DC</div>
+            <div class="proof-text">
+              <div class="proof-meta" data-i18n="proof.dc.meta">ctf</div>
+              <h3>DEFCON Quals · Navaja Negra · Google CTF</h3>
+              <p data-i18n="proof.dc.sub">CTF competitor since 2017</p>
+            </div>
+          </div>
+
+          <div class="proof-item">
+            <div class="proof-icon" aria-hidden="true">ES</div>
+            <div class="proof-text">
+              <div class="proof-meta" data-i18n="proof.es.meta">team</div>
+              <h3>ECSC Spain 2021 · Mentor 2022</h3>
+              <p data-i18n="proof.es.sub">Spain's national cybersecurity team</p>
+            </div>
+          </div>
+
+          <div class="proof-item is-link">
+            <div class="proof-icon" aria-hidden="true">HB</div>
+            <div class="proof-text">
+              <div class="proof-meta" data-i18n="proof.hb.meta">community</div>
+              <h3 data-i18n="proof.hb.title">Hack&amp;Beers Málaga Organizer</h3>
+              <p data-i18n="proof.hb.sub">Security community</p>
+              <a class="proof-link" href="https://www.meetup.com/es-ES/hackbeersmalaga/" target="_blank" rel="noopener" data-i18n="proof.linkCommunity">see community</a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="proof-item">
-        <div class="proof-icon" aria-hidden="true">SR</div>
-        <div class="proof-text">
-          <h3 data-i18n="proof.sr.title">Security Researcher · Freelance</h3>
-          <p data-i18n="proof.sr.sub">Bug Bounty · Penetration Testing · Consulting</p>
+      <div class="col-right reveal">
+        <div class="section-label" data-i18n="section.posts">// latest posts</div>
+        <div class="posts-status" id="posts-status" data-i18n="posts.statusLoading">loading feed</div>
+        <div id="posts-container" aria-live="polite">
+          <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
+          <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
+          <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
+        </div>
+        <a href="https://blog.devploit.dev" target="_blank" rel="noopener" class="posts-all" data-i18n="posts.viewAll" aria-label="View all blog posts (opens in new tab)">→ view all posts</a>
+      </div>
+    </section>
+
+    <!-- TOOLS -->
+    <section class="tools-section reveal" id="tools">
+      <div class="shell">
+        <div class="section-label" data-i18n="section.tools">// tools &amp; projects</div>
+        <div class="tools-grid">
+
+          <a href="https://github.com/devploit/nomore403" target="_blank" rel="noopener" class="tool-card" aria-label="nomore403 on GitHub (opens in new tab)">
+            <div class="tool-header">
+              <span class="tool-name">nomore403</span>
+              <span class="tool-badge">+1000 ★</span>
+            </div>
+            <p class="tool-desc" data-i18n="tool.nomore.desc">Tool to bypass 403/40X HTTP responses</p>
+            <div class="tool-tags">
+              <span class="tool-tag">Go</span>
+              <span class="tool-tag">ctf</span>
+            </div>
+          </a>
+
+          <a href="https://pwny.cc" target="_blank" rel="noopener" class="tool-card" aria-label="pwny.cc (opens in new tab)">
+            <div class="tool-header">
+              <span class="tool-name">pwny.cc</span>
+            </div>
+            <p class="tool-desc" data-i18n="tool.pwny.desc">Payload repository for security researchers</p>
+            <div class="tool-tags">
+              <span class="tool-tag">reference</span>
+              <span class="tool-tag">payloads</span>
+            </div>
+          </a>
+
+          <a href="https://github.com/devploit/awesome-ctf-resources" target="_blank" rel="noopener" class="tool-card" aria-label="awesome-ctf-resources on GitHub (opens in new tab)">
+            <div class="tool-header">
+              <span class="tool-name">awesome-ctf-resources</span>
+              <span class="tool-badge">+700 ★</span>
+            </div>
+            <p class="tool-desc" data-i18n="tool.awesome.desc">CTF frameworks, libraries, resources and software for CTF players</p>
+            <div class="tool-tags">
+              <span class="tool-tag">reference</span>
+              <span class="tool-tag">ctf</span>
+            </div>
+          </a>
+
+          <a href="https://github.com/devploit/debugHunter" target="_blank" rel="noopener" class="tool-card" aria-label="debugHunter on GitHub (opens in new tab)">
+            <div class="tool-header">
+              <span class="tool-name">debugHunter</span>
+              <span class="tool-badge">+200 ★</span>
+            </div>
+            <p class="tool-desc" data-i18n="tool.debug.desc">Discover hidden debugging parameters and uncover web application secrets</p>
+            <div class="tool-tags">
+              <span class="tool-tag">Go</span>
+              <span class="tool-tag">recon</span>
+            </div>
+          </a>
         </div>
       </div>
-
-      <div class="proof-item">
-        <div class="proof-icon" aria-hidden="true">{;}</div>
-        <div class="proof-text">
-          <h3>nomore403 · +1000 ★ GitHub</h3>
-          <p data-i18n="proof.nm.sub">Tool to bypass 403/40X responses</p>
-        </div>
-      </div>
-
-      <div class="proof-item">
-        <div class="proof-icon" aria-hidden="true">DC</div>
-        <div class="proof-text">
-          <h3>DEFCON Quals · Navaja Negra · Google CTF</h3>
-          <p data-i18n="proof.dc.sub">CTF competitor since 2017</p>
-        </div>
-      </div>
-
-      <div class="proof-item">
-        <div class="proof-icon" aria-hidden="true">ES</div>
-        <div class="proof-text">
-          <h3>ECSC Spain 2021 · Mentor 2022</h3>
-          <p data-i18n="proof.es.sub">Spain's national cybersecurity team</p>
-        </div>
-      </div>
-
-      <div class="proof-item">
-        <div class="proof-icon" aria-hidden="true">HB</div>
-        <div class="proof-text">
-          <h3 data-i18n="proof.hb.title">Hack&amp;Beers Málaga Organizer</h3>
-          <p data-i18n="proof.hb.sub">Security community</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-right reveal">
-      <div class="section-label" data-i18n="section.posts">// latest posts</div>
-      <div id="posts-container">
-        <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
-        <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
-        <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
-      </div>
-      <a href="https://blog.devploit.dev" target="_blank" rel="noopener" class="posts-all" data-i18n="posts.viewAll" aria-label="View all blog posts (opens in new tab)">→ view all posts</a>
-    </div>
-  </section>
-
-  <!-- TOOLS -->
-  <section class="tools-section reveal" id="tools">
-    <div class="section-label" data-i18n="section.tools">// tools &amp; projects</div>
-    <div class="tools-grid">
-
-      <a href="https://github.com/devploit/nomore403" target="_blank" rel="noopener" class="tool-card" aria-label="nomore403 on GitHub (opens in new tab)">
-        <div class="tool-header">
-          <span class="tool-name">nomore403</span>
-          <span class="tool-badge">+1000 ★</span>
-        </div>
-        <p class="tool-desc" data-i18n="tool.nomore.desc">Tool to bypass 403/40X HTTP responses</p>
-        <div class="tool-tags">
-          <span class="tool-tag">Go</span>
-          <span class="tool-tag">ctf</span>
-        </div>
-      </a>
-
-      <a href="https://pwny.cc" target="_blank" rel="noopener" class="tool-card" aria-label="pwny.cc (opens in new tab)">
-        <div class="tool-header">
-          <span class="tool-name">pwny.cc</span>
-        </div>
-        <p class="tool-desc" data-i18n="tool.pwny.desc">Payload repository for security researchers</p>
-        <div class="tool-tags">
-          <span class="tool-tag">reference</span>
-          <span class="tool-tag">payloads</span>
-        </div>
-      </a>
-
-      <a href="https://github.com/devploit/awesome-ctf-resources" target="_blank" rel="noopener" class="tool-card" aria-label="awesome-ctf-resources on GitHub (opens in new tab)">
-        <div class="tool-header">
-          <span class="tool-name">awesome-ctf-resources</span>
-          <span class="tool-badge">+700 ★</span>
-        </div>
-        <p class="tool-desc" data-i18n="tool.awesome.desc">CTF frameworks, libraries, resources and software for CTF players</p>
-        <div class="tool-tags">
-          <span class="tool-tag">reference</span>
-          <span class="tool-tag">ctf</span>
-        </div>
-      </a>
-
-      <a href="https://github.com/devploit/debugHunter" target="_blank" rel="noopener" class="tool-card" aria-label="debugHunter on GitHub (opens in new tab)">
-        <div class="tool-header">
-          <span class="tool-name">debugHunter</span>
-          <span class="tool-badge">+200 ★</span>
-        </div>
-        <p class="tool-desc" data-i18n="tool.debug.desc">Discover hidden debugging parameters and uncover web application secrets</p>
-        <div class="tool-tags">
-          <span class="tool-tag">Go</span>
-          <span class="tool-tag">recon</span>
-        </div>
-      </a>
-
-    </div>
-  </section>
+    </section>
+  </main>
 
   <!-- FOOTER -->
   <footer class="footer reveal" id="contact">
-    <div class="footer-content">
-      <div class="footer-left">
-        <h3 data-i18n="footer.cta">Working on something interesting?</h3>
-        <a href="#" id="email-link" aria-label="Send email to daniel@devploit.dev">daniel@devploit.dev</a>
+    <div class="shell">
+        <div class="footer-content">
+          <div class="footer-left">
+            <h3 data-i18n="footer.cta">Working on something interesting?</h3>
+            <p class="footer-kicker" data-i18n="footer.kicker">Security leadership, offensive research and pragmatic advisory for products that operate in the real world.</p>
+            <a href="#" id="email-link" aria-label="Send email to daniel@devploit.dev">daniel@devploit.dev</a>
+          </div>
+        <nav class="footer-socials" aria-label="Social links">
+          <a href="https://github.com/devploit" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://twitter.com/devploit" target="_blank" rel="noopener">Twitter</a>
+          <a href="https://www.linkedin.com/in/daniel-pua/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://blog.devploit.dev" target="_blank" rel="noopener">Blog</a>
+        </nav>
       </div>
-      <nav class="footer-socials" aria-label="Social links">
-        <a href="https://github.com/devploit" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://twitter.com/devploit" target="_blank" rel="noopener">Twitter</a>
-        <a href="https://www.linkedin.com/in/daniel-pua/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://blog.devploit.dev" target="_blank" rel="noopener">Blog</a>
-      </nav>
+      <div class="footer-bottom">© Daniel Púa · @devploit</div>
     </div>
-    <div class="footer-bottom">© Daniel Púa · @devploit</div>
   </footer>
 
   <script>
@@ -899,20 +1235,34 @@
           'section.proof': '// proof of work',
           'section.posts': '// latest posts',
           'section.tools': '// tools & projects',
+          'proof.fp.meta': 'role',
           'proof.fp.sub': 'Managing security at scale · Málaga',
+          'proof.linkCompany': 'visit company',
+          'proof.sr.meta': 'research',
           'proof.sr.title': 'Security Researcher · Freelance',
           'proof.sr.sub': 'Bug Bounty · Penetration Testing · Consulting',
+          'proof.linkContact': 'get in touch',
+          'proof.nm.meta': 'project',
           'proof.nm.sub': 'Tool to bypass 403/40X responses',
+          'proof.linkProject': 'open project',
+          'proof.dc.meta': 'ctf',
           'proof.dc.sub': 'CTF competitor since 2017',
+          'proof.es.meta': 'team',
           'proof.es.sub': "Spain's national cybersecurity team",
+          'proof.hb.meta': 'community',
           'proof.hb.title': 'Hack&Beers Málaga Organizer',
           'proof.hb.sub': 'Security community',
+          'proof.linkCommunity': 'see community',
+          'posts.statusLoading': 'loading feed',
+          'posts.statusLive': 'live from blog',
+          'posts.statusFallback': 'featured posts',
           'posts.viewAll': '→ view all posts',
           'tool.nomore.desc': 'Tool to bypass 403/40X HTTP responses',
           'tool.pwny.desc': 'Payload repository for security researchers',
           'tool.awesome.desc': 'CTF frameworks, libraries, resources and software for CTF players',
           'tool.debug.desc': 'Discover hidden debugging parameters and uncover web application secrets',
-          'footer.cta': 'Working on something interesting?'
+          'footer.cta': 'Working on something interesting?',
+          'footer.kicker': 'Security leadership, offensive research and pragmatic advisory for products that operate in the real world.'
         },
         es: {
           'nav.work': 'trabajo',
@@ -924,24 +1274,40 @@
           'section.proof': '// trayectoria',
           'section.posts': '// últimos posts',
           'section.tools': '// herramientas y proyectos',
+          'proof.fp.meta': 'rol',
           'proof.fp.sub': 'Gestionando seguridad a escala · Málaga',
+          'proof.linkCompany': 'ver empresa',
+          'proof.sr.meta': 'research',
           'proof.sr.title': 'Security Researcher · Freelance',
           'proof.sr.sub': 'Bug Bounty · Penetration Testing · Consultoría',
+          'proof.linkContact': 'contactar',
+          'proof.nm.meta': 'proyecto',
           'proof.nm.sub': 'Herramienta para evadir respuestas 403/40X',
+          'proof.linkProject': 'abrir proyecto',
+          'proof.dc.meta': 'ctf',
           'proof.dc.sub': 'Competidor CTF desde 2017',
+          'proof.es.meta': 'equipo',
           'proof.es.sub': 'Selección nacional de ciberseguridad',
+          'proof.hb.meta': 'comunidad',
           'proof.hb.title': 'Organizador Hack&Beers Málaga',
           'proof.hb.sub': 'Comunidad de seguridad',
+          'proof.linkCommunity': 'ver comunidad',
+          'posts.statusLoading': 'cargando feed',
+          'posts.statusLive': 'en vivo desde el blog',
+          'posts.statusFallback': 'selección destacada',
           'posts.viewAll': '→ ver todos los posts',
           'tool.nomore.desc': 'Herramienta para evadir respuestas HTTP 403/40X',
           'tool.pwny.desc': 'Repositorio de payloads para investigadores de seguridad',
           'tool.awesome.desc': 'Frameworks, librerías, recursos y software para jugadores de CTF',
           'tool.debug.desc': 'Descubre parámetros de debugging ocultos y secretos en aplicaciones web',
-          'footer.cta': '¿Trabajando en algo interesante?'
+          'footer.cta': '¿Trabajando en algo interesante?',
+          'footer.kicker': 'Liderazgo en seguridad, research ofensivo y advisory pragmático para productos que operan en el mundo real.'
         }
       };
 
       var currentLang = 'en';
+      var postsStatusEl = document.getElementById('posts-status');
+      var postsState = 'loading';
 
       function detectLang() {
         var stored = localStorage.getItem('lang');
@@ -965,6 +1331,17 @@
           if (t[key] !== undefined) el.innerHTML = t[key];
         });
 
+        document.documentElement.setAttribute('data-lang', lang);
+
+        if (postsStatusEl) {
+          var statusKey = postsState === 'live'
+            ? 'posts.statusLive'
+            : postsState === 'fallback'
+              ? 'posts.statusFallback'
+              : 'posts.statusLoading';
+          postsStatusEl.textContent = t[statusKey];
+        }
+
         var toggle = document.getElementById('lang-toggle');
         toggle.textContent = lang === 'en' ? 'ES' : 'EN';
         toggle.setAttribute('aria-label', lang === 'en' ? 'Cambiar a español' : 'Switch to English');
@@ -985,7 +1362,13 @@
           if (entry.isIntersecting) {
             navLinks.forEach(function (link) { link.classList.remove('active'); });
             var active = document.querySelector('[data-nav="' + entry.target.id + '"]');
-            if (active) active.classList.add('active');
+            if (active) {
+              active.classList.add('active');
+              active.setAttribute('aria-current', 'page');
+            }
+            navLinks.forEach(function (link) {
+              if (!link.classList.contains('active')) link.removeAttribute('aria-current');
+            });
           }
         });
       }, { rootMargin: '-30% 0px -60% 0px' });
@@ -1039,6 +1422,13 @@
         });
       }
 
+      function setPostsState(state) {
+        postsState = state;
+        if (!postsStatusEl) return;
+        postsStatusEl.classList.toggle('is-live', state === 'live');
+        applyLang(currentLang);
+      }
+
       function escapeHtml(str) {
         var div = document.createElement('div');
         div.textContent = str;
@@ -1081,12 +1471,15 @@
             }
 
             if (posts.length) {
+              setPostsState('live');
               renderPosts(posts);
             } else {
+              setPostsState('fallback');
               renderPosts(fallbackPosts);
             }
           })
           .catch(function () {
+            setPostsState('fallback');
             renderPosts(fallbackPosts);
           });
       }

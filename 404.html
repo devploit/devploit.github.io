@@ -3,74 +3,214 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="accelerometer=(), autoplay=(), camera=(), display-capture=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
   <title>404 · devploit</title>
+  <meta name="robots" content="noindex, follow">
+  <meta name="description" content="Page not found on devploit.dev.">
+  <meta name="theme-color" content="#0c0c0e">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
   <link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
-  <meta name="theme-color" content="#0c0c0e">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --color-bg: #0c0c0e;
+      --color-surface: #18181c;
+      --color-border: #1e1e24;
+      --color-border-md: #2a2a30;
+      --color-text: #f0ede6;
+      --color-muted: #aaa79f;
+      --color-subtle: #8a867d;
+      --color-accent: #e88c40;
+      --color-accent-dim: #7a4a20;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      background: #0c0c0e;
-      color: #f0ede6;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+        var(--color-bg);
+      background-size: 100% 32px, 32px 100%, auto;
+      color: var(--color-text);
       font-family: 'Syne', sans-serif;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 24px;
       -webkit-font-smoothing: antialiased;
     }
+
+    .shell {
+      width: min(calc(100% - 48px), 980px);
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(24, 24, 28, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .nav-shell {
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 56px 0;
+    }
+
+    .panel {
+      position: relative;
+      width: 100%;
+      padding: 40px;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(232, 140, 64, 0.06), transparent 34%),
+        var(--color-surface);
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(232, 140, 64, 0.12), transparent 36%);
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: 540px;
+    }
+
     .code {
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
-      color: #e88c40;
+      color: var(--color-accent);
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 16px;
     }
+
     h1 {
       font-weight: 800;
-      font-size: 48px;
-      letter-spacing: -1px;
+      font-size: clamp(42px, 8vw, 64px);
+      letter-spacing: -2px;
+      line-height: 0.96;
       margin-bottom: 12px;
     }
+
     p {
       font-family: 'JetBrains Mono', monospace;
       font-size: 14px;
-      color: #666660;
+      color: var(--color-muted);
+      max-width: 40ch;
       margin-bottom: 32px;
+      line-height: 1.7;
     }
-    a {
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
       font-family: 'JetBrains Mono', monospace;
       font-size: 13px;
-      color: #e88c40;
+      color: var(--color-accent);
       text-decoration: none;
-      border: 1px solid #7a4a20;
+      border: 1px solid var(--color-accent-dim);
       padding: 10px 24px;
       border-radius: 4px;
-      transition: border-color 150ms, color 150ms;
+      transition: border-color 150ms, color 150ms, background 150ms, transform 150ms;
     }
-    a:hover {
-      border-color: #e88c40;
-      color: #f0ede6;
+
+    .button:hover {
+      border-color: var(--color-accent);
+      color: var(--color-text);
+      background: rgba(232, 140, 64, 0.08);
+      transform: translateY(-1px);
     }
-    a:focus-visible {
-      outline: 2px solid #e88c40;
+
+    .button:focus-visible {
+      outline: 2px solid var(--color-accent);
       outline-offset: 2px;
+    }
+
+    .button-secondary {
+      color: var(--color-subtle);
+      border-color: var(--color-border-md);
+    }
+
+    .button-secondary:hover {
+      color: var(--color-text);
+      border-color: var(--color-border-md);
+      background: rgba(255,255,255,0.03);
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(calc(100% - 32px), 980px);
+      }
+
+      main {
+        padding: 32px 0;
+      }
+
+      .panel {
+        padding: 28px 22px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="code">&gt; error 404</div>
-  <h1>Nothing here.</h1>
-  <p>The page you're looking for doesn't exist.</p>
-  <a href="/">← back to devploit.dev</a>
+  <nav class="nav" aria-label="Main navigation">
+    <div class="shell nav-shell">
+      <a href="/" class="nav-logo">~/devploit</a>
+    </div>
+  </nav>
+  <main>
+    <div class="shell">
+      <section class="panel">
+        <div class="content">
+          <div class="code">&gt; error 404</div>
+          <h1>Nothing here.</h1>
+          <p>The page you're looking for doesn't exist, or the link is older than the exploit writeup that pointed to it.</p>
+          <div class="actions">
+            <a class="button" href="/">← back to devploit.dev</a>
+            <a class="button button-secondary" href="https://blog.devploit.dev">open blog ↗</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
 </body>
 </html>
