@@ -1785,6 +1785,45 @@
           })
           .catch(function () {});
       });
+
+      /* ── Easter egg: Kettle the duck ── */
+      if (new URLSearchParams(window.location.search).get('pet') === '1') {
+        var kettle = document.createElement('div');
+        kettle.id = 'kettle';
+        kettle.innerHTML =
+          '<button id="kettle-close" aria-label="Close Kettle">&times;</button>' +
+          '<pre>' +
+          '  __\n' +
+          '&lt;(o )___\n' +
+          ' ( ._&gt; /\n' +
+          '  `---´\n' +
+          '</pre>' +
+          '<span class="kettle-name">Kettle</span>' +
+          '<span class="kettle-bubble">quack!</span>';
+        document.body.appendChild(kettle);
+
+        var style = document.createElement('style');
+        style.textContent =
+          '#kettle{position:fixed;bottom:24px;right:24px;z-index:9999;' +
+          'font-family:var(--font-mono,monospace);text-align:center;' +
+          'background:var(--surface,#161618);border:1px solid var(--border,#28282c);' +
+          'border-radius:12px;padding:16px 20px 12px;box-shadow:0 4px 24px rgba(0,0,0,.4);' +
+          'animation:kettle-in .4s ease-out}' +
+          '#kettle pre{margin:0 auto;line-height:1.3;color:var(--accent,#c8a2ff);font-size:14px;text-align:left;display:inline-block}' +
+          '#kettle .kettle-name{display:block;margin-top:4px;font-size:11px;' +
+          'letter-spacing:2px;text-transform:uppercase;color:var(--muted,#888)}' +
+          '#kettle .kettle-bubble{display:block;margin-top:8px;font-size:12px;' +
+          'color:var(--text,#e4e4e4);opacity:.7;font-style:italic}' +
+          '#kettle-close{position:absolute;top:6px;right:10px;background:none;border:none;' +
+          'color:var(--muted,#888);font-size:18px;cursor:pointer;line-height:1;padding:0}' +
+          '#kettle-close:hover{color:var(--text,#e4e4e4)}' +
+          '@keyframes kettle-in{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}';
+        document.head.appendChild(style);
+
+        document.getElementById('kettle-close').addEventListener('click', function () {
+          kettle.remove();
+        });
+      }
     })();
   </script>
 
