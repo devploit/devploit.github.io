@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com https://api.allorigins.win; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="accelerometer=(), autoplay=(), camera=(), display-capture=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
-  <title>Daniel Púa · @devploit · Head of Security · Security Researcher</title>
+  <title>Daniel Púa · devploit · Security Researcher</title>
   <meta name="description" content="Head of Security at Freepik. Security Researcher. Offensive security, CTF player. Creator of nomore403. Real-world infosec, no hype.">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="author" content="Daniel Púa">
@@ -227,24 +227,6 @@
       transform: scaleX(1);
     }
 
-    .lang-toggle {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--color-subtle);
-      background: rgba(255,255,255,0.01);
-      border: 1px solid var(--color-border-md);
-      border-radius: 4px;
-      padding: 4px 10px;
-      cursor: pointer;
-      transition: color 150ms, border-color 150ms, background 150ms;
-    }
-
-    .lang-toggle:hover {
-      color: var(--color-accent);
-      border-color: var(--color-accent);
-      background: rgba(232, 140, 64, 0.08);
-    }
-
     /* ── HERO ── */
     .hero {
       position: relative;
@@ -409,12 +391,17 @@
 
     /* ── MAIN GRID ── */
     .main-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
       background: var(--grid-bg);
       border-bottom: 1px solid var(--color-border);
       position: relative;
       overflow: hidden;
+    }
+
+    .main-grid-shell {
+      width: min(calc(100% - 48px), var(--page-max));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
     }
 
     .main-grid::before {
@@ -425,12 +412,12 @@
       pointer-events: none;
     }
 
-    .main-grid > .col-left {
+    .main-grid-shell > .col-left {
       padding: 64px 56px 56px 48px;
       border-right: 1px solid var(--color-border);
     }
 
-    .main-grid > .col-right {
+    .main-grid-shell > .col-right {
       padding: 112px 48px 56px 56px;
     }
 
@@ -654,6 +641,226 @@
     @keyframes pulse {
       0%, 100% { opacity: 0.4; }
       50% { opacity: 1; }
+    }
+
+    /* ── RECOGNITION ── */
+    .recognition-section {
+      padding: 56px 0;
+      border-bottom: 1px solid var(--color-border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .recognition-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(232, 140, 64, 0.08), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,0.015), transparent 38%);
+      pointer-events: none;
+    }
+
+    .recognition-intro {
+      position: relative;
+      z-index: 1;
+      max-width: 68ch;
+      margin-bottom: 28px;
+    }
+
+    .recognition-intro h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 0.98;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
+    .recognition-intro p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--color-muted);
+      line-height: 1.7;
+    }
+
+    .recognition-intro .recognition-kicker {
+      margin-bottom: 14px;
+    }
+
+    .recognition-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .recognition-card {
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      background:
+        linear-gradient(180deg, rgba(232, 140, 64, 0.05), rgba(255,255,255,0.01) 34%),
+        var(--color-surface);
+      padding: 26px 24px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .recognition-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(232, 140, 64, 0.10), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,0.02), transparent 24%);
+      pointer-events: none;
+    }
+
+    .recognition-card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .recognition-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      line-height: 1.1;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .recognition-card p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--color-muted);
+      line-height: 1.6;
+      max-width: 44ch;
+      position: relative;
+      z-index: 1;
+    }
+
+    .recognition-kicker {
+      display: inline-flex;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-accent);
+      border: 1px solid var(--color-accent-dim);
+      border-radius: 999px;
+      padding: 4px 10px;
+      white-space: nowrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .recognition-list {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .recognition-list li {
+      list-style: none;
+      padding: 12px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .recognition-list li:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .recognition-list li.is-empty {
+      padding: 4px 0 0;
+      border-top: none;
+    }
+
+    .recognition-item-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: baseline;
+      margin-bottom: 2px;
+    }
+
+    .recognition-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      color: var(--color-text);
+      line-height: 1.35;
+    }
+
+    .recognition-year {
+      flex-shrink: 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-accent);
+    }
+
+    .recognition-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--color-subtle);
+      line-height: 1.5;
+    }
+
+    .recognition-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .recognition-badge {
+      display: inline-flex;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--color-accent);
+      border: 1px solid var(--color-accent-dim);
+      border-radius: 999px;
+      padding: 2px 7px;
+      background: rgba(232, 140, 64, 0.06);
+    }
+
+    .recognition-badge.is-muted {
+      color: var(--color-muted);
+      border-color: var(--color-border-md);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .recognition-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--color-accent);
+      transition: color 150ms;
+      position: relative;
+      z-index: 1;
+    }
+
+    .recognition-link::after {
+      content: '↓';
+    }
+
+    .recognition-link:hover {
+      color: var(--color-text);
+    }
+
+    .recognition-empty {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--color-muted);
+      line-height: 1.7;
     }
 
     /* ── TOOLS ── */
@@ -890,22 +1097,31 @@
         max-width: 28ch;
       }
 
-      .main-grid {
+      .main-grid-shell {
+        width: min(calc(100% - 32px), var(--page-max));
         grid-template-columns: 1fr;
       }
 
-      .main-grid > .col-left {
+      .main-grid-shell > .col-left {
         border-right: none;
         border-bottom: 1px solid var(--color-border);
         padding: 36px 24px;
       }
 
-      .main-grid > .col-right {
+      .main-grid-shell > .col-right {
         padding: 36px 24px;
       }
 
       .tools-section {
         padding: 36px 0;
+      }
+
+      .recognition-section {
+        padding: 36px 0;
+      }
+
+      .recognition-grid {
+        grid-template-columns: 1fr;
       }
 
       .tools-grid {
@@ -931,10 +1147,6 @@
       .nav-right {
         flex-direction: column;
         align-items: flex-start;
-      }
-
-      .lang-toggle {
-        padding: 6px 10px;
       }
 
       .proof-item,
@@ -970,10 +1182,6 @@
         background: none;
         backdrop-filter: none;
         border-bottom: 2px solid #111;
-      }
-
-      .lang-toggle {
-        display: none;
       }
 
       .hero-label, .hero-name, .hero-handle, .hero-tagline, .hero-pills,
@@ -1028,10 +1236,11 @@
         <div class="nav-links">
           <a href="#work" data-i18n="nav.work" data-nav="work">work</a>
           <a href="https://blog.devploit.dev" target="_blank" rel="noopener" aria-label="Blog (opens in new tab)">blog</a>
+          <a href="/ctf.html" data-i18n="nav.ctf">ctf</a>
+          <a href="/cves.html" data-i18n="nav.cves">cves</a>
           <a href="#tools" data-i18n="nav.tools" data-nav="tools">tools</a>
           <a href="#contact" data-i18n="nav.contact" data-nav="contact">contact</a>
         </div>
-        <button class="lang-toggle" id="lang-toggle" aria-label="Switch language">EN</button>
       </div>
     </div>
   </nav>
@@ -1068,10 +1277,11 @@
     </section>
 
     <!-- MAIN GRID -->
-    <section class="shell main-grid">
-      <div class="col-left reveal">
-        <div class="section-label" data-i18n="section.proof">// proof of work</div>
-        <div class="proof-list">
+    <section class="main-grid">
+      <div class="main-grid-shell">
+        <div class="col-left reveal">
+          <div class="section-label" data-i18n="section.proof">// proof of work</div>
+          <div class="proof-list">
           <div class="proof-item">
             <div class="proof-icon" aria-hidden="true">FP</div>
             <div class="proof-text">
@@ -1130,17 +1340,100 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="col-right reveal">
-        <div class="section-label" data-i18n="section.posts">// latest posts</div>
-        <div class="posts-status" id="posts-status" data-i18n="posts.statusLoading">loading feed</div>
-        <div id="posts-container" aria-live="polite">
-          <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
-          <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
-          <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
         </div>
-        <a href="https://blog.devploit.dev" target="_blank" rel="noopener" class="posts-all" data-i18n="posts.viewAll" aria-label="View all blog posts (opens in new tab)">→ view all posts</a>
+
+        <div class="col-right reveal">
+          <div class="section-label" data-i18n="section.posts">// latest posts</div>
+          <div class="posts-status" id="posts-status" data-i18n="posts.statusLoading">loading feed</div>
+          <div id="posts-container" aria-live="polite">
+            <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
+            <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
+            <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
+          </div>
+          <a href="https://blog.devploit.dev" target="_blank" rel="noopener" class="posts-all" data-i18n="posts.viewAll" aria-label="View all blog posts (opens in new tab)">→ view all posts</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECOGNITION -->
+    <section class="recognition-section reveal" id="recognition">
+      <div class="shell">
+        <div class="section-label" data-i18n="section.recognition">// research & recognition</div>
+        <div class="recognition-intro">
+          <span class="recognition-kicker" data-i18n="recognition.introKicker">Competitive work</span>
+          <h2 data-i18n="recognition.title">CTF Results and Published CVEs.</h2>
+          <p data-i18n="recognition.copy">A concise view of hands-on work across competitive security and responsible disclosure, with separate pages for the full lists and references.</p>
+        </div>
+
+        <div class="recognition-grid">
+          <article class="recognition-card">
+            <div class="recognition-card-head">
+              <div>
+                <h3 data-i18n="recognition.ctf.title">CTF Awards</h3>
+                <p data-i18n="recognition.ctf.copy">Recent first places and podium finishes across individual competitions and team events, with the complete record grouped separately.</p>
+              </div>
+              <span class="recognition-kicker" data-i18n="recognition.ctf.kicker">Since 2017</span>
+            </div>
+
+            <ul class="recognition-list" aria-label="Selected CTF awards">
+              <li>
+                <div class="recognition-item-top">
+                  <div class="recognition-title">1st · Google Security Forum 2024</div>
+                  <div class="recognition-year">2024</div>
+                </div>
+                <div class="recognition-subtitle">SecOps &amp; Threat Intelligence CTF</div>
+              </li>
+              <li>
+                <div class="recognition-item-top">
+                  <div class="recognition-title">1st · Google Security Forum 2023</div>
+                  <div class="recognition-year">2023</div>
+                </div>
+                <div class="recognition-subtitle">Chronicle CTF</div>
+              </li>
+              <li>
+                <div class="recognition-item-top">
+                  <div class="recognition-title">1st · Andalusian Cybersecurity Congress</div>
+                  <div class="recognition-year">2023</div>
+                </div>
+                <div class="recognition-subtitle">III edition · individual category</div>
+              </li>
+              <li>
+                <div class="recognition-item-top">
+                  <div class="recognition-title">1st · Navaja Negra CTF</div>
+                  <div class="recognition-year">2022</div>
+                </div>
+                <div class="recognition-subtitle">Individual competition</div>
+              </li>
+              <li>
+                <div class="recognition-item-top">
+                  <div class="recognition-title">3rd · Digital Overdose Autumn CTF</div>
+                  <div class="recognition-year">2021</div>
+                </div>
+                <div class="recognition-subtitle">Team result with ripp3rs</div>
+              </li>
+            </ul>
+
+            <a class="recognition-link" href="/ctf.html" data-i18n="recognition.viewAllCtf">View all CTF results</a>
+          </article>
+
+          <article class="recognition-card">
+            <div class="recognition-card-head">
+              <div>
+                <h3 data-i18n="recognition.cve.title">CVEs</h3>
+                <p data-i18n="recognition.cve.copy">Official CVE records will appear here once assigned and publicly available.</p>
+              </div>
+              <span class="recognition-kicker" data-i18n="recognition.cve.kicker">Official records</span>
+            </div>
+
+            <ul class="recognition-list" aria-label="Selected CVEs">
+              <li class="is-empty">
+                <div class="recognition-empty" data-i18n="recognition.cve.empty">No public CVEs listed yet.</div>
+              </li>
+            </ul>
+
+            <a class="recognition-link" href="/cves.html" data-i18n="recognition.viewAllCve">View all CVEs</a>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -1227,6 +1520,8 @@
       var translations = {
         en: {
           'nav.work': 'work',
+          'nav.ctf': 'ctf',
+          'nav.cves': 'cves',
           'nav.tools': 'tools',
           'nav.contact': 'contact',
           'hero.label': '> Head of Security · Security Researcher · CTF Player',
@@ -1234,7 +1529,26 @@
           'hero.pill.pentest': 'Penetration Testing',
           'section.proof': '// proof of work',
           'section.posts': '// latest posts',
+          'section.recognition': '// research & recognition',
           'section.tools': '// tools & projects',
+          'recognition.introKicker': 'Competitive work',
+          'recognition.title': 'CTF Results and Published CVEs.',
+          'recognition.copy': 'A concise view of hands-on work across competitive security and responsible disclosure, with separate pages for the full lists and references.',
+          'recognition.ctf.title': 'CTF Awards',
+          'recognition.ctf.copy': 'Recent first places and podium finishes across individual competitions and team events, with the complete record grouped separately.',
+          'recognition.ctf.kicker': 'Since 2017',
+          'recognition.cve.title': 'CVEs',
+          'recognition.cve.copy': 'Official CVE records will appear here once assigned and publicly available.',
+          'recognition.cve.kicker': 'Official records',
+          'recognition.cve.empty': 'No public CVEs listed yet.',
+          'recognition.viewAllCtf': 'View all CTF results',
+          'recognition.viewAllCve': 'View all CVEs',
+          'recognition.fullCtf.title': 'All CTF Results',
+          'recognition.fullCtf.copy': 'A fuller record of individual placements and team podiums. This keeps the homepage curated while preserving the full competitive track record.',
+          'recognition.fullCtf.individual': 'Individual',
+          'recognition.fullCtf.team': 'Team',
+          'recognition.fullCve.title': 'CVEs and Responsible Disclosure',
+          'recognition.fullCve.copy': 'Reported vulnerabilities published with official CVE identifiers.',
           'proof.fp.meta': 'role',
           'proof.fp.sub': 'Managing security at scale · Málaga',
           'proof.linkCompany': 'visit company',
@@ -1263,45 +1577,6 @@
           'tool.debug.desc': 'Discover hidden debugging parameters and uncover web application secrets',
           'footer.cta': 'Working on something interesting?',
           'footer.kicker': 'Security leadership, offensive research and pragmatic advisory for products that operate in the real world.'
-        },
-        es: {
-          'nav.work': 'trabajo',
-          'nav.tools': 'herramientas',
-          'nav.contact': 'contacto',
-          'hero.label': '> Head of Security · Security Researcher · CTF Player',
-          'hero.tagline': 'Real-world infosec, no hype.<br><em>Never trust a fox.</em>',
-          'hero.pill.pentest': 'Pentesting',
-          'section.proof': '// trayectoria',
-          'section.posts': '// últimos posts',
-          'section.tools': '// herramientas y proyectos',
-          'proof.fp.meta': 'rol',
-          'proof.fp.sub': 'Gestionando seguridad a escala · Málaga',
-          'proof.linkCompany': 'ver empresa',
-          'proof.sr.meta': 'research',
-          'proof.sr.title': 'Security Researcher · Freelance',
-          'proof.sr.sub': 'Bug Bounty · Penetration Testing · Consultoría',
-          'proof.linkContact': 'contactar',
-          'proof.nm.meta': 'proyecto',
-          'proof.nm.sub': 'Herramienta para evadir respuestas 403/40X',
-          'proof.linkProject': 'abrir proyecto',
-          'proof.dc.meta': 'ctf',
-          'proof.dc.sub': 'Competidor CTF desde 2017',
-          'proof.es.meta': 'equipo',
-          'proof.es.sub': 'Selección nacional de ciberseguridad',
-          'proof.hb.meta': 'comunidad',
-          'proof.hb.title': 'Organizador Hack&Beers Málaga',
-          'proof.hb.sub': 'Comunidad de seguridad',
-          'proof.linkCommunity': 'ver comunidad',
-          'posts.statusLoading': 'cargando feed',
-          'posts.statusLive': 'en vivo desde el blog',
-          'posts.statusFallback': 'selección destacada',
-          'posts.viewAll': '→ ver todos los posts',
-          'tool.nomore.desc': 'Herramienta para evadir respuestas HTTP 403/40X',
-          'tool.pwny.desc': 'Repositorio de payloads para investigadores de seguridad',
-          'tool.awesome.desc': 'Frameworks, librerías, recursos y software para jugadores de CTF',
-          'tool.debug.desc': 'Descubre parámetros de debugging ocultos y secretos en aplicaciones web',
-          'footer.cta': '¿Trabajando en algo interesante?',
-          'footer.kicker': 'Liderazgo en seguridad, research ofensivo y advisory pragmático para productos que operan en el mundo real.'
         }
       };
 
@@ -1309,17 +1584,9 @@
       var postsStatusEl = document.getElementById('posts-status');
       var postsState = 'loading';
 
-      function detectLang() {
-        var stored = localStorage.getItem('lang');
-        if (stored && translations[stored]) return stored;
-        var nav = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-        return nav.startsWith('es') ? 'es' : 'en';
-      }
-
       function applyLang(lang) {
         currentLang = lang;
         document.documentElement.lang = lang;
-        localStorage.setItem('lang', lang);
 
         var t = translations[lang];
         document.querySelectorAll('[data-i18n]').forEach(function (el) {
@@ -1341,17 +1608,9 @@
               : 'posts.statusLoading';
           postsStatusEl.textContent = t[statusKey];
         }
-
-        var toggle = document.getElementById('lang-toggle');
-        toggle.textContent = lang === 'en' ? 'ES' : 'EN';
-        toggle.setAttribute('aria-label', lang === 'en' ? 'Cambiar a español' : 'Switch to English');
       }
 
-      document.getElementById('lang-toggle').addEventListener('click', function () {
-        applyLang(currentLang === 'en' ? 'es' : 'en');
-      });
-
-      applyLang(detectLang());
+      applyLang('en');
 
       /* ── Active nav (IntersectionObserver) ── */
       var navLinks = document.querySelectorAll('[data-nav]');

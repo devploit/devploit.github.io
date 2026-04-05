@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CTF Awards · Daniel Púa · devploit</title>
+  <meta name="description" content="CTF results and competitive security track record of Daniel Púa (@devploit).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-bg: #0c0c0e;
+      --color-surface: #18181c;
+      --color-surface-hi: #1d1d22;
+      --color-panel: #131317;
+      --color-border: #1e1e24;
+      --color-border-md: #2a2a30;
+      --color-text: #f0ede6;
+      --color-muted: #aaa79f;
+      --color-subtle: #8a867d;
+      --color-accent: #e88c40;
+      --color-accent-dim: #7a4a20;
+      --page-max: 1180px;
+      --glow-soft: radial-gradient(circle at top left, rgba(232, 140, 64, 0.14), transparent 46%);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: 'Syne', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      background-image:
+        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+        radial-gradient(circle at top left, rgba(232,140,64,0.08), transparent 28%);
+      background-size: 100% 32px, 32px 100%, auto;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(calc(100% - 48px), var(--page-max)); margin: 0 auto; }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(24,24,28,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .nav-shell {
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--color-accent);
+      font-size: 15px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .nav-link {
+      position: relative;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--color-muted);
+      transition: color 150ms;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 100%;
+      height: 1px;
+      background: var(--color-accent);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 150ms;
+    }
+
+    .nav-link:hover,
+    .back-link:hover,
+    .cta:hover {
+      color: var(--color-text);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active {
+      color: var(--color-accent);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      transform: scaleX(1);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 96px 0 54px;
+      border-bottom: 1px solid var(--color-border);
+      background:
+        linear-gradient(180deg, rgba(24,24,28,0.56), transparent 60%),
+        var(--glow-soft);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(232, 140, 64, 0.06), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,0.02), transparent 30%);
+      pointer-events: none;
+    }
+
+    .hero-shell {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+    }
+
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--color-accent);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(40px, 7vw, 72px);
+      line-height: 0.92;
+      letter-spacing: -2px;
+      margin-bottom: 14px;
+    }
+
+    .lead {
+      max-width: 62ch;
+      color: var(--color-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 6px 12px;
+      border: 1px solid var(--color-border-md);
+      border-radius: 999px;
+      color: var(--color-muted);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .section {
+      padding: 34px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 1.1;
+    }
+
+    .meta {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--color-subtle);
+      font-size: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(232,140,64,0.05), rgba(255,255,255,0.01) 30%), var(--color-surface);
+      padding: 22px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .item {
+      border-left: 2px solid rgba(232,140,64,0.18);
+      padding-left: 12px;
+    }
+
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: baseline;
+    }
+
+    .title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .year {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--color-accent);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--color-subtle);
+      font-size: 12px;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      margin-top: 18px;
+    }
+
+    .footer {
+      padding: 32px 0 48px;
+      border-top: 1px solid var(--color-border);
+      color: var(--color-subtle);
+    }
+
+    .back-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .shell { width: min(calc(100% - 32px), var(--page-max)); }
+      .grid { grid-template-columns: 1fr; }
+      .nav-shell {
+        min-height: auto;
+        padding: 12px 0;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .nav-right { width: 100%; gap: 16px; }
+      .nav-links {
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+      .nav-link { font-size: 12px; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 560px) {
+      .nav-right {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="shell nav-shell">
+      <a class="nav-logo" href="/index.html">~/devploit</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a class="nav-link" href="/index.html">work</a>
+          <a class="nav-link" href="https://blog.devploit.dev" target="_blank" rel="noopener">blog</a>
+          <a class="nav-link active" href="/ctf.html">ctf</a>
+          <a class="nav-link" href="/cves.html">cves</a>
+          <a class="nav-link" href="/index.html#tools">tools</a>
+          <a class="nav-link" href="/index.html#contact">contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="shell hero-shell">
+        <div class="eyebrow">Competitive Security</div>
+        <h1>CTF Awards.</h1>
+        <p class="lead">A fuller record of individual placements and team results across CTF competitions. The homepage now stays selective; this page keeps the competitive track record visible without compressing it into the landing.</p>
+        <div class="stats">
+          <span class="badge">Multiple 1st-place finishes</span>
+          <span class="badge">Individual + Team track record</span>
+          <span class="badge">CTF competitor since 2017</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Selected Highlights</div>
+            <h2>Key results</h2>
+          </div>
+          <div class="meta">Most representative placements shown first.</div>
+        </div>
+        <div class="card">
+          <div class="list">
+            <div class="item">
+              <div class="title-row"><div class="title">1st · Google Security Forum 2024</div><div class="year">2024</div></div>
+              <div class="subtitle">SecOps &amp; Threat Intelligence CTF</div>
+            </div>
+            <div class="item">
+              <div class="title-row"><div class="title">1st · Google Security Forum 2023</div><div class="year">2023</div></div>
+              <div class="subtitle">Chronicle CTF</div>
+            </div>
+            <div class="item">
+              <div class="title-row"><div class="title">1st · CTF III Andalusian Cybersecurity Congress</div><div class="year">2023</div></div>
+              <div class="subtitle">Individual category</div>
+            </div>
+            <div class="item">
+              <div class="title-row"><div class="title">1st · Navaja Negra CTF</div><div class="year">2022</div></div>
+              <div class="subtitle">Individual competition</div>
+            </div>
+            <div class="item">
+              <div class="title-row"><div class="title">3rd · Digital Overdose 2021 Autumn CTF</div><div class="year">2021</div></div>
+              <div class="subtitle">Team result with ripp3rs</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="grid">
+          <article class="card">
+            <div class="section-head">
+              <div>
+                <div class="eyebrow">Individual</div>
+                <h2>Solo competitions</h2>
+              </div>
+              <div class="meta">2017-2024</div>
+            </div>
+            <div class="list">
+              <div class="item"><div class="title-row"><div class="title">1st · Google Security Forum 2024</div><div class="year">2024</div></div><div class="subtitle">SecOps &amp; Threat Intelligence CTF</div></div>
+              <div class="item"><div class="title-row"><div class="title">1st · CTF III Andalusian Cybersecurity Congress</div><div class="year">2023</div></div><div class="subtitle">Individual category</div></div>
+              <div class="item"><div class="title-row"><div class="title">1st · Google Security Forum 2023</div><div class="year">2023</div></div><div class="subtitle">Chronicle CTF</div></div>
+              <div class="item"><div class="title-row"><div class="title">2nd · Navaja Negra CTF 2023</div><div class="year">2023</div></div><div class="subtitle">Individual category</div></div>
+              <div class="item"><div class="title-row"><div class="title">1st · CTF II Andalusian Cybersecurity Congress</div><div class="year">2022</div></div><div class="subtitle">Individual category</div></div>
+              <div class="item"><div class="title-row"><div class="title">1st · Navaja Negra CTF 2022</div><div class="year">2022</div></div><div class="subtitle">Individual category</div></div>
+              <div class="item"><div class="title-row"><div class="title">2nd · FWhibbit CTF</div><div class="year">2022</div></div><div class="subtitle">c0r0n4c0n</div></div>
+              <div class="item"><div class="title-row"><div class="title">Finalist · CyberCamp CTF 2019</div><div class="year">2019</div></div><div class="subtitle">Valencia</div></div>
+              <div class="item"><div class="title-row"><div class="title">3rd · Navaja Negra CTF 2019</div><div class="year">2019</div></div><div class="subtitle">Individual category</div></div>
+              <div class="item"><div class="title-row"><div class="title">1st · Hack&amp;Beers 0day CTF 2019</div><div class="year">2019</div></div><div class="subtitle">Individual category</div></div>
+              <div class="item"><div class="title-row"><div class="title">2nd · SecAdmin CTF 2018</div><div class="year">2018</div></div><div class="subtitle">Individual category</div></div>
+              <div class="item"><div class="title-row"><div class="title">6th · Navaja Negra CTF 2018</div><div class="year">2018</div></div><div class="subtitle">Individual category</div></div>
+              <div class="item"><div class="title-row"><div class="title">Finalist · CyberCamp CTF 2018</div><div class="year">2018</div></div><div class="subtitle">Málaga</div></div>
+              <div class="item"><div class="title-row"><div class="title">1st · JASYP CTF 2018</div><div class="year">2018</div></div><div class="subtitle">Individual category</div></div>
+              <div class="item"><div class="title-row"><div class="title">Finalist · CyberCamp CTF 2017</div><div class="year">2017</div></div><div class="subtitle">Santander</div></div>
+              <div class="item"><div class="title-row"><div class="title">4th · Qurtuba CTF 2017</div><div class="year">2017</div></div><div class="subtitle">Individual category</div></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <div>
+                <div class="eyebrow">Team</div>
+                <h2>ripp3rs results</h2>
+              </div>
+              <div class="meta">CTFtime-linked</div>
+            </div>
+            <div class="list">
+              <div class="item"><div class="title-row"><div class="title">3rd · Digital Overdose 2021 Autumn CTF</div><div class="year">2021</div></div><div class="subtitle">Team result</div></div>
+              <div class="item"><div class="title-row"><div class="title">5th · DefCamp CTF 2020</div><div class="year">2020</div></div><div class="subtitle">Team result</div></div>
+              <div class="item"><div class="title-row"><div class="title">4th · KipodAfterFree CTF 2020</div><div class="year">2020</div></div><div class="subtitle">Team result</div></div>
+              <div class="item"><div class="title-row"><div class="title">3rd · h-con CTF 2020</div><div class="year">2020</div></div><div class="subtitle">Onsite finals</div></div>
+              <div class="item"><div class="title-row"><div class="title">2nd · h-con CTF 2020</div><div class="year">2020</div></div><div class="subtitle">Online qualifiers</div></div>
+              <div class="item"><div class="title-row"><div class="title">3rd · WCTF 2019</div><div class="year">2019</div></div><div class="subtitle">Team result</div></div>
+              <div class="item"><div class="title-row"><div class="title">6th · SwampCTF 2019</div><div class="year">2019</div></div><div class="subtitle">Team result</div></div>
+              <div class="item"><div class="title-row"><div class="title">3rd · RADARCTF 2019</div><div class="year">2019</div></div><div class="subtitle">Team result</div></div>
+              <div class="item"><div class="title-row"><div class="title">3rd · ENCRYPT CTF 2019</div><div class="year">2019</div></div><div class="subtitle">Team result</div></div>
+              <div class="item"><div class="title-row"><div class="title">10th · PragyanCTF 2019</div><div class="year">2019</div></div><div class="subtitle">Team result</div></div>
+              <div class="item"><div class="title-row"><div class="title">11th · TAMUctf 2019</div><div class="year">2019</div></div><div class="subtitle">Team result</div></div>
+            </div>
+            <a class="cta" href="https://ctftime.org/team/50984" target="_blank" rel="noopener">Open full team profile ↗</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell">
+      <a class="back-link" href="/index.html#recognition">← Back to homepage</a>
+    </div>
+  </footer>
+</body>
+</html>
