@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CVEs · Daniel Púa · devploit</title>
-  <meta name="description" content="Published CVEs and responsible disclosure references for Daniel Púa · devploit.">
+  <title>Live Hacking Events · Daniel Púa · devploit</title>
+  <meta name="description" content="Live hacking event results and bug bounty competition track record of Daniel Púa · devploit.">
   <meta name="theme-color" content="#0c0c0e">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="devploit">
   <meta property="og:locale" content="en_US">
-  <meta property="og:title" content="CVEs · Daniel Púa · devploit">
-  <meta property="og:description" content="Published CVEs and responsible disclosure references for Daniel Púa · devploit.">
-  <meta property="og:url" content="https://devploit.dev/cves.html">
+  <meta property="og:title" content="Live Hacking Events · Daniel Púa · devploit">
+  <meta property="og:description" content="Live hacking event results and bug bounty competition track record of Daniel Púa · devploit.">
+  <meta property="og:url" content="https://devploit.dev/livehackingevents.html">
   <meta property="og:image" content="https://devploit.dev/og-image.png">
   <meta property="og:image:alt" content="Daniel Púa / devploit">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@devploit">
   <meta name="twitter:creator" content="@devploit">
-  <meta name="twitter:title" content="CVEs · Daniel Púa · devploit">
-  <meta name="twitter:description" content="Published CVEs and responsible disclosure references for Daniel Púa · devploit.">
+  <meta name="twitter:title" content="Live Hacking Events · Daniel Púa · devploit">
+  <meta name="twitter:description" content="Live hacking event results and bug bounty competition track record of Daniel Púa · devploit.">
   <meta name="twitter:image" content="https://devploit.dev/og-image.png">
-  <link rel="canonical" href="https://devploit.dev/cves.html">
+  <link rel="canonical" href="https://devploit.dev/livehackingevents.html">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
   <link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
@@ -35,21 +35,25 @@
       --color-bg: #0c0c0e;
       --color-surface: #18181c;
       --color-surface-hi: #1d1d22;
+      --color-panel: #131317;
       --color-border: #1e1e24;
       --color-border-md: #2a2a30;
       --color-text: #f0ede6;
       --color-muted: #aaa79f;
       --color-subtle: #8a867d;
       --color-accent: #e88c40;
+      --color-accent-dim: #7a4a20;
       --page-max: 1180px;
       --glow-soft: radial-gradient(circle at top left, rgba(232, 140, 64, 0.14), transparent 46%);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       background: var(--color-bg);
       color: var(--color-text);
       font-family: 'Syne', sans-serif;
+      font-weight: 400;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       background-image:
@@ -61,7 +65,6 @@
 
     a { color: inherit; text-decoration: none; }
     .shell { width: min(calc(100% - 48px), var(--page-max)); margin: 0 auto; }
-    .nav, .hero, .section, .footer { border-bottom: 1px solid var(--color-border); }
 
     .nav {
       position: sticky;
@@ -69,6 +72,7 @@
       z-index: 100;
       background: rgba(24,24,28,0.88);
       backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--color-border);
     }
 
     .nav-shell {
@@ -93,7 +97,10 @@
       white-space: nowrap;
     }
 
-    .nav-links { display: flex; gap: 32px; }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+    }
 
     .nav-link {
       position: relative;
@@ -117,7 +124,8 @@
     }
 
     .nav-link:hover,
-    .back-link:hover {
+    .back-link:hover,
+    .cta:hover {
       color: var(--color-text);
     }
 
@@ -135,6 +143,7 @@
       position: relative;
       overflow: hidden;
       padding: 96px 0 54px;
+      border-bottom: 1px solid var(--color-border);
       background:
         linear-gradient(180deg, rgba(24,24,28,0.56), transparent 60%),
         var(--glow-soft);
@@ -157,12 +166,12 @@
     }
 
     .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
       color: var(--color-accent);
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-bottom: 16px;
-      font-family: 'JetBrains Mono', monospace;
     }
 
     h1 {
@@ -175,13 +184,33 @@
     }
 
     .lead {
-      max-width: 64ch;
+      max-width: 62ch;
       color: var(--color-muted);
-      font-size: 13px;
       font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
     }
 
-    .section { padding: 34px 0; }
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 6px 12px;
+      border: 1px solid var(--color-border-md);
+      border-radius: 999px;
+      color: var(--color-muted);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .section {
+      padding: 34px 0;
+    }
+
     .section-head {
       display: flex;
       justify-content: space-between;
@@ -198,9 +227,9 @@
     }
 
     .meta {
+      font-family: 'JetBrains Mono', monospace;
       color: var(--color-subtle);
       font-size: 12px;
-      font-family: 'JetBrains Mono', monospace;
     }
 
     .card {
@@ -210,15 +239,22 @@
       padding: 22px;
     }
 
-    .list { display: grid; gap: 14px; }
-    .item {
-      display: block;
-      border-left: 2px solid rgba(232,140,64,0.18);
-      padding-left: 12px;
-      transition: opacity 150ms;
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
     }
 
-    .item:hover { opacity: 0.88; }
+    .list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .item {
+      border-left: 2px solid rgba(232,140,64,0.18);
+      padding-left: 12px;
+    }
+
     .title-row {
       display: flex;
       justify-content: space-between;
@@ -234,65 +270,65 @@
     }
 
     .year {
+      font-family: 'JetBrains Mono', monospace;
       color: var(--color-accent);
       font-size: 11px;
       white-space: nowrap;
-      font-family: 'JetBrains Mono', monospace;
     }
 
     .subtitle {
+      font-family: 'JetBrains Mono', monospace;
       color: var(--color-subtle);
       font-size: 12px;
-      font-family: 'JetBrains Mono', monospace;
     }
 
-    .cve-meta {
+    .item-meta {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
       margin-top: 8px;
     }
 
-    .cve-badge {
+    .tag {
       display: inline-flex;
       align-items: center;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
+      font-size: 10px;
       color: var(--color-accent);
-      border: 1px solid var(--color-accent);
+      border: 1px solid var(--color-accent-dim);
       border-radius: 999px;
-      padding: 3px 8px;
+      padding: 2px 7px;
       background: rgba(232, 140, 64, 0.06);
     }
 
-    .cve-badge.is-muted {
+    .tag.is-muted {
       color: var(--color-muted);
       border-color: var(--color-border-md);
       background: rgba(255,255,255,0.02);
     }
 
-    .empty-state {
-      border-left: 2px solid rgba(232,140,64,0.18);
-      padding-left: 12px;
-    }
-
-    .empty-title {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 18px;
-      line-height: 1.3;
-      margin-bottom: 6px;
-    }
-
-    .empty-copy {
+    .note {
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
-      color: var(--color-subtle);
+      color: var(--color-muted);
       line-height: 1.7;
-      max-width: 52ch;
     }
 
-    .footer { padding: 32px 0 48px; color: var(--color-subtle); }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      margin-top: 18px;
+    }
+
+    .footer {
+      padding: 32px 0 48px;
+      border-top: 1px solid var(--color-border);
+      color: var(--color-subtle);
+    }
 
     .back-link {
       font-family: 'JetBrains Mono', monospace;
@@ -301,6 +337,7 @@
 
     @media (max-width: 768px) {
       .shell { width: min(calc(100% - 32px), var(--page-max)); }
+      .grid { grid-template-columns: 1fr; }
       .nav-shell {
         min-height: auto;
         padding: 12px 0;
@@ -322,7 +359,6 @@
         flex-direction: column;
         align-items: flex-start;
       }
-
     }
   </style>
 </head>
@@ -335,8 +371,8 @@
           <a class="nav-link" href="/index.html">work</a>
           <a class="nav-link" href="https://blog.devploit.dev" target="_blank" rel="noopener">blog</a>
           <a class="nav-link" href="/ctf.html">ctf</a>
-          <a class="nav-link" href="/livehackingevents.html">live</a>
-          <a class="nav-link active" href="/cves.html">cves</a>
+          <a class="nav-link active" href="/livehackingevents.html">live</a>
+          <a class="nav-link" href="/cves.html">cves</a>
           <a class="nav-link" href="/index.html#tools">tools</a>
           <a class="nav-link" href="/index.html#contact">contact</a>
         </div>
@@ -347,9 +383,14 @@
   <main>
     <section class="hero">
       <div class="shell hero-shell">
-        <div class="eyebrow">Responsible Disclosure</div>
-        <h1>CVEs.</h1>
-        <p class="lead">Published vulnerabilities with official CVE identifiers and direct links to the official record.</p>
+        <div class="eyebrow">Onsite Bug Bounty</div>
+        <h1>Live Hacking Events.</h1>
+        <p class="lead">Public placements from onsite bug bounty competitions and live hacking events.</p>
+        <div class="stats">
+          <span class="badge">2 public event results</span>
+          <span class="badge">Top 2 in Madrid 2026</span>
+          <span class="badge">Top 4 in Lisbon 2025</span>
+        </div>
       </div>
     </section>
 
@@ -357,19 +398,36 @@
       <div class="shell">
         <div class="section-head">
           <div>
-            <div class="eyebrow">Published Entries</div>
-            <h2>Published records</h2>
+            <div class="eyebrow">Results</div>
+            <h2>Selected placements</h2>
           </div>
-          <div class="meta">Entries will link to cve.org</div>
+          <div class="meta">Ordered by recency.</div>
         </div>
         <div class="card">
-          <div class="empty-state">
-            <div class="empty-title">Pending publication.</div>
-            <div class="empty-copy">Published CVEs and assigned disclosures will appear here with direct links to the official record.</div>
+          <div class="list">
+            <div class="item">
+              <div class="title-row"><div class="title">2nd · Intigriti RootedCON Hacker Night Madrid</div><div class="year">2026</div></div>
+              <div class="subtitle">Madrid · Live hacking event</div>
+              <div class="item-meta">
+                <span class="tag">Intigriti</span>
+                <span class="tag is-muted">Onsite</span>
+                <span class="tag is-muted">2nd place</span>
+              </div>
+            </div>
+            <div class="item">
+              <div class="title-row"><div class="title">4th · Yogosha RootedCON Hacker Night Lisbon</div><div class="year">2025</div></div>
+              <div class="subtitle">Lisbon · Live hacking event</div>
+              <div class="item-meta">
+                <span class="tag">Yogosha</span>
+                <span class="tag is-muted">Onsite</span>
+                <span class="tag is-muted">4th place</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
+
   </main>
 
   <footer class="footer">

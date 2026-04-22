@@ -69,7 +69,7 @@
       "https://www.linkedin.com/in/daniel-pua/",
       "https://blog.devploit.dev"
     ],
-    "knowsAbout": ["Offensive Security", "Penetration Testing", "CTF", "Application Security"]
+    "knowsAbout": ["Offensive Security", "Penetration Testing", "CTF", "Application Security", "Bug Bounty", "Live Hacking Events"]
   }
   </script>
 
@@ -691,7 +691,7 @@
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 18px;
       margin-bottom: 20px;
     }
@@ -1055,6 +1055,12 @@
     }
 
     /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .recognition-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
     @media (max-width: 768px) {
       .shell {
         width: min(calc(100% - 32px), var(--page-max));
@@ -1242,12 +1248,13 @@
       <a href="#" class="nav-logo" aria-label="devploit - back to top">~/devploit</a>
       <div class="nav-right">
         <div class="nav-links">
-          <a href="#work" data-i18n="nav.work" data-nav="work">work</a>
+          <a href="#work" data-nav="work">work</a>
           <a href="https://blog.devploit.dev" target="_blank" rel="noopener" aria-label="Blog (opens in new tab)">blog</a>
-          <a href="/ctf.html" data-i18n="nav.ctf">ctf</a>
-          <a href="/cves.html" data-i18n="nav.cves">cves</a>
-          <a href="#tools" data-i18n="nav.tools" data-nav="tools">tools</a>
-          <a href="#contact" data-i18n="nav.contact" data-nav="contact">contact</a>
+          <a href="/ctf.html">ctf</a>
+          <a href="/livehackingevents.html">live</a>
+          <a href="/cves.html">cves</a>
+          <a href="#tools" data-nav="tools">tools</a>
+          <a href="#contact" data-nav="contact">contact</a>
         </div>
       </div>
     </div>
@@ -1258,17 +1265,17 @@
     <section class="hero" id="work">
       <div class="shell hero-shell">
         <div class="hero-copy">
-          <div class="hero-label" data-i18n="hero.label">&gt; Head of Security · Security Researcher · CTF Player</div>
+          <div class="hero-label">&gt; Head of Security · Security Researcher · CTF Player</div>
           <h1 class="hero-name">Daniel Púa</h1>
           <div class="hero-handle">@devploit</div>
-          <p class="hero-tagline" data-i18n-html="hero.tagline">
+          <p class="hero-tagline">
             Real-world infosec, no hype.<br>
             <em>Never trust a fox.</em>
           </p>
           <div class="hero-pills" role="list" aria-label="Roles">
             <span class="pill pill--accent" role="listitem">Head of Security @ Freepik</span>
             <span class="pill pill--accent" role="listitem">Security Researcher</span>
-            <span class="pill" role="listitem" data-i18n="hero.pill.pentest">Penetration Testing</span>
+            <span class="pill" role="listitem">Penetration Testing</span>
             <span class="pill" role="listitem">Hack&amp;Beers Málaga</span>
             <span class="pill" role="listitem">ECSC Spain 2021</span>
             <span class="pill" role="listitem">ripp3rsCTF / SFPE</span>
@@ -1288,77 +1295,77 @@
     <section class="main-grid">
       <div class="main-grid-shell">
         <div class="col-left reveal">
-          <div class="section-label" data-i18n="section.proof">// proof of work</div>
+          <div class="section-label">// proof of work</div>
           <div class="proof-list">
           <div class="proof-item">
             <div class="proof-icon" aria-hidden="true">FP</div>
             <div class="proof-text">
-              <div class="proof-meta" data-i18n="proof.fp.meta">role</div>
+              <div class="proof-meta">role</div>
               <h3>Head of Security · Freepik</h3>
-              <p data-i18n="proof.fp.sub">Managing security at scale · Málaga</p>
-              <a class="proof-link" href="https://www.freepik.com" target="_blank" rel="noopener" data-i18n="proof.linkCompany">visit company</a>
+              <p>Managing security at scale · Málaga</p>
+              <a class="proof-link" href="https://www.freepik.com" target="_blank" rel="noopener">visit company</a>
             </div>
           </div>
 
           <div class="proof-item is-link">
             <div class="proof-icon" aria-hidden="true">SR</div>
             <div class="proof-text">
-              <div class="proof-meta" data-i18n="proof.sr.meta">research</div>
-              <h3 data-i18n="proof.sr.title">Security Researcher · Freelance</h3>
-              <p data-i18n="proof.sr.sub">Bug Bounty · Penetration Testing · Consulting</p>
-              <a class="proof-link" href="#contact" data-i18n="proof.linkContact">get in touch</a>
+              <div class="proof-meta">research</div>
+              <h3>Security Researcher · Freelance</h3>
+              <p>Bug Bounty · Penetration Testing · Consulting</p>
+              <a class="proof-link" href="#contact">get in touch</a>
             </div>
           </div>
 
           <div class="proof-item is-link">
             <div class="proof-icon" aria-hidden="true">{;}</div>
             <div class="proof-text">
-              <div class="proof-meta" data-i18n="proof.nm.meta">project</div>
+              <div class="proof-meta">project</div>
               <h3>nomore403 · +1000 ★ GitHub</h3>
-              <p data-i18n="proof.nm.sub">Tool to bypass 403/40X responses</p>
-              <a class="proof-link" href="https://github.com/devploit/nomore403" target="_blank" rel="noopener" data-i18n="proof.linkProject">open project</a>
+              <p>Tool to bypass 403/40X responses</p>
+              <a class="proof-link" href="https://github.com/devploit/nomore403" target="_blank" rel="noopener">open project</a>
             </div>
           </div>
 
           <div class="proof-item">
             <div class="proof-icon" aria-hidden="true">DC</div>
             <div class="proof-text">
-              <div class="proof-meta" data-i18n="proof.dc.meta">ctf</div>
+              <div class="proof-meta">ctf</div>
               <h3>DEFCON Quals · Navaja Negra · Google CTF</h3>
-              <p data-i18n="proof.dc.sub">CTF competitor since 2017</p>
+              <p>CTF competitor since 2017</p>
             </div>
           </div>
 
           <div class="proof-item">
             <div class="proof-icon" aria-hidden="true">ES</div>
             <div class="proof-text">
-              <div class="proof-meta" data-i18n="proof.es.meta">team</div>
+              <div class="proof-meta">team</div>
               <h3>ECSC Spain 2021 · Mentor 2022</h3>
-              <p data-i18n="proof.es.sub">Spain's national cybersecurity team</p>
+              <p>Spain's national cybersecurity team</p>
             </div>
           </div>
 
           <div class="proof-item is-link">
             <div class="proof-icon" aria-hidden="true">HB</div>
             <div class="proof-text">
-              <div class="proof-meta" data-i18n="proof.hb.meta">community</div>
-              <h3 data-i18n="proof.hb.title">Hack&amp;Beers Málaga Organizer</h3>
-              <p data-i18n="proof.hb.sub">Security community</p>
-              <a class="proof-link" href="https://hackandbeers.es/" target="_blank" rel="noopener" data-i18n="proof.linkCommunity">see community</a>
+              <div class="proof-meta">community</div>
+              <h3>Hack&amp;Beers Málaga Organizer</h3>
+              <p>Security community</p>
+              <a class="proof-link" href="https://hackandbeers.es/" target="_blank" rel="noopener">see community</a>
             </div>
           </div>
         </div>
         </div>
 
         <div class="col-right reveal">
-          <div class="section-label" data-i18n="section.posts">// latest posts</div>
-          <div class="posts-status" id="posts-status" data-i18n="posts.statusLoading">loading feed</div>
+          <div class="section-label">// latest posts</div>
+          <div class="posts-status" id="posts-status">loading feed</div>
           <div id="posts-container" aria-live="polite">
             <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
             <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
             <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
           </div>
-          <a href="https://blog.devploit.dev" target="_blank" rel="noopener" class="posts-all" data-i18n="posts.viewAll" aria-label="View all blog posts (opens in new tab)">→ view all posts</a>
+          <a href="https://blog.devploit.dev" target="_blank" rel="noopener" class="posts-all" aria-label="View all blog posts (opens in new tab)">→ view all posts</a>
         </div>
       </div>
     </section>
@@ -1366,21 +1373,21 @@
     <!-- RECOGNITION -->
     <section class="recognition-section reveal" id="recognition">
       <div class="shell">
-        <div class="section-label" data-i18n="section.recognition">// research & recognition</div>
+        <div class="section-label">// research & recognition</div>
         <div class="recognition-intro">
-          <span class="recognition-kicker" data-i18n="recognition.introKicker">Competitive work</span>
-          <h2 data-i18n="recognition.title">CTF Results and Published CVEs.</h2>
-          <p data-i18n="recognition.copy">A concise view of hands-on work across competitive security and responsible disclosure, with separate pages for the full lists and references.</p>
+          <span class="recognition-kicker">Competitive work</span>
+          <h2>CTF Results, Live Hacking Events and Published CVEs.</h2>
+          <p>A concise view of hands-on work across competitive security, invite-only live hacking and responsible disclosure, with separate pages for the full lists and references.</p>
         </div>
 
         <div class="recognition-grid">
           <article class="recognition-card">
             <div class="recognition-card-head">
               <div>
-                <h3 data-i18n="recognition.ctf.title">CTF Awards</h3>
-                <p data-i18n="recognition.ctf.copy">Recent first places and podium finishes across individual competitions and team events, with the complete record grouped separately.</p>
+                <h3>CTF Awards</h3>
+                <p>Selected wins and podiums across solo and team CTFs.</p>
               </div>
-              <span class="recognition-kicker" data-i18n="recognition.ctf.kicker">Since 2017</span>
+              <span class="recognition-kicker">Since 2017</span>
             </div>
 
             <ul class="recognition-list" aria-label="Selected CTF awards">
@@ -1423,25 +1430,62 @@
               </li>
             </ul>
 
-            <a class="recognition-link" href="/ctf.html" data-i18n="recognition.viewAllCtf">View all CTF results</a>
+            <a class="recognition-link" href="/ctf.html">View all CTF results</a>
           </article>
 
           <article class="recognition-card">
             <div class="recognition-card-head">
               <div>
-                <h3 data-i18n="recognition.cve.title">CVEs</h3>
-                <p data-i18n="recognition.cve.copy">Official CVE records will appear here once assigned and publicly available.</p>
+                <h3>Live Hacking Events</h3>
+                <p>Selected onsite bug bounty event results.</p>
               </div>
-              <span class="recognition-kicker" data-i18n="recognition.cve.kicker">Official records</span>
+              <span class="recognition-kicker">RootedCON 2025-2026</span>
+            </div>
+
+            <ul class="recognition-list" aria-label="Selected live hacking events">
+              <li>
+                <div class="recognition-item-top">
+                  <div class="recognition-title">2nd · Intigriti RootedCON Hacker Night Madrid</div>
+                  <div class="recognition-year">2026</div>
+                </div>
+                <div class="recognition-subtitle">Madrid · Live hacking event</div>
+                <div class="recognition-meta">
+                  <span class="recognition-badge">Intigriti</span>
+                  <span class="recognition-badge is-muted">Onsite</span>
+                </div>
+              </li>
+              <li>
+                <div class="recognition-item-top">
+                  <div class="recognition-title">4th · Yogosha RootedCON Hacker Night Lisbon</div>
+                  <div class="recognition-year">2025</div>
+                </div>
+                <div class="recognition-subtitle">Lisbon · Live hacking event</div>
+                <div class="recognition-meta">
+                  <span class="recognition-badge">Yogosha</span>
+                  <span class="recognition-badge is-muted">Onsite</span>
+                </div>
+              </li>
+            </ul>
+
+            <a class="recognition-link" href="/livehackingevents.html">View live hacking events</a>
+          </article>
+
+          <article class="recognition-card">
+            <div class="recognition-card-head">
+              <div>
+                <h3>CVEs</h3>
+                <p>Published CVEs and assigned disclosures.</p>
+              </div>
+              <span class="recognition-kicker">Official records</span>
             </div>
 
             <ul class="recognition-list" aria-label="Selected CVEs">
               <li class="is-empty">
-                <div class="recognition-empty" data-i18n="recognition.cve.empty">No public CVEs listed yet.</div>
+                <div class="recognition-empty">Pending publication.</div>
               </li>
             </ul>
 
-            <a class="recognition-link" href="/cves.html" data-i18n="recognition.viewAllCve">View all CVEs</a>
+            <a class="recognition-link" href="/cves.html">View all CVEs</a>
           </article>
         </div>
       </div>
@@ -1450,7 +1494,7 @@
     <!-- TOOLS -->
     <section class="tools-section reveal" id="tools">
       <div class="shell">
-        <div class="section-label" data-i18n="section.tools">// tools &amp; projects</div>
+        <div class="section-label">// tools &amp; projects</div>
         <div class="tools-grid">
 
           <a href="https://github.com/devploit/nomore403" target="_blank" rel="noopener" class="tool-card" aria-label="nomore403 on GitHub (opens in new tab)">
@@ -1458,7 +1502,7 @@
               <span class="tool-name">nomore403</span>
               <span class="tool-badge">+1000 ★</span>
             </div>
-            <p class="tool-desc" data-i18n="tool.nomore.desc">Tool to bypass 403/40X HTTP responses</p>
+            <p class="tool-desc">Tool to bypass 403/40X HTTP responses</p>
             <div class="tool-tags">
               <span class="tool-tag">Go</span>
               <span class="tool-tag">ctf</span>
@@ -1469,7 +1513,7 @@
             <div class="tool-header">
               <span class="tool-name">pwny.cc</span>
             </div>
-            <p class="tool-desc" data-i18n="tool.pwny.desc">Payload repository for security researchers</p>
+            <p class="tool-desc">Payload repository for security researchers</p>
             <div class="tool-tags">
               <span class="tool-tag">reference</span>
               <span class="tool-tag">payloads</span>
@@ -1481,7 +1525,7 @@
               <span class="tool-name">awesome-ctf-resources</span>
               <span class="tool-badge">+700 ★</span>
             </div>
-            <p class="tool-desc" data-i18n="tool.awesome.desc">CTF frameworks, libraries, resources and software for CTF players</p>
+            <p class="tool-desc">CTF frameworks, libraries, resources and software for CTF players</p>
             <div class="tool-tags">
               <span class="tool-tag">reference</span>
               <span class="tool-tag">ctf</span>
@@ -1493,7 +1537,7 @@
               <span class="tool-name">debugHunter</span>
               <span class="tool-badge">+200 ★</span>
             </div>
-            <p class="tool-desc" data-i18n="tool.debug.desc">Discover hidden debugging parameters and uncover web application secrets</p>
+            <p class="tool-desc">Discover hidden debugging parameters and uncover web application secrets</p>
             <div class="tool-tags">
               <span class="tool-tag">Go</span>
               <span class="tool-tag">recon</span>
@@ -1509,8 +1553,8 @@
     <div class="shell">
         <div class="footer-content">
           <div class="footer-left">
-            <h3 data-i18n="footer.cta">Working on something interesting?</h3>
-            <p class="footer-kicker" data-i18n="footer.kicker">Security leadership, offensive research and pragmatic advisory for products that operate in the real world.</p>
+            <h3>Working on something interesting?</h3>
+            <p class="footer-kicker">Security leadership, offensive research and pragmatic advisory for products that operate in the real world.</p>
             <a href="#" id="email-link" aria-label="Send email to daniel@devploit.dev">daniel@devploit.dev</a>
           </div>
         <nav class="footer-socials" aria-label="Social links">
@@ -1526,101 +1570,8 @@
 
   <script>
     (function () {
-      /* ── i18n ── */
-      var translations = {
-        en: {
-          'nav.work': 'work',
-          'nav.ctf': 'ctf',
-          'nav.cves': 'cves',
-          'nav.tools': 'tools',
-          'nav.contact': 'contact',
-          'hero.label': '> Head of Security · Security Researcher · CTF Player',
-          'hero.tagline': 'Real-world infosec, no hype.<br><em>Never trust a fox.</em>',
-          'hero.pill.pentest': 'Penetration Testing',
-          'section.proof': '// proof of work',
-          'section.posts': '// latest posts',
-          'section.recognition': '// research & recognition',
-          'section.tools': '// tools & projects',
-          'recognition.introKicker': 'Competitive work',
-          'recognition.title': 'CTF Results and Published CVEs.',
-          'recognition.copy': 'A concise view of hands-on work across competitive security and responsible disclosure, with separate pages for the full lists and references.',
-          'recognition.ctf.title': 'CTF Awards',
-          'recognition.ctf.copy': 'Recent first places and podium finishes across individual competitions and team events, with the complete record grouped separately.',
-          'recognition.ctf.kicker': 'Since 2017',
-          'recognition.cve.title': 'CVEs',
-          'recognition.cve.copy': 'Official CVE records will appear here once assigned and publicly available.',
-          'recognition.cve.kicker': 'Official records',
-          'recognition.cve.empty': 'No public CVEs listed yet.',
-          'recognition.viewAllCtf': 'View all CTF results',
-          'recognition.viewAllCve': 'View all CVEs',
-          'recognition.fullCtf.title': 'All CTF Results',
-          'recognition.fullCtf.copy': 'A fuller record of individual placements and team podiums. This keeps the homepage curated while preserving the full competitive track record.',
-          'recognition.fullCtf.individual': 'Individual',
-          'recognition.fullCtf.team': 'Team',
-          'recognition.fullCve.title': 'CVEs and Responsible Disclosure',
-          'recognition.fullCve.copy': 'Reported vulnerabilities published with official CVE identifiers.',
-          'proof.fp.meta': 'role',
-          'proof.fp.sub': 'Managing security at scale · Málaga',
-          'proof.linkCompany': 'visit company',
-          'proof.sr.meta': 'research',
-          'proof.sr.title': 'Security Researcher · Freelance',
-          'proof.sr.sub': 'Bug Bounty · Penetration Testing · Consulting',
-          'proof.linkContact': 'get in touch',
-          'proof.nm.meta': 'project',
-          'proof.nm.sub': 'Tool to bypass 403/40X responses',
-          'proof.linkProject': 'open project',
-          'proof.dc.meta': 'ctf',
-          'proof.dc.sub': 'CTF competitor since 2017',
-          'proof.es.meta': 'team',
-          'proof.es.sub': "Spain's national cybersecurity team",
-          'proof.hb.meta': 'community',
-          'proof.hb.title': 'Hack&Beers Málaga Organizer',
-          'proof.hb.sub': 'Security community',
-          'proof.linkCommunity': 'see community',
-          'posts.statusLoading': 'loading feed',
-          'posts.statusLive': 'live from blog',
-          'posts.statusFallback': 'featured posts',
-          'posts.viewAll': '→ view all posts',
-          'tool.nomore.desc': 'Tool to bypass 403/40X HTTP responses',
-          'tool.pwny.desc': 'Payload repository for security researchers',
-          'tool.awesome.desc': 'CTF frameworks, libraries, resources and software for CTF players',
-          'tool.debug.desc': 'Discover hidden debugging parameters and uncover web application secrets',
-          'footer.cta': 'Working on something interesting?',
-          'footer.kicker': 'Security leadership, offensive research and pragmatic advisory for products that operate in the real world.'
-        }
-      };
-
-      var currentLang = 'en';
       var postsStatusEl = document.getElementById('posts-status');
       var postsState = 'loading';
-
-      function applyLang(lang) {
-        currentLang = lang;
-        document.documentElement.lang = lang;
-
-        var t = translations[lang];
-        document.querySelectorAll('[data-i18n]').forEach(function (el) {
-          var key = el.getAttribute('data-i18n');
-          if (t[key] !== undefined) el.textContent = t[key];
-        });
-        document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
-          var key = el.getAttribute('data-i18n-html');
-          if (t[key] !== undefined) el.innerHTML = t[key];
-        });
-
-        document.documentElement.setAttribute('data-lang', lang);
-
-        if (postsStatusEl) {
-          var statusKey = postsState === 'live'
-            ? 'posts.statusLive'
-            : postsState === 'fallback'
-              ? 'posts.statusFallback'
-              : 'posts.statusLoading';
-          postsStatusEl.textContent = t[statusKey];
-        }
-      }
-
-      applyLang('en');
 
       /* ── Active nav (IntersectionObserver) ── */
       var navLinks = document.querySelectorAll('[data-nav]');
@@ -1659,8 +1610,7 @@
 
       /* ── RSS ── */
       var container = document.getElementById('posts-container');
-      var MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      var MONTHS_ES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+      var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
       var fallbackPosts = [
         { tag: 'CTF · Exploitation', title: 'DEFCON Quals 2025 — Memory Bank writeup', date: 'Apr 2025', link: 'https://blog.devploit.dev' },
@@ -1671,8 +1621,7 @@
       function formatDate(dateStr) {
         var d = new Date(dateStr);
         if (isNaN(d)) return dateStr;
-        var months = currentLang === 'es' ? MONTHS_ES : MONTHS_EN;
-        return months[d.getMonth()] + ' ' + d.getFullYear();
+        return MONTHS[d.getMonth()] + ' ' + d.getFullYear();
       }
 
       function renderPosts(posts) {
@@ -1695,7 +1644,11 @@
         postsState = state;
         if (!postsStatusEl) return;
         postsStatusEl.classList.toggle('is-live', state === 'live');
-        applyLang(currentLang);
+        postsStatusEl.textContent = state === 'live'
+          ? 'live from blog'
+          : state === 'fallback'
+            ? 'featured posts'
+            : 'loading feed';
       }
 
       function escapeHtml(str) {
