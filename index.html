@@ -1239,13 +1239,13 @@
     }
   </style>
 </head>
-<body>
+<body id="top">
   <a href="#main-content" class="skip-link">Skip to content</a>
 
   <!-- NAV -->
   <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="shell nav-shell">
-      <a href="#" class="nav-logo" aria-label="devploit - back to top">~/devploit</a>
+      <a href="#top" class="nav-logo" aria-label="devploit - back to top">~/devploit</a>
       <div class="nav-right">
         <div class="nav-links">
           <a href="#work" data-nav="work">work</a>
@@ -1555,7 +1555,12 @@
           <div class="footer-left">
             <h3>Working on something interesting?</h3>
             <p class="footer-kicker">Security leadership, offensive research and pragmatic advisory for products that operate in the real world.</p>
-            <a href="#" id="email-link" aria-label="Send email to daniel@devploit.dev">daniel@devploit.dev</a>
+            <a
+              href="mailto:daniel@devploit.dev"
+              id="email-link"
+              data-email="daniel@devploit.dev"
+              aria-label="Copy email address daniel@devploit.dev"
+            >daniel@devploit.dev</a>
           </div>
         <nav class="footer-socials" aria-label="Social links">
           <a href="https://github.com/devploit" target="_blank" rel="noopener">GitHub</a>
@@ -1574,26 +1579,67 @@
       var postsState = 'loading';
 
       /* ── Active nav (IntersectionObserver) ── */
-      var navLinks = document.querySelectorAll('[data-nav]');
-      var sections = document.querySelectorAll('#work, #tools, #contact');
+      var navLinks = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
+      var sections = Array.prototype.slice.call(document.querySelectorAll('#work, #tools, #contact'));
+      var visibleSections = {};
+
+      function setActiveNav(id) {
+        navLinks.forEach(function (link) {
+          var isActive = link.getAttribute('data-nav') === id;
+          link.classList.toggle('active', isActive);
+          if (isActive) {
+            link.setAttribute('aria-current', 'location');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+      }
+
+      function pickActiveSection() {
+        var visibleIds = Object.keys(visibleSections);
+        if (!visibleIds.length) {
+          if (window.scrollY < window.innerHeight * 0.4) setActiveNav('work');
+          return;
+        }
+
+        var activeId = visibleIds.reduce(function (bestId, currentId) {
+          var bestSection = document.getElementById(bestId);
+          var currentSection = document.getElementById(currentId);
+          if (!bestSection || !currentSection) return bestId;
+
+          var bestDistance = Math.abs(bestSection.getBoundingClientRect().top - 120);
+          var currentDistance = Math.abs(currentSection.getBoundingClientRect().top - 120);
+          return currentDistance < bestDistance ? currentId : bestId;
+        });
+
+        setActiveNav(activeId);
+      }
+
+      navLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+          var targetId = link.getAttribute('data-nav');
+          if (targetId) setActiveNav(targetId);
+        });
+      });
 
       var navObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
-            navLinks.forEach(function (link) { link.classList.remove('active'); });
-            var active = document.querySelector('[data-nav="' + entry.target.id + '"]');
-            if (active) {
-              active.classList.add('active');
-              active.setAttribute('aria-current', 'page');
-            }
-            navLinks.forEach(function (link) {
-              if (!link.classList.contains('active')) link.removeAttribute('aria-current');
-            });
+            visibleSections[entry.target.id] = true;
+          } else {
+            delete visibleSections[entry.target.id];
           }
         });
-      }, { rootMargin: '-30% 0px -60% 0px' });
+        pickActiveSection();
+      }, { rootMargin: '-20% 0px -55% 0px' });
 
-      sections.forEach(function (s) { navObserver.observe(s); });
+      sections.forEach(function (section) { navObserver.observe(section); });
+
+      var initialNavId = window.location.hash ? window.location.hash.slice(1) : 'work';
+      if (initialNavId !== 'work' && initialNavId !== 'tools' && initialNavId !== 'contact') {
+        initialNavId = 'work';
+      }
+      setActiveNav(initialNavId);
 
       /* ── Scroll reveal (IntersectionObserver) ── */
       var reveals = document.querySelectorAll('.reveal');
@@ -1708,12 +1754,62 @@
 
       loadRSS();
 
-      /* ── Email obfuscation ── */
+      /* ── Email copy ── */
       var emailLink = document.getElementById('email-link');
-      var u = 'daniel'; var d = 'devploit.dev';
+      var emailAddress = emailLink.getAttribute('data-email') || 'daniel@devploit.dev';
+      var emailLabel = emailLink.textContent;
+      var emailResetTimer = null;
+
+      function showEmailStatus(message) {
+        window.clearTimeout(emailResetTimer);
+        emailLink.textContent = message;
+        emailResetTimer = window.setTimeout(function () {
+          emailLink.textContent = emailLabel;
+        }, 1800);
+      }
+
+      function fallbackCopyEmail(text) {
+        var helper = document.createElement('textarea');
+        helper.value = text;
+        helper.setAttribute('readonly', '');
+        helper.style.position = 'absolute';
+        helper.style.left = '-9999px';
+        document.body.appendChild(helper);
+        helper.select();
+        helper.setSelectionRange(0, helper.value.length);
+
+        var copied = false;
+        try {
+          copied = document.execCommand('copy');
+        } catch (err) {
+          copied = false;
+        }
+
+        document.body.removeChild(helper);
+        return copied;
+      }
+
       emailLink.addEventListener('click', function (e) {
         e.preventDefault();
-        window.location.href = 'mai' + 'lto:' + u + '@' + d;
+
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(emailAddress)
+            .then(function () { showEmailStatus('copied to clipboard'); })
+            .catch(function () {
+              if (fallbackCopyEmail(emailAddress)) {
+                showEmailStatus('copied to clipboard');
+              } else {
+                window.location.href = emailLink.href;
+              }
+            });
+          return;
+        }
+
+        if (fallbackCopyEmail(emailAddress)) {
+          showEmailStatus('copied to clipboard');
+        } else {
+          window.location.href = emailLink.href;
+        }
       });
 
       /* ── Dynamic GitHub stars ── */
