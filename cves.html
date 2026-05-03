@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CVEs · Daniel Púa · devploit</title>
-  <meta name="description" content="Published CVEs and responsible disclosure references for Daniel Púa · devploit.">
+  <meta name="description" content="Published CVEs, advisory references and responsible disclosure records for Daniel Púa · devploit.">
   <meta name="theme-color" content="#0c0c0e">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="devploit">
   <meta property="og:locale" content="en_US">
   <meta property="og:title" content="CVEs · Daniel Púa · devploit">
-  <meta property="og:description" content="Published CVEs and responsible disclosure references for Daniel Púa · devploit.">
+  <meta property="og:description" content="Published CVEs, advisory references and responsible disclosure records for Daniel Púa · devploit.">
   <meta property="og:url" content="https://devploit.dev/cves.html">
   <meta property="og:image" content="https://devploit.dev/og-image.png">
   <meta property="og:image:alt" content="Daniel Púa / devploit">
@@ -19,7 +19,7 @@
   <meta name="twitter:site" content="@devploit">
   <meta name="twitter:creator" content="@devploit">
   <meta name="twitter:title" content="CVEs · Daniel Púa · devploit">
-  <meta name="twitter:description" content="Published CVEs and responsible disclosure references for Daniel Púa · devploit.">
+  <meta name="twitter:description" content="Published CVEs, advisory references and responsible disclosure records for Daniel Púa · devploit.">
   <meta name="twitter:image" content="https://devploit.dev/og-image.png">
   <link rel="canonical" href="https://devploit.dev/cves.html">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
@@ -219,6 +219,7 @@
     }
 
     .item:hover { opacity: 0.88; }
+    .item.is-static:hover { opacity: 1; }
     .title-row {
       display: flex;
       justify-content: space-between;
@@ -246,6 +247,14 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
+    .summary {
+      color: var(--color-muted);
+      font-size: 13px;
+      line-height: 1.7;
+      margin-top: 10px;
+      max-width: 76ch;
+    }
+
     .cve-meta {
       display: flex;
       flex-wrap: wrap;
@@ -271,25 +280,26 @@
       background: rgba(255,255,255,0.02);
     }
 
-    .empty-state {
-      border-left: 2px solid rgba(232,140,64,0.18);
-      padding-left: 12px;
+    .source-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 14px;
     }
 
-    .empty-title {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 18px;
-      line-height: 1.3;
-      margin-bottom: 6px;
-    }
-
-    .empty-copy {
+    .source-link {
+      color: var(--color-text);
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
-      color: var(--color-subtle);
-      line-height: 1.7;
-      max-width: 52ch;
+      text-decoration: underline;
+      text-decoration-color: rgba(232,140,64,0.42);
+      text-underline-offset: 4px;
+      transition: color 150ms, text-decoration-color 150ms;
+    }
+
+    .source-link:hover {
+      color: var(--color-accent);
+      text-decoration-color: var(--color-accent);
     }
 
     .footer { padding: 32px 0 48px; color: var(--color-subtle); }
@@ -349,7 +359,7 @@
       <div class="shell hero-shell">
         <div class="eyebrow">Responsible Disclosure</div>
         <h1>CVEs.</h1>
-        <p class="lead">Published vulnerabilities with official CVE identifiers and direct links to the official record.</p>
+        <p class="lead">Published vulnerabilities with official CVE identifiers, advisory references and direct links to the official record.</p>
       </div>
     </section>
 
@@ -360,12 +370,30 @@
             <div class="eyebrow">Published Entries</div>
             <h2>Published records</h2>
           </div>
-          <div class="meta">Entries will link to cve.org</div>
+          <div class="meta">1 published entry</div>
         </div>
         <div class="card">
-          <div class="empty-state">
-            <div class="empty-title">Pending publication.</div>
-            <div class="empty-copy">Published CVEs and assigned disclosures will appear here with direct links to the official record.</div>
+          <div class="list">
+            <article class="item is-static" id="cve-2026-6379">
+              <div class="title-row">
+                <div class="title">CVE-2026-6379</div>
+                <div class="year">2026</div>
+              </div>
+              <div class="subtitle">WP Photo Album Plus &lt; 9.1.11.001 - Unauthenticated SQL Injection via 'wppa-supersearch' Parameter</div>
+              <p class="summary">The plugin does not properly sanitize and escape a parameter before using it in a SQL query, allowing unauthenticated users to perform SQL injection attacks.</p>
+              <div class="cve-meta" aria-label="CVE metadata">
+                <span class="cve-badge">CVSS 8.6 High</span>
+                <span class="cve-badge is-muted">SQLI</span>
+                <span class="cve-badge is-muted">CWE-89</span>
+                <span class="cve-badge is-muted">Fixed in 9.1.11.001</span>
+                <span class="cve-badge is-muted">Published Apr 27, 2026</span>
+                <span class="cve-badge is-muted">Verified by WPScan</span>
+              </div>
+              <div class="source-links" aria-label="External references">
+                <a class="source-link" href="https://www.cve.org/CVERecord?id=CVE-2026-6379" target="_blank" rel="noopener">CVE.org record</a>
+                <a class="source-link" href="https://wpscan.com/vulnerability/60b88fd2-4048-4773-b319-63caaf5bd8eb" target="_blank" rel="noopener">WPScan advisory</a>
+              </div>
+            </article>
           </div>
         </div>
       </div>
