@@ -1,0 +1,331 @@
+/* ──────────────────────────────────────────────
+   base.css — shared design tokens, fonts, reset,
+   navigation and primitives for devploit.dev.
+   Single source of truth: change tokens here once.
+   ────────────────────────────────────────────── */
+
+/* ── SELF-HOSTED FONTS ── */
+/* JetBrains Mono and Syne are variable fonts: one file per
+   subset serves every weight via the font-weight range. */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url('/assets/fonts/jetbrains-mono-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url('/assets/fonts/jetbrains-mono-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Syne';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/assets/fonts/syne-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Syne';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/assets/fonts/syne-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ── DESIGN TOKENS ── */
+:root {
+  --color-bg:        #0c0c0e;
+  --color-surface:   #18181c;
+  --color-surface-hi:#1d1d22;
+  --color-panel:     #131317;
+  --color-border:    #1e1e24;
+  --color-border-md: #2a2a30;
+  --color-text:      #f0ede6;
+  --color-muted:     #aaa79f;
+  --color-subtle:    #8a867d;
+  --color-accent:    #e88c40;
+  --color-accent-soft: rgba(232, 140, 64, 0.16);
+  --color-accent-dim:#7a4a20;
+  --page-max:        1180px;
+  --hero-max:        760px;
+  --glow-soft:       radial-gradient(circle at top left, rgba(232, 140, 64, 0.14), transparent 46%);
+  --grid-bg:         linear-gradient(180deg, rgba(255,255,255,0.015), transparent 38%);
+}
+
+/* ── RESET ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Syne', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+    radial-gradient(circle at top left, rgba(232, 140, 64, 0.08), transparent 28%);
+  background-size: 100% 32px, 32px 100%, auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.shell {
+  width: min(calc(100% - 48px), var(--page-max));
+  margin: 0 auto;
+}
+
+/* Skip link for keyboard users */
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -48px;
+  z-index: 200;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+/* Focus visible for keyboard nav */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Scroll offset for sticky nav */
+[id] {
+  scroll-margin-top: 72px;
+}
+
+/* ── NAV ── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(24, 24, 28, 0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nav-shell {
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.nav-logo {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+}
+
+/* Supports both markups: index uses `.nav-links a`, inner pages use `.nav-link` */
+.nav-links a,
+.nav-link {
+  position: relative;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--color-muted);
+  transition: color 150ms;
+}
+
+.nav-links a::after,
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 100%;
+  height: 1px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 150ms;
+}
+
+.nav-links a:hover,
+.nav-link:hover {
+  color: var(--color-text);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active,
+.nav-link:hover::after,
+.nav-link.active {
+  color: var(--color-accent);
+}
+
+.nav-links a.active::after,
+.nav-links a:hover::after,
+.nav-link.active::after,
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ── MOBILE NAV TOGGLE ── */
+/* Hidden on desktop and when JS hasn't enhanced the nav. */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--color-border-md);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  margin: 0 auto;
+  background: var(--color-text);
+  transition: transform 150ms, opacity 150ms;
+}
+
+.nav[data-nav-enhanced].is-open .nav-toggle-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav[data-nav-enhanced].is-open .nav-toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.nav[data-nav-enhanced].is-open .nav-toggle-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── RESPONSIVE NAV ── */
+@media (max-width: 768px) {
+  .shell {
+    width: min(calc(100% - 32px), var(--page-max));
+  }
+
+  /* No-JS fallback: links stack and wrap (original behavior) */
+  .nav:not([data-nav-enhanced]) .nav-shell {
+    min-height: auto;
+    padding: 12px 0;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .nav:not([data-nav-enhanced]) .nav-right {
+    width: 100%;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .nav:not([data-nav-enhanced]) .nav-links {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* JS-enhanced: collapsible dropdown menu */
+  .nav[data-nav-enhanced] .nav-toggle {
+    display: flex;
+  }
+
+  .nav[data-nav-enhanced] .nav-right {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 8px 24px 20px;
+    background: rgba(18, 18, 21, 0.98);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav[data-nav-enhanced].is-open .nav-right {
+    display: flex;
+  }
+
+  .nav[data-nav-enhanced] .nav-links {
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+
+  .nav[data-nav-enhanced] .nav-links a,
+  .nav[data-nav-enhanced] .nav-link {
+    display: block;
+    width: 100%;
+    padding: 12px 0;
+    font-size: 14px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav[data-nav-enhanced] .nav-links a::after,
+  .nav[data-nav-enhanced] .nav-link::after {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .nav:not([data-nav-enhanced]) .nav-right {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

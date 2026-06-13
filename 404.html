@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="accelerometer=(), autoplay=(), camera=(), display-capture=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
   <title>404 · devploit</title>
@@ -14,67 +14,18 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
   <link rel="shortcut icon" href="/assets/img/favicons/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" href="/assets/fonts/syne-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/base.css">
   <style>
-    :root {
-      --color-bg: #0c0c0e;
-      --color-surface: #18181c;
-      --color-border: #1e1e24;
-      --color-border-md: #2a2a30;
-      --color-text: #f0ede6;
-      --color-muted: #aaa79f;
-      --color-subtle: #8a867d;
-      --color-accent: #e88c40;
-      --color-accent-dim: #7a4a20;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
-      background:
-        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
-        var(--color-bg);
-      background-size: 100% 32px, 32px 100%, auto;
-      color: var(--color-text);
-      font-family: 'Syne', sans-serif;
       min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
     }
 
     .shell {
       width: min(calc(100% - 48px), 980px);
-      margin: 0 auto;
-    }
-
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: rgba(24, 24, 28, 0.88);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--color-border);
-    }
-
-    .nav-shell {
-      min-height: 56px;
-      display: flex;
-      align-items: center;
-    }
-
-    .nav-logo {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--color-accent);
-      text-decoration: none;
-    }
-
-    body {
-      display: flex;
-      flex-direction: column;
     }
 
     main {
@@ -158,11 +109,6 @@
       color: var(--color-text);
       background: rgba(232, 140, 64, 0.08);
       transform: translateY(-1px);
-    }
-
-    .button:focus-visible {
-      outline: 2px solid var(--color-accent);
-      outline-offset: 2px;
     }
 
     .button-secondary {
