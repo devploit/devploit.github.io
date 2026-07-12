@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="accelerometer=(), autoplay=(), camera=(), display-capture=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
   <title>CVEs · Daniel Púa · devploit</title>
-  <meta name="description" content="Published CVEs, advisory references and responsible disclosure records for Daniel Púa · devploit.">
+  <meta name="description" content="Assigned CVEs, public advisory references and responsible disclosure records for Daniel Púa · devploit.">
   <meta name="theme-color" content="#0c0c0e">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="devploit">
   <meta property="og:locale" content="en_US">
   <meta property="og:title" content="CVEs · Daniel Púa · devploit">
-  <meta property="og:description" content="Published CVEs, advisory references and responsible disclosure records for Daniel Púa · devploit.">
+  <meta property="og:description" content="Assigned CVEs, public advisory references and responsible disclosure records for Daniel Púa · devploit.">
   <meta property="og:url" content="https://devploit.dev/cves.html">
   <meta property="og:image" content="https://devploit.dev/og-image.png">
   <meta property="og:image:alt" content="Daniel Púa / devploit">
@@ -19,7 +22,7 @@
   <meta name="twitter:site" content="@devploit">
   <meta name="twitter:creator" content="@devploit">
   <meta name="twitter:title" content="CVEs · Daniel Púa · devploit">
-  <meta name="twitter:description" content="Published CVEs, advisory references and responsible disclosure records for Daniel Púa · devploit.">
+  <meta name="twitter:description" content="Assigned CVEs, public advisory references and responsible disclosure records for Daniel Púa · devploit.">
   <meta name="twitter:image" content="https://devploit.dev/og-image.png">
   <link rel="canonical" href="https://devploit.dev/cves.html">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
@@ -30,16 +33,18 @@
   <link rel="preload" href="/assets/fonts/syne-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/inner.css">
   <link rel="stylesheet" href="/assets/css/cves.css">
 </head>
 <body>
-  <nav class="nav">
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <nav class="nav" aria-label="Main navigation">
     <div class="shell nav-shell">
       <a class="nav-logo" href="/index.html">~/devploit</a>
       <button class="nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
       </button>
       <div class="nav-right" id="nav-menu">
         <div class="nav-links">
@@ -47,7 +52,7 @@
           <a class="nav-link" href="https://blog.devploit.dev" target="_blank" rel="noopener">blog</a>
           <a class="nav-link" href="/ctf.html">ctf</a>
           <a class="nav-link" href="/livehackingevents.html">live</a>
-          <a class="nav-link active" href="/cves.html">cves</a>
+          <a class="nav-link active" href="/cves.html" aria-current="page">cves</a>
           <a class="nav-link" href="/index.html#tools">tools</a>
           <a class="nav-link" href="/index.html#contact">contact</a>
         </div>
@@ -55,12 +60,19 @@
     </div>
   </nav>
 
-  <main>
+  <main id="main-content">
     <section class="hero">
       <div class="shell hero-shell">
         <div class="eyebrow">Responsible Disclosure</div>
         <h1>CVEs.</h1>
-        <p class="lead">Published vulnerabilities with official CVE identifiers, advisory references and direct links to the official record.</p>
+        <p class="lead">Assigned vulnerabilities with official CVE identifiers, advisory references and direct links to the public record.</p>
+<!-- CVE_STATS:START -->
+        <div class="stats" aria-label="CVE track record">
+          <span class="badge">11 CVE identifiers</span>
+          <span class="badge">9 published CVE records</span>
+          <span class="badge">2 CVE publications pending</span>
+        </div>
+<!-- CVE_STATS:END -->
       </div>
     </section>
 
@@ -68,20 +80,207 @@
       <div class="shell">
         <div class="section-head">
           <div>
-            <div class="eyebrow">Published Entries</div>
-            <h2>Published records</h2>
+            <div class="eyebrow">Selected Impact</div>
+            <h2>Key findings</h2>
           </div>
-          <div class="meta">5 published entries</div>
+          <div class="meta">Most representative security findings shown first.</div>
         </div>
         <div class="card">
           <div class="list">
+<!-- CVE_KEY_FINDINGS:START -->
+            <article class="item">
+              <a class="item-link" href="#cve-2026-49030">
+                <div class="title-row">
+                  <div class="title">CVE-2026-49030 · Path Traversal</div>
+                  <div class="year">2026</div>
+                </div>
+                <div class="subtitle">pathe · Backslash normalization bypasses POSIX traversal filters · CVSS Pending</div>
+              </a>
+            </article>
+            <article class="item">
+              <a class="item-link" href="#cve-2026-39244">
+                <div class="title-row">
+                  <div class="title">CVE-2026-39244 · Denial of Service</div>
+                  <div class="year">2026</div>
+                </div>
+                <div class="subtitle">adm-zip · ~120-byte ZIP can trigger a ~4 GB memory allocation · CVSS 7.5 High</div>
+              </a>
+            </article>
+            <article class="item">
+              <a class="item-link" href="#cve-2026-39245">
+                <div class="title-row">
+                  <div class="title">CVE-2026-39245 · Arbitrary File Write</div>
+                  <div class="year">2026</div>
+                </div>
+                <div class="subtitle">decompress · Path containment bypass of the CVE-2020-12265 fix · CVSS 6.2 Medium</div>
+              </a>
+            </article>
+            <article class="item">
+              <a class="item-link" href="#cve-2026-6379">
+                <div class="title-row">
+                  <div class="title">CVE-2026-6379 · Unauthenticated SQL Injection</div>
+                  <div class="year">2026</div>
+                </div>
+                <div class="subtitle">WP Photo Album Plus · CVSS 8.6 High</div>
+              </a>
+            </article>
+            <article class="item">
+              <a class="item-link" href="#cve-2026-6449">
+                <div class="title-row">
+                  <div class="title">CVE-2026-6449 · Authorization Bypass</div>
+                  <div class="year">2026</div>
+                </div>
+                <div class="subtitle">Amelia · Unauthenticated booking status manipulation · CVSS 5.3 Medium</div>
+              </a>
+            </article>
+<!-- CVE_KEY_FINDINGS:END -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Assigned Entries</div>
+            <h2>All CVE records</h2>
+          </div>
+<!-- CVE_RECORDS_META:START -->
+          <div class="meta">9 published · 2 CVE publications pending</div>
+<!-- CVE_RECORDS_META:END -->
+        </div>
+        <div class="card">
+          <div class="list">
+<!-- CVE_RECORDS:START -->
+            <article class="item is-static" id="cve-2026-14231">
+              <div class="title-row">
+                <div class="title">CVE-2026-14231</div>
+                <div class="year">2026</div>
+              </div>
+              <div class="subtitle">LifterLMS &lt; 10.0.10 - Authenticated (Subscriber+) Sensitive Information Disclosure via &#39;select2_query_posts&#39;</div>
+              <p class="summary">The plugin only verifies that a user is logged in when handling a select2 query request and does not perform the required capability check. Subscriber-level attackers can supply an internal post type and retrieve otherwise restricted titles, including coupon codes.</p>
+              <div class="cve-meta" aria-label="CVE metadata">
+                <span class="cve-badge">CVSS 4.3 Medium</span>
+                <span class="cve-badge is-muted">Sensitive Data Exposure</span>
+                <span class="cve-badge is-muted">CWE-200</span>
+                <span class="cve-badge is-muted">Fixed in 10.0.10</span>
+                <span class="cve-badge is-muted">Advisory published Jul 10, 2026</span>
+                <span class="cve-badge is-muted">Verified by WPScan</span>
+                <span class="cve-badge is-muted">CVE publication pending</span>
+              </div>
+              <div class="source-links" aria-label="External references">
+                <a class="source-link" href="https://www.cve.org/CVERecord?id=CVE-2026-14231" target="_blank" rel="noopener">CVE.org status</a>
+                <a class="source-link" href="https://wpscan.com/vulnerability/2a353964-9f4c-4528-b187-42766f0cfaed/" target="_blank" rel="noopener">WPScan advisory</a>
+              </div>
+            </article>
+            <article class="item is-static" id="cve-2026-49030">
+              <div class="title-row">
+                <div class="title">CVE-2026-49030</div>
+                <div class="year">2026</div>
+              </div>
+              <div class="subtitle">pathe &lt;= 2.0.3 - Path Traversal via Cross-Platform Backslash Normalization</div>
+              <p class="summary">On POSIX systems, pathe unconditionally converts backslashes to forward slashes before resolving a path. Inputs such as ..\..\..\etc\passwd can bypass validation that only blocks ../, then escape the intended base directory through join(), resolve() or normalize(), enabling arbitrary file read or write when the resolved path is used.</p>
+              <div class="cve-meta" aria-label="CVE metadata">
+                <span class="cve-badge is-muted">CVSS Pending</span>
+                <span class="cve-badge is-muted">Path Traversal</span>
+                <span class="cve-badge is-muted">CWE-22</span>
+                <span class="cve-badge is-muted">Affects &lt;= 2.0.3</span>
+                <span class="cve-badge is-muted">Reported Apr 2026</span>
+                <span class="cve-badge is-muted">CNA: MITRE</span>
+                <span class="cve-badge is-muted">CVE publication pending</span>
+              </div>
+              <div class="source-links" aria-label="External references">
+                <a class="source-link" href="https://www.cve.org/CVERecord?id=CVE-2026-49030" target="_blank" rel="noopener">CVE.org status</a>
+              </div>
+            </article>
+            <article class="item is-static" id="cve-2026-39244">
+              <div class="title-row">
+                <div class="title">CVE-2026-39244</div>
+                <div class="year">2026</div>
+              </div>
+              <div class="subtitle">adm-zip &lt; 0.5.18 - Denial of Service via Unbounded Memory Allocation</div>
+              <p class="summary">The package allocates memory from an untrusted ZIP uncompressed-size header without an upper bound. A crafted file of roughly 120 bytes can request nearly 4 GB before CRC validation, immediately crashing applications that read or extract it.</p>
+              <div class="cve-meta" aria-label="CVE metadata">
+                <span class="cve-badge">CVSS 7.5 High</span>
+                <span class="cve-badge is-muted">Denial of Service</span>
+                <span class="cve-badge is-muted">CWE-400 / CWE-789</span>
+                <span class="cve-badge is-muted">Fixed in 0.5.18</span>
+                <span class="cve-badge is-muted">Published Jul 10, 2026</span>
+                <span class="cve-badge is-muted">CNA: MITRE</span>
+              </div>
+              <div class="source-links" aria-label="External references">
+                <a class="source-link" href="https://www.cve.org/CVERecord?id=CVE-2026-39244" target="_blank" rel="noopener">CVE.org record</a>
+                <a class="source-link" href="https://github.com/cthackers/adm-zip/issues/568" target="_blank" rel="noopener">GitHub disclosure</a>
+              </div>
+            </article>
+            <article class="item is-static" id="cve-2026-39246">
+              <div class="title-row">
+                <div class="title">CVE-2026-39246</div>
+                <div class="year">2026</div>
+              </div>
+              <div class="subtitle">decompress &lt;= 4.2.1 - Arbitrary Symlink Creation and Information Disclosure</div>
+              <p class="summary">The package creates symlinks from archive entries without validating their targets. An attacker can place links to sensitive files outside the extraction directory and expose any data the application later reads or serves.</p>
+              <div class="cve-meta" aria-label="CVE metadata">
+                <span class="cve-badge">CVSS 7.5 High</span>
+                <span class="cve-badge is-muted">Symlink</span>
+                <span class="cve-badge is-muted">CWE-59 / CWE-61</span>
+                <span class="cve-badge is-muted">Affects &lt;= 4.2.1</span>
+                <span class="cve-badge is-muted">Published Jul 9, 2026</span>
+                <span class="cve-badge is-muted">CNA: MITRE</span>
+              </div>
+              <div class="source-links" aria-label="External references">
+                <a class="source-link" href="https://www.cve.org/CVERecord?id=CVE-2026-39246" target="_blank" rel="noopener">CVE.org record</a>
+                <a class="source-link" href="https://github.com/kevva/decompress/issues/114" target="_blank" rel="noopener">GitHub disclosure</a>
+              </div>
+            </article>
+            <article class="item is-static" id="cve-2026-39245">
+              <div class="title-row">
+                <div class="title">CVE-2026-39245</div>
+                <div class="year">2026</div>
+              </div>
+              <div class="subtitle">decompress &lt;= 4.2.1 - Path Containment Bypass and Arbitrary File Write</div>
+              <p class="summary">A flawed String.indexOf() containment check accepts sibling directories that share the extraction path prefix. Combined with symlink creation, a crafted archive can write files outside the intended output directory and bypass the fix for CVE-2020-12265.</p>
+              <div class="cve-meta" aria-label="CVE metadata">
+                <span class="cve-badge">CVSS 6.2 Medium</span>
+                <span class="cve-badge is-muted">Path Traversal</span>
+                <span class="cve-badge is-muted">CWE-22</span>
+                <span class="cve-badge is-muted">Affects &lt;= 4.2.1</span>
+                <span class="cve-badge is-muted">Published Jul 9, 2026</span>
+                <span class="cve-badge is-muted">CNA: MITRE</span>
+              </div>
+              <div class="source-links" aria-label="External references">
+                <a class="source-link" href="https://www.cve.org/CVERecord?id=CVE-2026-39245" target="_blank" rel="noopener">CVE.org record</a>
+                <a class="source-link" href="https://github.com/kevva/decompress/issues/115" target="_blank" rel="noopener">GitHub disclosure</a>
+              </div>
+            </article>
+            <article class="item is-static" id="cve-2026-39243">
+              <div class="title-row">
+                <div class="title">CVE-2026-39243</div>
+                <div class="year">2026</div>
+              </div>
+              <div class="subtitle">decompress &lt;= 4.2.1 - Arbitrary Hardlink Creation, File Disclosure and Corruption</div>
+              <p class="summary">The package passes an archive-controlled hardlink target directly to fs.link(). A crafted archive can expose a file on the same filesystem through the extraction directory, and changes made through that hardlink can corrupt the original file.</p>
+              <div class="cve-meta" aria-label="CVE metadata">
+                <span class="cve-badge">CVSS 5.5 Medium</span>
+                <span class="cve-badge is-muted">Hardlink</span>
+                <span class="cve-badge is-muted">CWE-59</span>
+                <span class="cve-badge is-muted">Affects &lt;= 4.2.1</span>
+                <span class="cve-badge is-muted">Published Jul 9, 2026</span>
+                <span class="cve-badge is-muted">CNA: MITRE</span>
+              </div>
+              <div class="source-links" aria-label="External references">
+                <a class="source-link" href="https://www.cve.org/CVERecord?id=CVE-2026-39243" target="_blank" rel="noopener">CVE.org record</a>
+                <a class="source-link" href="https://github.com/kevva/decompress/issues/113" target="_blank" rel="noopener">GitHub disclosure</a>
+              </div>
+            </article>
             <article class="item is-static" id="cve-2026-11367">
               <div class="title-row">
                 <div class="title">CVE-2026-11367</div>
                 <div class="year">2026</div>
               </div>
-              <div class="subtitle">PixMagix &lt;= 1.7.2 - Authenticated (Author+) Path Traversal in 'layers[].id' Parameter</div>
-              <p class="summary">The plugin's move_image_on_server function concatenates an unsanitized layer ID into a filesystem path passed to PHP's copy(), allowing authenticated Author-level attackers to use traversal sequences to write attacker-controlled files to arbitrary locations on the server.</p>
+              <div class="subtitle">PixMagix &lt;= 1.7.2 - Authenticated (Author+) Path Traversal in &#39;layers[].id&#39; Parameter</div>
+              <p class="summary">The plugin&#39;s move_image_on_server function concatenates an unsanitized layer ID into a filesystem path passed to PHP&#39;s copy(), allowing authenticated Author-level attackers to use traversal sequences to write attacker-controlled files to arbitrary locations on the server.</p>
               <div class="cve-meta" aria-label="CVE metadata">
                 <span class="cve-badge">CVSS 6.5 Medium</span>
                 <span class="cve-badge is-muted">Path Traversal</span>
@@ -140,7 +339,7 @@
                 <div class="title">CVE-2026-6379</div>
                 <div class="year">2026</div>
               </div>
-              <div class="subtitle">WP Photo Album Plus &lt; 9.1.11.001 - Unauthenticated SQL Injection via 'wppa-supersearch' Parameter</div>
+              <div class="subtitle">WP Photo Album Plus &lt; 9.1.11.001 - Unauthenticated SQL Injection via &#39;wppa-supersearch&#39; Parameter</div>
               <p class="summary">The plugin does not properly sanitize and escape a parameter before using it in a SQL query, allowing unauthenticated users to perform SQL injection attacks.</p>
               <div class="cve-meta" aria-label="CVE metadata">
                 <span class="cve-badge">CVSS 8.6 High</span>
@@ -161,9 +360,9 @@
                 <div class="year">2026</div>
               </div>
               <div class="subtitle">Amelia &lt; 2.3 - Unauthenticated Improper Authorization on Booking Status</div>
-              <p class="summary">A logical flaw in the booking authorization check skips token validation when the booking status is "waiting", allowing unauthenticated attackers to approve arbitrary bookings via the admin-ajax endpoint.</p>
+              <p class="summary">A logical flaw in the booking authorization check skips token validation when the booking status is &#39;waiting&#39;, allowing unauthenticated attackers to approve arbitrary bookings via the admin-ajax endpoint.</p>
               <div class="cve-meta" aria-label="CVE metadata">
-                <span class="cve-badge">CVSS 7.5 High</span>
+                <span class="cve-badge">CVSS 5.3 Medium</span>
                 <span class="cve-badge is-muted">AuthZ</span>
                 <span class="cve-badge is-muted">CWE-285</span>
                 <span class="cve-badge is-muted">Fixed in 2.3</span>
@@ -175,6 +374,7 @@
                 <a class="source-link" href="https://wpscan.com/vulnerability/f7c7b981-866e-4285-a0eb-514654733a31/" target="_blank" rel="noopener">WPScan advisory</a>
               </div>
             </article>
+<!-- CVE_RECORDS:END -->
           </div>
         </div>
       </div>

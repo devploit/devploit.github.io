@@ -1,141 +1,31 @@
-/* ──────────────────────────────────────────────
-   cves.css — components for cves.html.
-   Depends on base.css (tokens, fonts, reset, nav).
-   ────────────────────────────────────────────── */
+/* Components specific to cves.html. Shared inner-page styles live in inner.css. */
 
-.hero, .section, .footer {
-  border-bottom: 1px solid var(--color-border);
+.section + .section {
+  border-top: 1px solid var(--color-border);
 }
 
-.back-link:hover {
-  color: var(--color-text);
+.list {
+  gap: 14px;
 }
-
-.hero {
-  position: relative;
-  overflow: hidden;
-  padding: 96px 0 54px;
-  background:
-    linear-gradient(180deg, rgba(24,24,28,0.56), transparent 60%),
-    var(--glow-soft);
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(232, 140, 64, 0.06), transparent 24%),
-    linear-gradient(180deg, rgba(255,255,255,0.02), transparent 30%);
-  pointer-events: none;
-}
-
-.hero-shell {
-  position: relative;
-  z-index: 1;
-  max-width: 760px;
-}
-
-.eyebrow {
-  color: var(--color-accent);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 16px;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-h1 {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  font-size: clamp(40px, 7vw, 72px);
-  line-height: 0.92;
-  letter-spacing: -2px;
-  margin-bottom: 14px;
-}
-
-.lead {
-  max-width: 64ch;
-  color: var(--color-muted);
-  font-size: 13px;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-.section { padding: 34px 0; }
-
-.section-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 16px;
-  margin-bottom: 18px;
-}
-
-h2 {
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 1.1;
-}
-
-.meta {
-  color: var(--color-subtle);
-  font-size: 12px;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-.card {
-  border: 1px solid var(--color-border);
-  border-radius: 14px;
-  background: linear-gradient(180deg, rgba(232,140,64,0.05), rgba(255,255,255,0.01) 30%), var(--color-surface);
-  padding: 22px;
-}
-
-.list { display: grid; gap: 14px; }
 
 .item {
-  display: block;
-  border-left: 2px solid rgba(232,140,64,0.18);
-  padding-left: 12px;
   transition: opacity 150ms;
 }
 
-.item:hover { opacity: 0.88; }
-.item.is-static:hover { opacity: 1; }
-
-.title-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  align-items: baseline;
+.item:hover {
+  opacity: 0.88;
 }
 
-.title {
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: 17px;
-  line-height: 1.35;
-}
-
-.year {
-  color: var(--color-accent);
-  font-size: 11px;
-  white-space: nowrap;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-.subtitle {
-  color: var(--color-subtle);
-  font-size: 12px;
-  font-family: 'JetBrains Mono', monospace;
+.item.is-static:hover {
+  opacity: 1;
 }
 
 .summary {
+  max-width: 76ch;
+  margin-top: 10px;
   color: var(--color-muted);
   font-size: 13px;
   line-height: 1.7;
-  margin-top: 10px;
-  max-width: 76ch;
 }
 
 .cve-meta {
@@ -148,18 +38,18 @@ h2 {
 .cve-badge {
   display: inline-flex;
   align-items: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--color-accent);
+  padding: 3px 8px;
   border: 1px solid var(--color-accent);
   border-radius: 999px;
-  padding: 3px 8px;
+  color: var(--color-accent);
   background: rgba(232, 140, 64, 0.06);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
 }
 
 .cve-badge.is-muted {
-  color: var(--color-muted);
   border-color: var(--color-border-md);
+  color: var(--color-muted);
   background: rgba(255,255,255,0.02);
 }
 
@@ -171,6 +61,7 @@ h2 {
 }
 
 .source-link {
+  padding: 2px 0;
   color: var(--color-text);
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
@@ -185,13 +76,8 @@ h2 {
   text-decoration-color: var(--color-accent);
 }
 
-.footer { padding: 32px 0 48px; color: var(--color-subtle); }
-
-.back-link {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-}
-
-@media (max-width: 768px) {
-  .section-head { flex-direction: column; align-items: flex-start; }
+@media (max-width: 560px) {
+  .cve-badge {
+    font-size: 12px;
+  }
 }

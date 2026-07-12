@@ -1,155 +1,4 @@
-/* ──────────────────────────────────────────────
-   live.css — components for livehackingevents.html.
-   Depends on base.css (tokens, fonts, reset, nav).
-   ────────────────────────────────────────────── */
-
-.back-link:hover,
-.cta:hover {
-  color: var(--color-text);
-}
-
-.hero {
-  position: relative;
-  overflow: hidden;
-  padding: 96px 0 54px;
-  border-bottom: 1px solid var(--color-border);
-  background:
-    linear-gradient(180deg, rgba(24,24,28,0.56), transparent 60%),
-    var(--glow-soft);
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(232, 140, 64, 0.06), transparent 24%),
-    linear-gradient(180deg, rgba(255,255,255,0.02), transparent 30%);
-  pointer-events: none;
-}
-
-.hero-shell {
-  position: relative;
-  z-index: 1;
-  max-width: 760px;
-}
-
-.eyebrow {
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--color-accent);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 16px;
-}
-
-h1 {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  font-size: clamp(40px, 7vw, 72px);
-  line-height: 0.92;
-  letter-spacing: -2px;
-  margin-bottom: 14px;
-}
-
-.lead {
-  max-width: 62ch;
-  color: var(--color-muted);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-}
-
-.stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 28px;
-}
-
-.badge {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  padding: 6px 12px;
-  border: 1px solid var(--color-border-md);
-  border-radius: 999px;
-  color: var(--color-muted);
-  background: rgba(255,255,255,0.02);
-}
-
-.section {
-  padding: 34px 0;
-}
-
-.section-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 16px;
-  margin-bottom: 18px;
-}
-
-h2 {
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: 28px;
-  line-height: 1.1;
-}
-
-.meta {
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--color-subtle);
-  font-size: 12px;
-}
-
-.card {
-  border: 1px solid var(--color-border);
-  border-radius: 14px;
-  background: linear-gradient(180deg, rgba(232,140,64,0.05), rgba(255,255,255,0.01) 30%), var(--color-surface);
-  padding: 22px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 18px;
-}
-
-.list {
-  display: grid;
-  gap: 12px;
-}
-
-.item {
-  border-left: 2px solid rgba(232,140,64,0.18);
-  padding-left: 12px;
-}
-
-.title-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  align-items: baseline;
-}
-
-.title {
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: 17px;
-  line-height: 1.35;
-}
-
-.year {
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--color-accent);
-  font-size: 11px;
-  white-space: nowrap;
-}
-
-.subtitle {
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--color-subtle);
-  font-size: 12px;
-}
+/* Components specific to livehackingevents.html. Shared inner-page styles live in inner.css. */
 
 .item-meta {
   display: flex;
@@ -161,50 +10,23 @@ h2 {
 .tag {
   display: inline-flex;
   align-items: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--color-accent);
+  padding: 2px 7px;
   border: 1px solid var(--color-accent-dim);
   border-radius: 999px;
-  padding: 2px 7px;
+  color: var(--color-accent);
   background: rgba(232, 140, 64, 0.06);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
 }
 
 .tag.is-muted {
-  color: var(--color-muted);
   border-color: var(--color-border-md);
+  color: var(--color-muted);
   background: rgba(255,255,255,0.02);
 }
 
-.note {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  color: var(--color-muted);
-  line-height: 1.7;
-}
-
-.cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--color-accent);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  margin-top: 18px;
-}
-
-.footer {
-  padding: 32px 0 48px;
-  border-top: 1px solid var(--color-border);
-  color: var(--color-subtle);
-}
-
-.back-link {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-}
-
-@media (max-width: 768px) {
-  .grid { grid-template-columns: 1fr; }
-  .section-head { flex-direction: column; align-items: flex-start; }
+@media (max-width: 560px) {
+  .tag {
+    font-size: 12px;
+  }
 }
