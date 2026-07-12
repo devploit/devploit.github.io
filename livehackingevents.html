@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="accelerometer=(), autoplay=(), camera=(), display-capture=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
   <title>Live Hacking Events · Daniel Púa · devploit</title>
   <meta name="description" content="Live hacking event results and bug bounty competition track record of Daniel Púa · devploit.">
   <meta name="theme-color" content="#0c0c0e">
@@ -30,23 +33,25 @@
   <link rel="preload" href="/assets/fonts/syne-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/inner.css">
   <link rel="stylesheet" href="/assets/css/live.css">
 </head>
 <body>
-  <nav class="nav">
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <nav class="nav" aria-label="Main navigation">
     <div class="shell nav-shell">
       <a class="nav-logo" href="/index.html">~/devploit</a>
       <button class="nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
       </button>
       <div class="nav-right" id="nav-menu">
         <div class="nav-links">
           <a class="nav-link" href="/index.html">work</a>
           <a class="nav-link" href="https://blog.devploit.dev" target="_blank" rel="noopener">blog</a>
           <a class="nav-link" href="/ctf.html">ctf</a>
-          <a class="nav-link active" href="/livehackingevents.html">live</a>
+          <a class="nav-link active" href="/livehackingevents.html" aria-current="page">live</a>
           <a class="nav-link" href="/cves.html">cves</a>
           <a class="nav-link" href="/index.html#tools">tools</a>
           <a class="nav-link" href="/index.html#contact">contact</a>
@@ -55,7 +60,7 @@
     </div>
   </nav>
 
-  <main>
+  <main id="main-content">
     <section class="hero">
       <div class="shell hero-shell">
         <div class="eyebrow">Onsite Bug Bounty</div>

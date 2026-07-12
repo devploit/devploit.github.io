@@ -1,0 +1,38 @@
+{
+  "action": "rewrite",
+  "action_parameters": {
+    "headers": {
+      "content-security-policy": {
+        "operation": "set",
+        "value": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.github.com https://blog.devploit.dev; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+      },
+      "strict-transport-security": {
+        "operation": "set",
+        "value": "max-age=31536000"
+      },
+      "x-content-type-options": {
+        "operation": "set",
+        "value": "nosniff"
+      },
+      "x-frame-options": {
+        "operation": "set",
+        "value": "DENY"
+      },
+      "referrer-policy": {
+        "operation": "set",
+        "value": "strict-origin-when-cross-origin"
+      },
+      "permissions-policy": {
+        "operation": "set",
+        "value": "accelerometer=(), autoplay=(), camera=(), display-capture=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+      },
+      "cross-origin-opener-policy": {
+        "operation": "set",
+        "value": "same-origin"
+      }
+    }
+  },
+  "description": "Set devploit.dev browser security headers",
+  "enabled": true,
+  "expression": "http.host eq \"devploit.dev\""
+}

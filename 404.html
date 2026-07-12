@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="accelerometer=(), autoplay=(), camera=(), display-capture=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
   <title>404 · devploit</title>
@@ -17,133 +17,16 @@
   <link rel="preload" href="/assets/fonts/syne-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/base.css">
-  <style>
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .shell {
-      width: min(calc(100% - 48px), 980px);
-    }
-
-    main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      padding: 56px 0;
-    }
-
-    .panel {
-      position: relative;
-      width: 100%;
-      padding: 40px;
-      border: 1px solid var(--color-border);
-      border-radius: 8px;
-      background:
-        linear-gradient(180deg, rgba(232, 140, 64, 0.06), transparent 34%),
-        var(--color-surface);
-      overflow: hidden;
-    }
-
-    .panel::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top left, rgba(232, 140, 64, 0.12), transparent 36%);
-      pointer-events: none;
-    }
-
-    .content {
-      position: relative;
-      z-index: 1;
-      max-width: 540px;
-    }
-
-    .code {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: var(--color-accent);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 16px;
-    }
-
-    h1 {
-      font-weight: 800;
-      font-size: clamp(42px, 8vw, 64px);
-      letter-spacing: -2px;
-      line-height: 0.96;
-      margin-bottom: 12px;
-    }
-
-    p {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
-      color: var(--color-muted);
-      max-width: 40ch;
-      margin-bottom: 32px;
-      line-height: 1.7;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .button {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      color: var(--color-accent);
-      text-decoration: none;
-      border: 1px solid var(--color-accent-dim);
-      padding: 10px 24px;
-      border-radius: 4px;
-      transition: border-color 150ms, color 150ms, background 150ms, transform 150ms;
-    }
-
-    .button:hover {
-      border-color: var(--color-accent);
-      color: var(--color-text);
-      background: rgba(232, 140, 64, 0.08);
-      transform: translateY(-1px);
-    }
-
-    .button-secondary {
-      color: var(--color-subtle);
-      border-color: var(--color-border-md);
-    }
-
-    .button-secondary:hover {
-      color: var(--color-text);
-      border-color: var(--color-border-md);
-      background: rgba(255,255,255,0.03);
-    }
-
-    @media (max-width: 640px) {
-      .shell {
-        width: min(calc(100% - 32px), 980px);
-      }
-
-      main {
-        padding: 32px 0;
-      }
-
-      .panel {
-        padding: 28px 22px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="/assets/css/404.css">
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
   <nav class="nav" aria-label="Main navigation">
     <div class="shell nav-shell">
       <a href="/" class="nav-logo">~/devploit</a>
     </div>
   </nav>
-  <main>
+  <main id="main-content">
     <div class="shell">
       <section class="panel">
         <div class="content">

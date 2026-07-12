@@ -1,0 +1,117 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.shell {
+  width: min(calc(100% - 48px), 980px);
+}
+
+main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 56px 0;
+}
+
+.panel {
+  position: relative;
+  width: 100%;
+  padding: 40px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(232, 140, 64, 0.06), transparent 34%),
+    var(--color-surface);
+}
+
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(232, 140, 64, 0.12), transparent 36%);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 540px;
+}
+
+.code {
+  margin-bottom: 16px;
+  color: var(--color-accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+h1 {
+  margin-bottom: 12px;
+  font-weight: 800;
+  font-size: clamp(42px, 8vw, 64px);
+  line-height: 0.96;
+  letter-spacing: -2px;
+}
+
+p {
+  max-width: 40ch;
+  margin-bottom: 32px;
+  color: var(--color-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.button {
+  padding: 10px 24px;
+  border: 1px solid var(--color-accent);
+  border-radius: 4px;
+  color: var(--color-accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  text-decoration: none;
+  transition: border-color 150ms, color 150ms, background 150ms, transform 150ms;
+}
+
+.button:hover {
+  border-color: var(--color-accent);
+  color: var(--color-text);
+  background: rgba(232, 140, 64, 0.08);
+  transform: translateY(-1px);
+}
+
+.button-secondary {
+  border-color: var(--color-border-md);
+  color: var(--color-muted);
+}
+
+.button-secondary:hover {
+  border-color: var(--color-border-md);
+  color: var(--color-text);
+  background: rgba(255,255,255,0.03);
+}
+
+@media (max-width: 640px) {
+  .shell {
+    width: min(calc(100% - 32px), 980px);
+  }
+
+  main {
+    padding: 32px 0;
+  }
+
+  .panel {
+    padding: 28px 22px;
+  }
+}

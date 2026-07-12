@@ -1,0 +1,309 @@
+{
+  "homeFeatured": [
+    "CVE-2026-39244",
+    "CVE-2026-49030",
+    "CVE-2026-6379"
+  ],
+  "keyFindings": [
+    "CVE-2026-49030",
+    "CVE-2026-39244",
+    "CVE-2026-39245",
+    "CVE-2026-6379",
+    "CVE-2026-6449"
+  ],
+  "records": [
+    {
+      "id": "CVE-2026-14231",
+      "year": 2026,
+      "publicationStatus": "pending",
+      "title": "LifterLMS < 10.0.10 - Authenticated (Subscriber+) Sensitive Information Disclosure via 'select2_query_posts'",
+      "summary": "The plugin only verifies that a user is logged in when handling a select2 query request and does not perform the required capability check. Subscriber-level attackers can supply an internal post type and retrieve otherwise restricted titles, including coupon codes.",
+      "cvss": {
+        "score": 4.3,
+        "severity": "Medium"
+      },
+      "type": "Sensitive Data Exposure",
+      "cwes": ["CWE-200"],
+      "version": "Fixed in 10.0.10",
+      "publication": "Advisory published Jul 10, 2026",
+      "verification": "Verified by WPScan",
+      "references": [
+        {
+          "label": "CVE.org status",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-14231"
+        },
+        {
+          "label": "WPScan advisory",
+          "url": "https://wpscan.com/vulnerability/2a353964-9f4c-4528-b187-42766f0cfaed/"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-49030",
+      "year": 2026,
+      "publicationStatus": "pending",
+      "title": "pathe <= 2.0.3 - Path Traversal via Cross-Platform Backslash Normalization",
+      "summary": "On POSIX systems, pathe unconditionally converts backslashes to forward slashes before resolving a path. Inputs such as ..\\..\\..\\etc\\passwd can bypass validation that only blocks ../, then escape the intended base directory through join(), resolve() or normalize(), enabling arbitrary file read or write when the resolved path is used.",
+      "cvss": null,
+      "type": "Path Traversal",
+      "cwes": ["CWE-22"],
+      "version": "Affects <= 2.0.3",
+      "publication": "Reported Apr 2026",
+      "verification": "CNA: MITRE",
+      "homeSubtitle": "pathe <= 2.0.3 · Path Traversal via Cross-Platform Backslash Normalization",
+      "keyTitle": "Path Traversal",
+      "keySubtitle": "pathe · Backslash normalization bypasses POSIX traversal filters",
+      "references": [
+        {
+          "label": "CVE.org status",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-49030"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-39244",
+      "year": 2026,
+      "publicationStatus": "published",
+      "title": "adm-zip < 0.5.18 - Denial of Service via Unbounded Memory Allocation",
+      "summary": "The package allocates memory from an untrusted ZIP uncompressed-size header without an upper bound. A crafted file of roughly 120 bytes can request nearly 4 GB before CRC validation, immediately crashing applications that read or extract it.",
+      "cvss": {
+        "score": 7.5,
+        "severity": "High"
+      },
+      "type": "Denial of Service",
+      "homeType": "DoS",
+      "cwes": ["CWE-400", "CWE-789"],
+      "version": "Fixed in 0.5.18",
+      "publication": "Published Jul 10, 2026",
+      "verification": "CNA: MITRE",
+      "homeSubtitle": "adm-zip < 0.5.18 · Denial of Service via Unbounded Memory Allocation",
+      "keyTitle": "Denial of Service",
+      "keySubtitle": "adm-zip · ~120-byte ZIP can trigger a ~4 GB memory allocation",
+      "references": [
+        {
+          "label": "CVE.org record",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-39244"
+        },
+        {
+          "label": "GitHub disclosure",
+          "url": "https://github.com/cthackers/adm-zip/issues/568"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-39246",
+      "year": 2026,
+      "publicationStatus": "published",
+      "title": "decompress <= 4.2.1 - Arbitrary Symlink Creation and Information Disclosure",
+      "summary": "The package creates symlinks from archive entries without validating their targets. An attacker can place links to sensitive files outside the extraction directory and expose any data the application later reads or serves.",
+      "cvss": {
+        "score": 7.5,
+        "severity": "High"
+      },
+      "type": "Symlink",
+      "cwes": ["CWE-59", "CWE-61"],
+      "version": "Affects <= 4.2.1",
+      "publication": "Published Jul 9, 2026",
+      "verification": "CNA: MITRE",
+      "references": [
+        {
+          "label": "CVE.org record",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-39246"
+        },
+        {
+          "label": "GitHub disclosure",
+          "url": "https://github.com/kevva/decompress/issues/114"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-39245",
+      "year": 2026,
+      "publicationStatus": "published",
+      "title": "decompress <= 4.2.1 - Path Containment Bypass and Arbitrary File Write",
+      "summary": "A flawed String.indexOf() containment check accepts sibling directories that share the extraction path prefix. Combined with symlink creation, a crafted archive can write files outside the intended output directory and bypass the fix for CVE-2020-12265.",
+      "cvss": {
+        "score": 6.2,
+        "severity": "Medium"
+      },
+      "type": "Path Traversal",
+      "cwes": ["CWE-22"],
+      "version": "Affects <= 4.2.1",
+      "publication": "Published Jul 9, 2026",
+      "verification": "CNA: MITRE",
+      "keyTitle": "Arbitrary File Write",
+      "keySubtitle": "decompress · Path containment bypass of the CVE-2020-12265 fix",
+      "references": [
+        {
+          "label": "CVE.org record",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-39245"
+        },
+        {
+          "label": "GitHub disclosure",
+          "url": "https://github.com/kevva/decompress/issues/115"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-39243",
+      "year": 2026,
+      "publicationStatus": "published",
+      "title": "decompress <= 4.2.1 - Arbitrary Hardlink Creation, File Disclosure and Corruption",
+      "summary": "The package passes an archive-controlled hardlink target directly to fs.link(). A crafted archive can expose a file on the same filesystem through the extraction directory, and changes made through that hardlink can corrupt the original file.",
+      "cvss": {
+        "score": 5.5,
+        "severity": "Medium"
+      },
+      "type": "Hardlink",
+      "cwes": ["CWE-59"],
+      "version": "Affects <= 4.2.1",
+      "publication": "Published Jul 9, 2026",
+      "verification": "CNA: MITRE",
+      "references": [
+        {
+          "label": "CVE.org record",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-39243"
+        },
+        {
+          "label": "GitHub disclosure",
+          "url": "https://github.com/kevva/decompress/issues/113"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-11367",
+      "year": 2026,
+      "publicationStatus": "published",
+      "title": "PixMagix <= 1.7.2 - Authenticated (Author+) Path Traversal in 'layers[].id' Parameter",
+      "summary": "The plugin's move_image_on_server function concatenates an unsanitized layer ID into a filesystem path passed to PHP's copy(), allowing authenticated Author-level attackers to use traversal sequences to write attacker-controlled files to arbitrary locations on the server.",
+      "cvss": {
+        "score": 6.5,
+        "severity": "Medium"
+      },
+      "type": "Path Traversal",
+      "cwes": ["CWE-22"],
+      "version": "Affects <= 1.7.2",
+      "publication": "Published Jun 30, 2026",
+      "verification": "Verified by Wordfence",
+      "references": [
+        {
+          "label": "CVE.org record",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-11367"
+        },
+        {
+          "label": "Wordfence advisory",
+          "url": "https://www.wordfence.com/threat-intel/vulnerabilities/wordpress-plugins/pixmagix/pixmagix-172-authenticated-author-path-traversal-in-layersid-parameter"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-39447",
+      "year": 2026,
+      "publicationStatus": "published",
+      "title": "Simply Schedule Appointments <= 1.6.10.6 - Cross Site Scripting (XSS)",
+      "summary": "The plugin fails to properly neutralize input during page generation, allowing attackers to inject JavaScript through a cross-site scripting vulnerability in affected WordPress installations.",
+      "cvss": {
+        "score": 7.1,
+        "severity": "High"
+      },
+      "type": "XSS",
+      "cwes": ["CWE-79"],
+      "version": "Fixed in 1.6.11.0",
+      "publication": "Published May 28, 2026",
+      "verification": "Verified by Patchstack",
+      "references": [
+        {
+          "label": "CVE.org record",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-39447"
+        },
+        {
+          "label": "Patchstack advisory",
+          "url": "https://vdp.patchstack.com/database/wordpress/plugin/simply-schedule-appointments/vulnerability/wordpress-simply-schedule-appointments-plugin-1-6-10-6-cross-site-scripting-xss-vulnerability"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-42725",
+      "year": 2026,
+      "publicationStatus": "published",
+      "title": "Checkout Files Upload for WooCommerce <= 2.2.5 - Unauthenticated Insecure Direct Object References (IDOR)",
+      "summary": "The plugin fails to properly validate object ownership on file access, allowing unauthenticated attackers to bypass authorization and access files uploaded by other users during checkout.",
+      "cvss": {
+        "score": 6.5,
+        "severity": "Medium"
+      },
+      "type": "IDOR",
+      "cwes": ["CWE-639"],
+      "version": "Affects <= 2.2.5",
+      "publication": "Published May 12, 2026",
+      "verification": "Verified by Patchstack",
+      "references": [
+        {
+          "label": "CVE.org record",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-42725"
+        },
+        {
+          "label": "Patchstack advisory",
+          "url": "https://patchstack.com/database/wordpress/plugin/checkout-files-upload-woocommerce/vulnerability/wordpress-checkout-files-upload-for-woocommerce-plugin-2-2-5-insecure-direct-object-references-idor-vulnerability"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-6379",
+      "year": 2026,
+      "publicationStatus": "published",
+      "title": "WP Photo Album Plus < 9.1.11.001 - Unauthenticated SQL Injection via 'wppa-supersearch' Parameter",
+      "summary": "The plugin does not properly sanitize and escape a parameter before using it in a SQL query, allowing unauthenticated users to perform SQL injection attacks.",
+      "cvss": {
+        "score": 8.6,
+        "severity": "High"
+      },
+      "type": "SQLI",
+      "cwes": ["CWE-89"],
+      "version": "Fixed in 9.1.11.001",
+      "publication": "Published Apr 27, 2026",
+      "verification": "Verified by WPScan",
+      "homeSubtitle": "WP Photo Album Plus < 9.1.11.001 · Unauthenticated SQL Injection",
+      "keyTitle": "Unauthenticated SQL Injection",
+      "keySubtitle": "WP Photo Album Plus",
+      "references": [
+        {
+          "label": "CVE.org record",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-6379"
+        },
+        {
+          "label": "WPScan advisory",
+          "url": "https://wpscan.com/vulnerability/60b88fd2-4048-4773-b319-63caaf5bd8eb"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-6449",
+      "year": 2026,
+      "publicationStatus": "published",
+      "title": "Amelia < 2.3 - Unauthenticated Improper Authorization on Booking Status",
+      "summary": "A logical flaw in the booking authorization check skips token validation when the booking status is 'waiting', allowing unauthenticated attackers to approve arbitrary bookings via the admin-ajax endpoint.",
+      "cvss": {
+        "score": 5.3,
+        "severity": "Medium"
+      },
+      "type": "AuthZ",
+      "cwes": ["CWE-285"],
+      "version": "Fixed in 2.3",
+      "publication": "Published Apr 14, 2026",
+      "verification": "Verified by WPScan",
+      "keyTitle": "Authorization Bypass",
+      "keySubtitle": "Amelia · Unauthenticated booking status manipulation",
+      "references": [
+        {
+          "label": "CVE.org record",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-6449"
+        },
+        {
+          "label": "WPScan advisory",
+          "url": "https://wpscan.com/vulnerability/f7c7b981-866e-4285-a0eb-514654733a31/"
+        }
+      ]
+    }
+  ]
+}
