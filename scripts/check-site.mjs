@@ -61,7 +61,7 @@ const cveIds = cveData.records.map((record) => record.id);
 if (new Set(cveIds).size !== cveIds.length) failures.push('assets/data/cves.json has duplicate CVE identifiers');
 const published = cveData.records.filter((record) => record.publicationStatus === 'published').length;
 const pending = cveData.records.length - published;
-if (published !== 9 || pending !== 2) failures.push(`Expected 9 published and 2 pending CVEs, found ${published} and ${pending}`);
+if (published !== 10 || pending !== 2) failures.push(`Expected 10 published and 2 pending CVEs, found ${published} and ${pending}`);
 if (!cves.includes(`${published} published CVE records`) || !cves.includes(`${pending} CVE publications pending`)) {
   failures.push('Rendered CVE status counts do not match the source data');
 }

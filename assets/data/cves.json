@@ -61,6 +61,32 @@
       ]
     },
     {
+      "id": "CVE-2026-11966",
+      "year": 2026,
+      "publicationStatus": "published",
+      "title": "User Registration & Membership < 5.2.3 - Unauthenticated Limited User Deletion via Stripe Subscription Handler",
+      "summary": "The plugin does not perform a capability check on a membership payment action and trusts a caller-supplied user identifier, allowing unauthenticated attackers to delete recently registered user accounts while their payments remain pending.",
+      "cvss": {
+        "score": 5.3,
+        "severity": "Medium"
+      },
+      "type": "IDOR",
+      "cwes": ["CWE-639"],
+      "version": "Fixed in 5.2.3",
+      "publication": "Published Jul 17, 2026",
+      "verification": "Verified by WPScan",
+      "references": [
+        {
+          "label": "CVE.org record",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-11966"
+        },
+        {
+          "label": "WPScan advisory",
+          "url": "https://wpscan.com/vulnerability/8e3be064-b3b7-4d68-960b-8c850c3e6f77/"
+        }
+      ]
+    },
+    {
       "id": "CVE-2026-39244",
       "year": 2026,
       "publicationStatus": "published",
