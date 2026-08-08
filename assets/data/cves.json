@@ -15,7 +15,7 @@
     {
       "id": "CVE-2026-14231",
       "year": 2026,
-      "publicationStatus": "pending",
+      "publicationStatus": "published",
       "title": "LifterLMS < 10.0.10 - Authenticated (Subscriber+) Sensitive Information Disclosure via 'select2_query_posts'",
       "summary": "The plugin only verifies that a user is logged in when handling a select2 query request and does not perform the required capability check. Subscriber-level attackers can supply an internal post type and retrieve otherwise restricted titles, including coupon codes.",
       "cvss": {
@@ -25,11 +25,11 @@
       "type": "Sensitive Data Exposure",
       "cwes": ["CWE-200"],
       "version": "Fixed in 10.0.10",
-      "publication": "Advisory published Jul 10, 2026",
+      "publication": "Published Jul 30, 2026",
       "verification": "Verified by WPScan",
       "references": [
         {
-          "label": "CVE.org status",
+          "label": "CVE.org record",
           "url": "https://www.cve.org/CVERecord?id=CVE-2026-14231"
         },
         {
