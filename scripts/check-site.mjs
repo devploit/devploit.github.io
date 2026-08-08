@@ -61,8 +61,9 @@ const cveIds = cveData.records.map((record) => record.id);
 if (new Set(cveIds).size !== cveIds.length) failures.push('assets/data/cves.json has duplicate CVE identifiers');
 const published = cveData.records.filter((record) => record.publicationStatus === 'published').length;
 const pending = cveData.records.length - published;
-if (published !== 10 || pending !== 2) failures.push(`Expected 10 published and 2 pending CVEs, found ${published} and ${pending}`);
-if (!cves.includes(`${published} published CVE records`) || !cves.includes(`${pending} CVE publications pending`)) {
+if (published !== 11 || pending !== 1) failures.push(`Expected 11 published and 1 pending CVEs, found ${published} and ${pending}`);
+const pendingLabel = `${pending} CVE ${pending === 1 ? 'publication' : 'publications'} pending`;
+if (!cves.includes(`${published} published CVE records`) || !cves.includes(pendingLabel)) {
   failures.push('Rendered CVE status counts do not match the source data');
 }
 const amelia = cveData.records.find((record) => record.id === 'CVE-2026-6449');
