@@ -110,12 +110,14 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  list-style: none;
   opacity: 0;
   animation: fadeUp 0.5s ease forwards;
   animation-delay: 0.4s;
 }
 
 .pill {
+  position: relative;
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
   padding: 6px 14px;
@@ -126,7 +128,14 @@
   transition: border-color 150ms, transform 150ms, color 150ms, background 150ms;
 }
 
-.pill:hover {
+/* Only pills that wrap a link advertise interactivity. */
+.pill--link a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.pill--link:hover {
   border-color: var(--color-accent);
   color: var(--color-text);
   background: rgba(232, 140, 64, 0.06);
@@ -136,10 +145,6 @@
 .pill--accent {
   border-color: var(--color-accent-dim);
   color: var(--color-accent);
-}
-
-.pill--accent:hover {
-  border-color: var(--color-accent);
 }
 
 @keyframes fadeUp {
@@ -200,6 +205,7 @@
 .section-label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
+  font-weight: 400;
   color: var(--color-subtle);
   margin-bottom: 28px;
   letter-spacing: 0.08em;
@@ -212,6 +218,7 @@
 }
 
 .proof-item {
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 16px;
@@ -295,15 +302,24 @@
   color: var(--color-accent);
 }
 
+/* Stretch the card's link over the whole card so the pointer
+   affordance matches the actual hit area. */
+.proof-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
 .proof-item:hover .proof-link,
 .proof-item.is-link:hover .proof-link {
   color: var(--color-text);
 }
 
-/* nomore403 live star count (kept inline-width to avoid layout shift) */
+/* nomore403 live star count (kept inline-width to avoid layout shift:
+   wide enough for both the static "+1700 ★" and the live "1.8k ★") */
 .proof-stars {
   display: inline-block;
-  min-width: 5ch;
+  min-width: 7ch;
 }
 
 /* ── LATEST POSTS ── */
@@ -418,6 +434,10 @@
 
 .post-skeleton + .post-skeleton + .post-skeleton .skeleton-line {
   animation-delay: 0.3s;
+}
+
+.post-skeleton + .post-skeleton + .post-skeleton + .post-skeleton .skeleton-line {
+  animation-delay: 0.45s;
 }
 
 @keyframes pulse {
@@ -729,6 +749,11 @@
 }
 
 .tool-badge {
+  display: inline-flex;
+  justify-content: center;
+  /* Reserve room for the widest count format ("+1700 ★" / "1.8k ★")
+     so the live GitHub star update doesn't shift the card layout. */
+  min-width: calc(7ch + 18px);
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   color: var(--color-accent);
@@ -809,6 +834,33 @@
 
 .footer-left a:hover {
   color: var(--color-text);
+}
+
+.email-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.email-copy {
+  /* Wide enough for both "copy" and "copied" so the swap doesn't shift layout. */
+  min-width: calc(6ch + 22px);
+  padding: 4px 10px;
+  border: 1px solid var(--color-accent-dim);
+  border-radius: 4px;
+  background: none;
+  color: var(--color-accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 150ms, color 150ms, background 150ms;
+}
+
+.email-copy:hover {
+  border-color: var(--color-accent);
+  background: rgba(232, 140, 64, 0.06);
 }
 
 .footer-socials {
@@ -944,6 +996,7 @@
 /* ── PRINT ── */
 @media print {
   :root {
+    color-scheme: light;
     --color-bg: #fff;
     --color-surface: #f5f5f5;
     --color-border: #ddd;

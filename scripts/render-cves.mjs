@@ -1,3 +1,7 @@
+/* Renders all data-driven site content (CVEs, CTF results, live hacking
+   events) from assets/data/*.json into the marked HTML sections, and keeps
+   sitemap.xml lastmod dates in sync with actual page changes.
+   Kept under its historical name so existing tooling keeps working. */
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -5,7 +9,10 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const checkOnly = process.argv.includes('--check');
 const data = JSON.parse(await readFile(path.join(root, 'assets/data/cves.json'), 'utf8'));
+const ctfData = JSON.parse(await readFile(path.join(root, 'assets/data/ctf.json'), 'utf8'));
+const liveData = JSON.parse(await readFile(path.join(root, 'assets/data/live.json'), 'utf8'));
 const recordsById = new Map(data.records.map((record) => [record.id, record]));
+const ctfById = new Map(ctfData.results.map((result) => [result.id, result]));
 
 function escapeHtml(value) {
   return String(value)
@@ -35,6 +42,14 @@ function requireRecord(id, collectionName) {
   if (!record) throw new Error(`${collectionName} references unknown CVE ${id}`);
   return record;
 }
+
+function requireCtfResult(id, collectionName) {
+  const result = ctfById.get(id);
+  if (!result) throw new Error(`${collectionName} references unknown CTF result ${id}`);
+  return result;
+}
+
+/* ── CVEs ── */
 
 function renderStats() {
   const published = data.records.filter((record) => record.publicationStatus === 'published').length;
@@ -142,6 +157,142 @@ function renderHomeFeatured() {
   }).join('\n');
 }
 
+/* ── CTF results ── */
+
+function ctfKeyTitle(result) {
+  return result.keyTitle || result.title;
+}
+
+function ctfKeySubtitle(result) {
+  return result.keySubtitle || result.subtitle;
+}
+
+function renderCtfItem(result, { title, subtitle }) {
+  const inner = [
+    `              <div class="title-row"><div class="title">${escapeHtml(title)}</div><div class="year">${result.year}</div></div>`,
+    `              <div class="subtitle">${escapeHtml(subtitle)}</div>`
+  ];
+
+  if (result.url) {
+    return [
+      '            <div class="item">',
+      `              <a href="${escapeHtml(result.url)}" target="_blank" rel="noopener">`,
+      ...inner.map((line) => `  ${line}`),
+      '              </a>',
+      '            </div>'
+    ].join('\n');
+  }
+
+  return ['            <div class="item">', ...inner, '            </div>'].join('\n');
+}
+
+function renderCtfKeyResults() {
+  return ctfData.keyResults.map((id) => {
+    const result = requireCtfResult(id, 'keyResults');
+    return renderCtfItem(result, { title: ctfKeyTitle(result), subtitle: ctfKeySubtitle(result) });
+  }).join('\n');
+}
+
+function renderCtfScope(scope) {
+  return ctfData.results
+    .filter((result) => result.scope === scope)
+    .map((result) => renderCtfItem(result, { title: result.title, subtitle: result.subtitle }))
+    .join('\n');
+}
+
+function renderCtfIndividualMeta() {
+  const years = ctfData.results
+    .filter((result) => result.scope === 'individual')
+    .map((result) => result.year);
+  return `              <div class="meta">${Math.min(...years)}-${Math.max(...years)}</div>`;
+}
+
+function renderCtfHomeKicker() {
+  const firstYear = Math.min(...ctfData.results.map((result) => result.year));
+  return `              <span class="recognition-kicker">Since ${firstYear}</span>`;
+}
+
+function renderCtfHomeFeatured() {
+  return ctfData.homeFeatured.map((id) => {
+    const result = requireCtfResult(id, 'homeFeatured');
+    const title = result.homeTitle || ctfKeyTitle(result);
+    const subtitle = result.homeSubtitle || ctfKeySubtitle(result);
+    const inner = [
+      '                <div class="recognition-item-top">',
+      `                  <div class="recognition-title">${escapeHtml(title)}</div>`,
+      `                  <div class="recognition-year">${result.year}</div>`,
+      '                </div>',
+      `                <div class="recognition-subtitle">${escapeHtml(subtitle)}</div>`
+    ];
+
+    if (result.url) {
+      return [
+        '              <li>',
+        `                <a href="${escapeHtml(result.url)}" target="_blank" rel="noopener">`,
+        ...inner.map((line) => `  ${line}`),
+        '                </a>',
+        '              </li>'
+      ].join('\n');
+    }
+
+    return ['              <li>', ...inner, '              </li>'].join('\n');
+  }).join('\n');
+}
+
+/* ── Live hacking events ── */
+
+function liveTitle(event) {
+  return `${event.rankLabel} · ${event.event}`;
+}
+
+function renderLiveStats() {
+  const badges = [
+    `${liveData.events.length} public event result${liveData.events.length === 1 ? '' : 's'}`,
+    ...liveData.events.map((event) => `Top ${parseInt(event.rankLabel, 10)} in ${event.city} ${event.year}`)
+  ];
+  return [
+    '        <div class="stats" aria-label="Live hacking track record">',
+    ...badges.map((badge) => `          <span class="badge">${escapeHtml(badge)}</span>`),
+    '        </div>'
+  ].join('\n');
+}
+
+function renderLiveResults() {
+  return liveData.events.map((event) => [
+    '            <div class="item">',
+    `              <div class="title-row"><div class="title">${escapeHtml(liveTitle(event))}</div><div class="year">${event.year}</div></div>`,
+    `              <div class="subtitle">${escapeHtml(event.city)}</div>`,
+    '              <div class="item-meta">',
+    `                <span class="tag">${escapeHtml(event.platform)}</span>`,
+    `                <span class="tag is-muted">${escapeHtml(event.format)}</span>`,
+    `                <span class="tag is-muted">${escapeHtml(event.rankLabel)} place</span>`,
+    '              </div>',
+    '            </div>'
+  ].join('\n')).join('\n');
+}
+
+function renderLiveHomeKicker() {
+  return `              <span class="recognition-kicker">${escapeHtml(liveData.homeKicker)}</span>`;
+}
+
+function renderLiveHomeFeatured() {
+  return liveData.events.map((event) => [
+    '              <li>',
+    '                <div class="recognition-item-top">',
+    `                  <div class="recognition-title">${escapeHtml(liveTitle(event))}</div>`,
+    `                  <div class="recognition-year">${event.year}</div>`,
+    '                </div>',
+    `                <div class="recognition-subtitle">${escapeHtml(event.city)}</div>`,
+    '                <div class="recognition-meta">',
+    `                  <span class="recognition-badge">${escapeHtml(event.platform)}</span>`,
+    `                  <span class="recognition-badge is-muted">${escapeHtml(event.format)}</span>`,
+    '                </div>',
+    '              </li>'
+  ].join('\n')).join('\n');
+}
+
+/* ── File updates ── */
+
 async function updateSections(relativePath, sections) {
   const filePath = path.join(root, relativePath);
   const source = await readFile(filePath, 'utf8');
@@ -156,23 +307,66 @@ async function updateSections(relativePath, sections) {
   }
 
   if (checkOnly) {
-    if (output !== source) throw new Error(`${relativePath} is out of sync with assets/data/cves.json`);
-    return;
+    if (output !== source) throw new Error(`${relativePath} is out of sync with its assets/data source`);
+    return false;
   }
 
-  await writeFile(filePath, output);
+  const changed = output !== source;
+  if (changed) await writeFile(filePath, output);
+  return changed;
 }
 
-await updateSections('cves.html', {
-  CVE_STATS: renderStats(),
-  CVE_KEY_FINDINGS: renderKeyFindings(),
-  CVE_RECORDS_META: renderRecordsMeta(),
-  CVE_RECORDS: renderRecords()
-});
+/* Bump sitemap lastmod only for pages whose rendered content changed. */
+async function updateSitemap(changedPages) {
+  if (checkOnly || !changedPages.length) return;
 
-await updateSections('index.html', {
-  CVE_HOME_KICKER: renderHomeKicker(),
-  CVE_HOME_FEATURED: renderHomeFeatured()
-});
+  const sitemapPath = path.join(root, 'sitemap.xml');
+  const source = await readFile(sitemapPath, 'utf8');
+  const today = new Date().toISOString().slice(0, 10);
+  let output = source;
 
-console.log(checkOnly ? 'CVE-generated content is up to date.' : 'Rendered CVE-generated content.');
+  for (const page of changedPages) {
+    const loc = page === 'index.html' ? 'https://devploit.dev/' : `https://devploit.dev/${page}`;
+    const pattern = new RegExp(`(<loc>${loc.replaceAll('/', '\\/').replaceAll('.', '\\.')}</loc>\\s*<lastmod>)[^<]+(</lastmod>)`);
+    if (!pattern.test(output)) throw new Error(`sitemap.xml has no entry for ${loc}`);
+    output = output.replace(pattern, `$1${today}$2`);
+  }
+
+  if (output !== source) await writeFile(sitemapPath, output);
+}
+
+const pageSections = {
+  'cves.html': {
+    CVE_STATS: renderStats(),
+    CVE_KEY_FINDINGS: renderKeyFindings(),
+    CVE_RECORDS_META: renderRecordsMeta(),
+    CVE_RECORDS: renderRecords()
+  },
+  'ctf.html': {
+    CTF_KEY_RESULTS: renderCtfKeyResults(),
+    CTF_INDIVIDUAL_META: renderCtfIndividualMeta(),
+    CTF_INDIVIDUAL: renderCtfScope('individual'),
+    CTF_TEAM: renderCtfScope('team')
+  },
+  'livehackingevents.html': {
+    LIVE_STATS: renderLiveStats(),
+    LIVE_RESULTS: renderLiveResults()
+  },
+  'index.html': {
+    CVE_HOME_KICKER: renderHomeKicker(),
+    CVE_HOME_FEATURED: renderHomeFeatured(),
+    CTF_HOME_KICKER: renderCtfHomeKicker(),
+    CTF_HOME_FEATURED: renderCtfHomeFeatured(),
+    LIVE_HOME_KICKER: renderLiveHomeKicker(),
+    LIVE_HOME_FEATURED: renderLiveHomeFeatured()
+  }
+};
+
+const changedPages = [];
+for (const [page, sections] of Object.entries(pageSections)) {
+  if (await updateSections(page, sections)) changedPages.push(page);
+}
+
+await updateSitemap(changedPages);
+
+console.log(checkOnly ? 'Data-driven content is up to date.' : 'Rendered data-driven content.');

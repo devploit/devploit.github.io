@@ -1,0 +1,23 @@
+{
+  "homeKicker": "RootedCON 2025-2026",
+  "events": [
+    {
+      "id": "rootedcon-madrid-2026",
+      "rankLabel": "2nd",
+      "event": "RootedCON Hacker Night",
+      "year": 2026,
+      "city": "Madrid",
+      "platform": "Intigriti",
+      "format": "Onsite"
+    },
+    {
+      "id": "rootedcon-lisbon-2025",
+      "rankLabel": "4th",
+      "event": "RootedCON Hacker Night",
+      "year": 2025,
+      "city": "Lisbon",
+      "platform": "Yogosha",
+      "format": "Onsite"
+    }
+  ]
+}

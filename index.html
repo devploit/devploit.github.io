@@ -44,6 +44,10 @@
   <link rel="mask-icon" href="/assets/img/favicons/safari-pinned-tab.svg" color="#e88c40">
   <meta name="msapplication-TileImage" content="/assets/img/favicons/mstile-150x150.png">
   <meta name="msapplication-TileColor" content="#0c0c0e">
+  <!-- Early connections for the runtime fetches (GitHub stars, blog feed) -->
+  <link rel="preconnect" href="https://api.github.com" crossorigin>
+  <link rel="preconnect" href="https://blog.devploit.dev" crossorigin>
+
   <!-- Fonts (self-hosted) -->
   <link rel="preload" href="/assets/fonts/syne-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -93,14 +97,14 @@
             Real-world infosec, no hype.<br>
             <em>Never trust a fox.</em>
           </p>
-          <div class="hero-pills" role="list" aria-label="Roles">
-            <span class="pill pill--accent" role="listitem">Head of Security @ Magnific</span>
-            <span class="pill pill--accent" role="listitem">Security Researcher</span>
-            <span class="pill" role="listitem">Penetration Testing</span>
-            <span class="pill" role="listitem">Hack&amp;Beers Málaga</span>
-            <span class="pill" role="listitem">ECSC Spain 2021</span>
-            <span class="pill" role="listitem">ripp3rsCTF / SFPE</span>
-          </div>
+          <ul class="hero-pills" role="list" aria-label="Roles">
+            <li class="pill pill--accent pill--link"><a href="https://www.magnific.com" target="_blank" rel="noopener" aria-label="Head of Security at Magnific (opens in new tab)">Head of Security @ Magnific</a></li>
+            <li class="pill pill--accent">Security Researcher</li>
+            <li class="pill">Penetration Testing</li>
+            <li class="pill pill--link"><a href="https://hackandbeers.es/" target="_blank" rel="noopener" aria-label="Hack&amp;Beers Málaga (opens in new tab)">Hack&amp;Beers Málaga</a></li>
+            <li class="pill">ECSC Spain 2021</li>
+            <li class="pill">ripp3rsCTF / SFPE</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -116,9 +120,9 @@
     <section class="main-grid">
       <div class="main-grid-shell">
         <div class="col-left reveal">
-          <div class="section-label">// proof of work</div>
+          <h2 class="section-label">// proof of work</h2>
           <div class="proof-list">
-          <div class="proof-item">
+          <div class="proof-item is-link">
             <div class="proof-icon" aria-hidden="true">MG</div>
             <div class="proof-text">
               <div class="proof-meta">role</div>
@@ -179,9 +183,10 @@
         </div>
 
         <div class="col-right reveal">
-          <div class="section-label">// latest posts</div>
+          <h2 class="section-label">// latest posts</h2>
           <div class="posts-status" id="posts-status">loading feed</div>
           <div id="posts-container" aria-live="polite">
+            <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
             <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
             <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
             <div class="post-skeleton"><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div>
@@ -208,10 +213,13 @@
                 <h3>CTF Awards</h3>
                 <p>Selected wins and podiums across solo and team CTFs.</p>
               </div>
+<!-- CTF_HOME_KICKER:START -->
               <span class="recognition-kicker">Since 2017</span>
+<!-- CTF_HOME_KICKER:END -->
             </div>
 
             <ul class="recognition-list" aria-label="Selected CTF awards">
+<!-- CTF_HOME_FEATURED:START -->
               <li>
                 <div class="recognition-item-top">
                   <div class="recognition-title">1st · Google Security Forum 2024</div>
@@ -249,6 +257,7 @@
                   <div class="recognition-subtitle">Team result with ripp3rs</div>
                 </a>
               </li>
+<!-- CTF_HOME_FEATURED:END -->
             </ul>
 
             <a class="recognition-link" href="/ctf.html">View all CTF results</a>
@@ -260,10 +269,13 @@
                 <h3>Live Hacking Events</h3>
                 <p>Selected onsite bug bounty event results.</p>
               </div>
+<!-- LIVE_HOME_KICKER:START -->
               <span class="recognition-kicker">RootedCON 2025-2026</span>
+<!-- LIVE_HOME_KICKER:END -->
             </div>
 
             <ul class="recognition-list" aria-label="Selected live hacking events">
+<!-- LIVE_HOME_FEATURED:START -->
               <li>
                 <div class="recognition-item-top">
                   <div class="recognition-title">2nd · RootedCON Hacker Night</div>
@@ -286,6 +298,7 @@
                   <span class="recognition-badge is-muted">Onsite</span>
                 </div>
               </li>
+<!-- LIVE_HOME_FEATURED:END -->
             </ul>
 
             <a class="recognition-link" href="/livehackingevents.html">View live hacking events</a>
@@ -358,7 +371,7 @@
     <!-- TOOLS -->
     <section class="tools-section reveal" id="tools">
       <div class="shell">
-        <div class="section-label">// tools &amp; projects</div>
+        <h2 class="section-label">// tools &amp; projects</h2>
         <div class="tools-grid">
 
           <a href="https://github.com/devploit/nomore403" target="_blank" rel="noopener" class="tool-card" aria-label="nomore403 on GitHub (opens in new tab)">
@@ -419,12 +432,16 @@
           <div class="footer-left">
             <h3>Working on something interesting?</h3>
             <p class="footer-kicker">Security leadership, offensive research and pragmatic advisory for products that operate in the real world.</p>
-            <a
-              href="mailto:daniel@devploit.dev"
-              id="email-link"
-              data-email="daniel@devploit.dev"
-              aria-label="Copy email address daniel@devploit.dev"
-            >daniel@devploit.dev</a>
+            <div class="email-row">
+              <a href="mailto:daniel@devploit.dev" id="email-link">daniel@devploit.dev</a>
+              <button
+                type="button"
+                class="email-copy"
+                id="email-copy"
+                data-email="daniel@devploit.dev"
+                aria-label="Copy email address to clipboard"
+              >copy</button>
+            </div>
             <span id="email-status" class="sr-only" role="status" aria-live="polite"></span>
           </div>
         <nav class="footer-socials" aria-label="Social links">

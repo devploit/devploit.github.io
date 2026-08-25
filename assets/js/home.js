@@ -217,19 +217,18 @@
 
   loadFeed();
 
-  /* Email copy */
-  var emailLink = document.getElementById('email-link');
+  /* Email copy: the mailto link keeps its default behavior; copying
+     lives in a dedicated button next to it. */
+  var emailCopyButton = document.getElementById('email-copy');
   var emailStatusEl = document.getElementById('email-status');
-  var emailAddress = emailLink.getAttribute('data-email') || 'daniel@devploit.dev';
-  var emailLabel = emailLink.textContent;
   var emailResetTimer = null;
 
-  function showEmailStatus(message) {
+  function showEmailStatus(buttonText, statusMessage) {
     window.clearTimeout(emailResetTimer);
-    emailLink.textContent = message;
-    if (emailStatusEl) emailStatusEl.textContent = message;
+    emailCopyButton.textContent = buttonText;
+    if (emailStatusEl) emailStatusEl.textContent = statusMessage;
     emailResetTimer = window.setTimeout(function () {
-      emailLink.textContent = emailLabel;
+      emailCopyButton.textContent = 'copy';
       if (emailStatusEl) emailStatusEl.textContent = '';
     }, 1800);
   }
@@ -254,37 +253,73 @@
     return copied;
   }
 
-  emailLink.addEventListener('click', function (event) {
-    event.preventDefault();
+  if (emailCopyButton) {
+    var emailAddress = emailCopyButton.getAttribute('data-email') || 'daniel@devploit.dev';
 
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(emailAddress)
-        .then(function () { showEmailStatus('copied to clipboard'); })
-        .catch(function () {
-          if (fallbackCopyEmail(emailAddress)) {
-            showEmailStatus('copied to clipboard');
-          } else {
-            window.location.href = emailLink.href;
-          }
-        });
-      return;
-    }
+    var onEmailCopied = function () {
+      showEmailStatus('copied', 'email address copied to clipboard');
+    };
 
-    if (fallbackCopyEmail(emailAddress)) {
-      showEmailStatus('copied to clipboard');
-    } else {
-      window.location.href = emailLink.href;
-    }
-  });
+    var onEmailCopyFailed = function () {
+      showEmailStatus('error', 'could not copy the email address');
+    };
 
-  /* Dynamic GitHub stars */
+    emailCopyButton.addEventListener('click', function () {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(emailAddress)
+          .then(onEmailCopied)
+          .catch(function () {
+            if (fallbackCopyEmail(emailAddress)) onEmailCopied();
+            else onEmailCopyFailed();
+          });
+        return;
+      }
+
+      if (fallbackCopyEmail(emailAddress)) onEmailCopied();
+      else onEmailCopyFailed();
+    });
+  }
+
+  /* Dynamic GitHub stars, cached in localStorage to avoid refetching
+     (and burning the 60 req/h unauthenticated API limit) on every visit. */
   var starRepos = [
     { repo: 'devploit/nomore403', selector: 'a[href*="nomore403"] .tool-badge' },
     { repo: 'devploit/awesome-ctf-resources', selector: 'a[href*="awesome-ctf-resources"] .tool-badge' },
     { repo: 'devploit/debugHunter', selector: 'a[href*="debugHunter"] .tool-badge' }
   ];
+  var STAR_CACHE_KEY = 'devploit-star-cache-v1';
+  var STAR_CACHE_TTL = 60 * 60 * 1000;
 
+  function readStarCache() {
+    try {
+      var cache = JSON.parse(window.localStorage.getItem(STAR_CACHE_KEY));
+      return cache && typeof cache === 'object' ? cache : {};
+    } catch (error) {
+      return {};
+    }
+  }
+
+  function writeStarCache(cache) {
+    try {
+      window.localStorage.setItem(STAR_CACHE_KEY, JSON.stringify(cache));
+    } catch (error) {}
+  }
+
+  function applyStarDisplay(item, display) {
+    var badge = document.querySelector(item.selector);
+    if (badge) badge.textContent = display;
+    var mirrors = document.querySelectorAll('[data-star-repo="' + item.repo + '"]');
+    Array.prototype.forEach.call(mirrors, function (element) { element.textContent = display; });
+  }
+
+  var starCache = readStarCache();
   starRepos.forEach(function (item) {
+    var cached = starCache[item.repo];
+    if (cached && typeof cached.display === 'string') {
+      applyStarDisplay(item, cached.display);
+      if (Date.now() - cached.savedAt < STAR_CACHE_TTL) return;
+    }
+
     fetch('https://api.github.com/repos/' + item.repo)
       .then(function (response) {
         if (!response.ok) throw new Error('GitHub request failed');
@@ -294,10 +329,9 @@
         if (typeof repository.stargazers_count !== 'number') return;
         var count = repository.stargazers_count;
         var display = (count >= 1000 ? (Math.floor(count / 100) / 10) + 'k' : count) + ' ★';
-        var badge = document.querySelector(item.selector);
-        if (badge) badge.textContent = display;
-        var mirrors = document.querySelectorAll('[data-star-repo="' + item.repo + '"]');
-        Array.prototype.forEach.call(mirrors, function (element) { element.textContent = display; });
+        applyStarDisplay(item, display);
+        starCache[item.repo] = { display: display, savedAt: Date.now() };
+        writeStarCache(starCache);
       })
       .catch(function () {});
   });

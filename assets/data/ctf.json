@@ -1,0 +1,222 @@
+{
+  "keyResults": [
+    "gsf-2024",
+    "gsf-2023",
+    "andalusian-2023",
+    "navaja-2022",
+    "digital-overdose-2021"
+  ],
+  "homeFeatured": [
+    "gsf-2024",
+    "gsf-2023",
+    "andalusian-2023",
+    "navaja-2022",
+    "digital-overdose-2021"
+  ],
+  "results": [
+    {
+      "id": "gsf-2024",
+      "scope": "individual",
+      "title": "1st · Google Security Forum 2024",
+      "year": 2024,
+      "subtitle": "Madrid",
+      "keySubtitle": "Madrid · SecOps & Threat Intelligence CTF"
+    },
+    {
+      "id": "andalusian-2023",
+      "scope": "individual",
+      "title": "1st · CTF III Andalusian Cybersecurity Congress",
+      "homeTitle": "1st · Andalusian Cybersecurity Congress",
+      "year": 2023,
+      "subtitle": "Málaga"
+    },
+    {
+      "id": "gsf-2023",
+      "scope": "individual",
+      "title": "1st · Google Security Forum 2023",
+      "year": 2023,
+      "subtitle": "Madrid",
+      "keySubtitle": "Madrid · Chronicle CTF"
+    },
+    {
+      "id": "navaja-2023",
+      "scope": "individual",
+      "title": "2nd · Navaja Negra CTF 2023",
+      "year": 2023,
+      "subtitle": "Albacete"
+    },
+    {
+      "id": "andalusian-2022",
+      "scope": "individual",
+      "title": "1st · CTF II Andalusian Cybersecurity Congress",
+      "year": 2022,
+      "subtitle": "Málaga"
+    },
+    {
+      "id": "navaja-2022",
+      "scope": "individual",
+      "title": "1st · Navaja Negra CTF 2022",
+      "keyTitle": "1st · Navaja Negra CTF",
+      "year": 2022,
+      "subtitle": "Albacete"
+    },
+    {
+      "id": "fwhibbit-2022",
+      "scope": "individual",
+      "title": "2nd · FWhibbit CTF - c0r0n4c0n",
+      "year": 2022,
+      "subtitle": "Online"
+    },
+    {
+      "id": "cybercamp-2019",
+      "scope": "individual",
+      "title": "Finalist · CyberCamp CTF 2019",
+      "year": 2019,
+      "subtitle": "Valencia"
+    },
+    {
+      "id": "navaja-2019",
+      "scope": "individual",
+      "title": "3rd · Navaja Negra CTF 2019",
+      "year": 2019,
+      "subtitle": "Albacete"
+    },
+    {
+      "id": "hackandbeers-2019",
+      "scope": "individual",
+      "title": "1st · Hack&Beers 0day CTF 2019",
+      "year": 2019,
+      "subtitle": "Córdoba"
+    },
+    {
+      "id": "secadmin-2018",
+      "scope": "individual",
+      "title": "2nd · SecAdmin CTF 2018",
+      "year": 2018,
+      "subtitle": "Sevilla"
+    },
+    {
+      "id": "navaja-2018",
+      "scope": "individual",
+      "title": "6th · Navaja Negra CTF 2018",
+      "year": 2018,
+      "subtitle": "Albacete"
+    },
+    {
+      "id": "cybercamp-2018",
+      "scope": "individual",
+      "title": "Finalist · CyberCamp CTF 2018",
+      "year": 2018,
+      "subtitle": "Málaga"
+    },
+    {
+      "id": "jasyp-2018",
+      "scope": "individual",
+      "title": "1st · JASYP CTF 2018",
+      "year": 2018,
+      "subtitle": "Granada"
+    },
+    {
+      "id": "cybercamp-2017",
+      "scope": "individual",
+      "title": "Finalist · CyberCamp CTF 2017",
+      "year": 2017,
+      "subtitle": "Santander"
+    },
+    {
+      "id": "qurtuba-2017",
+      "scope": "individual",
+      "title": "4th · Qurtuba CTF 2017",
+      "year": 2017,
+      "subtitle": "Córdoba"
+    },
+    {
+      "id": "digital-overdose-2021",
+      "scope": "team",
+      "title": "3rd · Digital Overdose 2021 Autumn CTF",
+      "homeTitle": "3rd · Digital Overdose Autumn CTF",
+      "year": 2021,
+      "subtitle": "Team result",
+      "keySubtitle": "Team result with ripp3rs",
+      "url": "https://ctftime.org/event/1459"
+    },
+    {
+      "id": "defcamp-2020",
+      "scope": "team",
+      "title": "5th · DefCamp CTF 2020",
+      "year": 2020,
+      "subtitle": "Team result",
+      "url": "https://ctftime.org/event/1182"
+    },
+    {
+      "id": "kipodafterfree-2020",
+      "scope": "team",
+      "title": "4th · KipodAfterFree CTF 2020",
+      "year": 2020,
+      "subtitle": "Team result",
+      "url": "https://ctftime.org/event/1133"
+    },
+    {
+      "id": "hcon-finals-2020",
+      "scope": "team",
+      "title": "3rd · h-con CTF 2020",
+      "year": 2020,
+      "subtitle": "Onsite finals"
+    },
+    {
+      "id": "hcon-quals-2020",
+      "scope": "team",
+      "title": "2nd · h-con CTF 2020",
+      "year": 2020,
+      "subtitle": "Online qualifiers"
+    },
+    {
+      "id": "wctf-2019",
+      "scope": "team",
+      "title": "3rd · WCTF 2019",
+      "year": 2019,
+      "subtitle": "Team result",
+      "url": "https://ctftime.org/event/833"
+    },
+    {
+      "id": "swampctf-2019",
+      "scope": "team",
+      "title": "6th · SwampCTF 2019",
+      "year": 2019,
+      "subtitle": "Team result",
+      "url": "https://ctftime.org/event/779"
+    },
+    {
+      "id": "radarctf-2019",
+      "scope": "team",
+      "title": "3rd · RADARCTF 2019",
+      "year": 2019,
+      "subtitle": "Team result",
+      "url": "https://ctftime.org/event/787"
+    },
+    {
+      "id": "encryptctf-2019",
+      "scope": "team",
+      "title": "3rd · ENCRYPT CTF 2019",
+      "year": 2019,
+      "subtitle": "Team result",
+      "url": "https://ctftime.org/event/771"
+    },
+    {
+      "id": "pragyanctf-2019",
+      "scope": "team",
+      "title": "10th · PragyanCTF 2019",
+      "year": 2019,
+      "subtitle": "Team result",
+      "url": "https://ctftime.org/event/755"
+    },
+    {
+      "id": "tamuctf-2019",
+      "scope": "team",
+      "title": "11th · TAMUctf 2019",
+      "year": 2019,
+      "subtitle": "Team result",
+      "url": "https://ctftime.org/event/740"
+    }
+  ]
+}
