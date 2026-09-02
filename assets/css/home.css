@@ -523,6 +523,7 @@
   padding: 26px 24px 24px;
   position: relative;
   overflow: hidden;
+  transition: border-color 180ms, transform 180ms;
 }
 
 .recognition-card::before {
@@ -533,6 +534,58 @@
     radial-gradient(circle at top right, rgba(232, 140, 64, 0.10), transparent 26%),
     linear-gradient(180deg, rgba(255,255,255,0.02), transparent 24%);
   pointer-events: none;
+  transition: opacity 180ms;
+}
+
+/* Hover glow shared with the product cards: a second, wider wash that
+   only shows while the card is hovered or its title link is focused. */
+.recognition-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% -10%, rgba(232, 140, 64, 0.14), transparent 46%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms;
+}
+
+.recognition-card:hover,
+.recognition-card:focus-within {
+  border-color: var(--color-accent-dim);
+  transform: translateY(-4px);
+}
+
+.recognition-card:hover::after,
+.recognition-card:focus-within::after {
+  opacity: 1;
+}
+
+.recognition-title-link {
+  color: inherit;
+  transition: color 150ms;
+}
+
+.recognition-title-link::after {
+  content: '→';
+  display: inline-block;
+  margin-left: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6em;
+  vertical-align: middle;
+  color: var(--color-subtle);
+  transition: transform 150ms, color 150ms;
+}
+
+.recognition-card:hover .recognition-title-link,
+.recognition-title-link:hover,
+.recognition-title-link:focus-visible {
+  color: var(--color-accent);
+}
+
+.recognition-card:hover .recognition-title-link::after,
+.recognition-title-link:focus-visible::after {
+  color: var(--color-accent);
+  transform: translateX(3px);
 }
 
 .recognition-card-head {
@@ -1333,7 +1386,9 @@
   }
 
   .product-card:hover,
-  .product-card:focus-visible {
+  .product-card:focus-visible,
+  .recognition-card:hover,
+  .recognition-card:focus-within {
     transform: none;
   }
 }
