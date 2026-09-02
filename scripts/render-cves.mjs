@@ -53,16 +53,33 @@ function requireCtfResult(id, collectionName) {
 
 /* ── CVEs ── */
 
+/* Shared hero stat tiles: a large value with a short label underneath. */
+function renderStatTiles(label, tiles) {
+  return [
+    `        <div class="stats" aria-label="${escapeHtml(label)}">`,
+    ...tiles.map(([value, text]) => [
+      '          <div class="stat">',
+      `            <span class="stat-value">${escapeHtml(value)}</span>`,
+      `            <span class="stat-label">${escapeHtml(text)}</span>`,
+      '          </div>'
+    ].join('\n')),
+    '        </div>'
+  ].join('\n');
+}
+
+function severityKey(record) {
+  if (!record.cvss) return 'pending';
+  return record.cvss.severity.toLowerCase();
+}
+
 function renderStats() {
   const published = data.records.filter((record) => record.publicationStatus === 'published').length;
   const pending = data.records.length - published;
-  return [
-    '        <div class="stats" aria-label="CVE track record">',
-    `          <span class="badge">${data.records.length} CVE identifiers</span>`,
-    `          <span class="badge">${published} published CVE records</span>`,
-    `          <span class="badge">${publicationCountLabel(pending)}</span>`,
-    '        </div>'
-  ].join('\n');
+  return renderStatTiles('CVE track record', [
+    [String(data.records.length), 'CVE identifiers'],
+    [String(published), 'published records'],
+    [String(pending), publicationCountLabel(pending).replace(/^\d+ /, '')]
+  ]);
 }
 
 function renderKeyFindings() {
@@ -70,7 +87,7 @@ function renderKeyFindings() {
     const record = requireRecord(id, 'keyFindings');
     const score = ` · ${cvssLabel(record)}`;
     return [
-      '            <article class="item">',
+      `            <article class="item" data-severity="${severityKey(record)}">`,
       `              <a class="item-link" href="#${slug(record)}">`,
       '                <div class="title-row">',
       `                  <div class="title">${escapeHtml(record.id)} · ${escapeHtml(record.keyTitle)}</div>`,
@@ -98,7 +115,7 @@ function renderRecord(record) {
   }
 
   const badges = metadata.map(({ label, emphasized }) =>
-    `                <span class="cve-badge${emphasized ? '' : ' is-muted'}">${escapeHtml(label)}</span>`
+    `                <span class="cve-badge${emphasized ? ` is-${severityKey(record)}` : ' is-muted'}">${escapeHtml(label)}</span>`
   ).join('\n');
 
   const references = record.references.map((reference) =>
@@ -106,7 +123,7 @@ function renderRecord(record) {
   ).join('\n');
 
   return [
-    `            <article class="item is-static" id="${slug(record)}">`,
+    `            <article class="item is-static" id="${slug(record)}" data-severity="${severityKey(record)}">`,
     '              <div class="title-row">',
     `                <div class="title">${escapeHtml(record.id)}</div>`,
     `                <div class="year">${record.year}</div>`,
@@ -248,15 +265,14 @@ function liveTitle(event) {
 }
 
 function renderLiveStats() {
-  const badges = [
-    `${liveData.events.length} public event result${liveData.events.length === 1 ? '' : 's'}`,
-    ...liveData.events.map((event) => `Top ${parseInt(event.rankLabel, 10)} in ${event.city} ${event.year}`)
-  ];
-  return [
-    '        <div class="stats" aria-label="Live hacking track record">',
-    ...badges.map((badge) => `          <span class="badge">${escapeHtml(badge)}</span>`),
-    '        </div>'
-  ].join('\n');
+  const events = liveData.events;
+  const best = events.reduce((top, event) => (parseInt(event.rankLabel, 10) < parseInt(top.rankLabel, 10) ? event : top), events[0]);
+  const platforms = new Set(events.map((event) => event.platform)).size;
+  return renderStatTiles('Live hacking track record', [
+    [String(events.length), `public event result${events.length === 1 ? '' : 's'}`],
+    [best.rankLabel, `best placement, ${best.city} ${best.year}`],
+    [String(platforms), `platform${platforms === 1 ? '' : 's'}, all onsite`]
+  ]);
 }
 
 function renderLiveResults() {
@@ -267,10 +283,28 @@ function renderLiveResults() {
     '              <div class="item-meta">',
     `                <span class="tag">${escapeHtml(event.platform)}</span>`,
     `                <span class="tag is-muted">${escapeHtml(event.format)}</span>`,
-    `                <span class="tag is-muted">${escapeHtml(event.rankLabel)} place</span>`,
     '              </div>',
     '            </div>'
   ].join('\n')).join('\n');
+}
+
+/* ── CTF hero stats, derived from the placement prefix in each title ── */
+
+function ctfRank(result) {
+  const match = /^(\d+)(?:st|nd|rd|th)\b/.exec(result.title);
+  return match ? parseInt(match[1], 10) : null;
+}
+
+function renderCtfStats() {
+  const ranks = ctfData.results.map(ctfRank).filter((rank) => rank !== null);
+  const firsts = ranks.filter((rank) => rank === 1).length;
+  const podiums = ranks.filter((rank) => rank <= 3).length;
+  const since = Math.min(...ctfData.results.map((result) => result.year));
+  return renderStatTiles('CTF track record', [
+    [String(firsts), `first place${firsts === 1 ? '' : 's'}`],
+    [String(podiums), `podium finishes, solo and team`],
+    [String(since), 'competing since']
+  ]);
 }
 
 function renderLiveHomeKicker() {
@@ -410,6 +444,7 @@ const pageSections = {
     CVE_RECORDS: renderRecords()
   },
   'ctf.html': {
+    CTF_STATS: renderCtfStats(),
     CTF_KEY_RESULTS: renderCtfKeyResults(),
     CTF_INDIVIDUAL_META: renderCtfIndividualMeta(),
     CTF_INDIVIDUAL: renderCtfScope('individual'),

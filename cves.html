@@ -49,6 +49,7 @@
       <div class="nav-right" id="nav-menu">
         <div class="nav-links">
           <a class="nav-link" href="/index.html">work</a>
+          <a class="nav-link" href="/index.html#products">products</a>
           <a class="nav-link" href="https://blog.devploit.dev" target="_blank" rel="noopener">blog</a>
           <a class="nav-link" href="/ctf.html">ctf</a>
           <a class="nav-link" href="/livehackingevents.html">live</a>
@@ -63,14 +64,23 @@
   <main id="main-content">
     <section class="hero">
       <div class="shell hero-shell">
-        <div class="eyebrow">Responsible Disclosure</div>
+        <div class="eyebrow">responsible disclosure</div>
         <h1>CVEs.</h1>
         <p class="lead">Assigned vulnerabilities with official CVE identifiers, advisory references and direct links to the public record.</p>
 <!-- CVE_STATS:START -->
         <div class="stats" aria-label="CVE track record">
-          <span class="badge">12 CVE identifiers</span>
-          <span class="badge">11 published CVE records</span>
-          <span class="badge">1 CVE publication pending</span>
+          <div class="stat">
+            <span class="stat-value">12</span>
+            <span class="stat-label">CVE identifiers</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">11</span>
+            <span class="stat-label">published records</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">1</span>
+            <span class="stat-label">CVE publication pending</span>
+          </div>
         </div>
 <!-- CVE_STATS:END -->
       </div>
@@ -80,7 +90,7 @@
       <div class="shell">
         <div class="section-head">
           <div>
-            <div class="eyebrow">Selected Impact</div>
+            <div class="eyebrow">selected impact</div>
             <h2>Key findings</h2>
           </div>
           <div class="meta">Most representative security findings shown first.</div>
@@ -88,7 +98,7 @@
         <div class="card">
           <div class="list">
 <!-- CVE_KEY_FINDINGS:START -->
-            <article class="item">
+            <article class="item" data-severity="pending">
               <a class="item-link" href="#cve-2026-49030">
                 <div class="title-row">
                   <div class="title">CVE-2026-49030 · Path Traversal</div>
@@ -97,7 +107,7 @@
                 <div class="subtitle">pathe · Backslash normalization bypasses POSIX traversal filters · CVSS Pending</div>
               </a>
             </article>
-            <article class="item">
+            <article class="item" data-severity="high">
               <a class="item-link" href="#cve-2026-39244">
                 <div class="title-row">
                   <div class="title">CVE-2026-39244 · Denial of Service</div>
@@ -106,7 +116,7 @@
                 <div class="subtitle">adm-zip · ~120-byte ZIP can trigger a ~4 GB memory allocation · CVSS 7.5 High</div>
               </a>
             </article>
-            <article class="item">
+            <article class="item" data-severity="medium">
               <a class="item-link" href="#cve-2026-39245">
                 <div class="title-row">
                   <div class="title">CVE-2026-39245 · Arbitrary File Write</div>
@@ -115,7 +125,7 @@
                 <div class="subtitle">decompress · Path containment bypass of the CVE-2020-12265 fix · CVSS 6.2 Medium</div>
               </a>
             </article>
-            <article class="item">
+            <article class="item" data-severity="high">
               <a class="item-link" href="#cve-2026-6379">
                 <div class="title-row">
                   <div class="title">CVE-2026-6379 · Unauthenticated SQL Injection</div>
@@ -124,7 +134,7 @@
                 <div class="subtitle">WP Photo Album Plus · CVSS 8.6 High</div>
               </a>
             </article>
-            <article class="item">
+            <article class="item" data-severity="medium">
               <a class="item-link" href="#cve-2026-6449">
                 <div class="title-row">
                   <div class="title">CVE-2026-6449 · Authorization Bypass</div>
@@ -143,7 +153,7 @@
       <div class="shell">
         <div class="section-head">
           <div>
-            <div class="eyebrow">Assigned Entries</div>
+            <div class="eyebrow">assigned entries</div>
             <h2>All CVE records</h2>
           </div>
 <!-- CVE_RECORDS_META:START -->
@@ -153,7 +163,7 @@
         <div class="card">
           <div class="list">
 <!-- CVE_RECORDS:START -->
-            <article class="item is-static" id="cve-2026-14231">
+            <article class="item is-static" id="cve-2026-14231" data-severity="medium">
               <div class="title-row">
                 <div class="title">CVE-2026-14231</div>
                 <div class="year">2026</div>
@@ -161,7 +171,7 @@
               <div class="subtitle">LifterLMS &lt; 10.0.10 - Authenticated (Subscriber+) Sensitive Information Disclosure via &#39;select2_query_posts&#39;</div>
               <p class="summary">The plugin only verifies that a user is logged in when handling a select2 query request and does not perform the required capability check. Subscriber-level attackers can supply an internal post type and retrieve otherwise restricted titles, including coupon codes.</p>
               <div class="cve-meta" aria-label="CVE metadata">
-                <span class="cve-badge">CVSS 4.3 Medium</span>
+                <span class="cve-badge is-medium">CVSS 4.3 Medium</span>
                 <span class="cve-badge is-muted">Sensitive Data Exposure</span>
                 <span class="cve-badge is-muted">CWE-200</span>
                 <span class="cve-badge is-muted">Fixed in 10.0.10</span>
@@ -173,7 +183,7 @@
                 <a class="source-link" href="https://wpscan.com/vulnerability/2a353964-9f4c-4528-b187-42766f0cfaed/" target="_blank" rel="noopener">WPScan advisory</a>
               </div>
             </article>
-            <article class="item is-static" id="cve-2026-49030">
+            <article class="item is-static" id="cve-2026-49030" data-severity="pending">
               <div class="title-row">
                 <div class="title">CVE-2026-49030</div>
                 <div class="year">2026</div>
@@ -193,7 +203,7 @@
                 <a class="source-link" href="https://www.cve.org/CVERecord?id=CVE-2026-49030" target="_blank" rel="noopener">CVE.org status</a>
               </div>
             </article>
-            <article class="item is-static" id="cve-2026-11966">
+            <article class="item is-static" id="cve-2026-11966" data-severity="medium">
               <div class="title-row">
                 <div class="title">CVE-2026-11966</div>
                 <div class="year">2026</div>
@@ -201,7 +211,7 @@
               <div class="subtitle">User Registration &amp; Membership &lt; 5.2.3 - Unauthenticated Limited User Deletion via Stripe Subscription Handler</div>
               <p class="summary">The plugin does not perform a capability check on a membership payment action and trusts a caller-supplied user identifier, allowing unauthenticated attackers to delete recently registered user accounts while their payments remain pending.</p>
               <div class="cve-meta" aria-label="CVE metadata">
-                <span class="cve-badge">CVSS 5.3 Medium</span>
+                <span class="cve-badge is-medium">CVSS 5.3 Medium</span>
                 <span class="cve-badge is-muted">IDOR</span>
                 <span class="cve-badge is-muted">CWE-639</span>
                 <span class="cve-badge is-muted">Fixed in 5.2.3</span>
@@ -213,7 +223,7 @@
                 <a class="source-link" href="https://wpscan.com/vulnerability/8e3be064-b3b7-4d68-960b-8c850c3e6f77/" target="_blank" rel="noopener">WPScan advisory</a>
               </div>
             </article>
-            <article class="item is-static" id="cve-2026-39244">
+            <article class="item is-static" id="cve-2026-39244" data-severity="high">
               <div class="title-row">
                 <div class="title">CVE-2026-39244</div>
                 <div class="year">2026</div>
@@ -221,7 +231,7 @@
               <div class="subtitle">adm-zip &lt; 0.5.18 - Denial of Service via Unbounded Memory Allocation</div>
               <p class="summary">The package allocates memory from an untrusted ZIP uncompressed-size header without an upper bound. A crafted file of roughly 120 bytes can request nearly 4 GB before CRC validation, immediately crashing applications that read or extract it.</p>
               <div class="cve-meta" aria-label="CVE metadata">
-                <span class="cve-badge">CVSS 7.5 High</span>
+                <span class="cve-badge is-high">CVSS 7.5 High</span>
                 <span class="cve-badge is-muted">Denial of Service</span>
                 <span class="cve-badge is-muted">CWE-400 / CWE-789</span>
                 <span class="cve-badge is-muted">Fixed in 0.5.18</span>
@@ -233,7 +243,7 @@
                 <a class="source-link" href="https://github.com/cthackers/adm-zip/issues/568" target="_blank" rel="noopener">GitHub disclosure</a>
               </div>
             </article>
-            <article class="item is-static" id="cve-2026-39246">
+            <article class="item is-static" id="cve-2026-39246" data-severity="high">
               <div class="title-row">
                 <div class="title">CVE-2026-39246</div>
                 <div class="year">2026</div>
@@ -241,7 +251,7 @@
               <div class="subtitle">decompress &lt;= 4.2.1 - Arbitrary Symlink Creation and Information Disclosure</div>
               <p class="summary">The package creates symlinks from archive entries without validating their targets. An attacker can place links to sensitive files outside the extraction directory and expose any data the application later reads or serves.</p>
               <div class="cve-meta" aria-label="CVE metadata">
-                <span class="cve-badge">CVSS 7.5 High</span>
+                <span class="cve-badge is-high">CVSS 7.5 High</span>
                 <span class="cve-badge is-muted">Symlink</span>
                 <span class="cve-badge is-muted">CWE-59 / CWE-61</span>
                 <span class="cve-badge is-muted">Affects &lt;= 4.2.1</span>
@@ -253,7 +263,7 @@
                 <a class="source-link" href="https://github.com/kevva/decompress/issues/114" target="_blank" rel="noopener">GitHub disclosure</a>
               </div>
             </article>
-            <article class="item is-static" id="cve-2026-39245">
+            <article class="item is-static" id="cve-2026-39245" data-severity="medium">
               <div class="title-row">
                 <div class="title">CVE-2026-39245</div>
                 <div class="year">2026</div>
@@ -261,7 +271,7 @@
               <div class="subtitle">decompress &lt;= 4.2.1 - Path Containment Bypass and Arbitrary File Write</div>
               <p class="summary">A flawed String.indexOf() containment check accepts sibling directories that share the extraction path prefix. Combined with symlink creation, a crafted archive can write files outside the intended output directory and bypass the fix for CVE-2020-12265.</p>
               <div class="cve-meta" aria-label="CVE metadata">
-                <span class="cve-badge">CVSS 6.2 Medium</span>
+                <span class="cve-badge is-medium">CVSS 6.2 Medium</span>
                 <span class="cve-badge is-muted">Path Traversal</span>
                 <span class="cve-badge is-muted">CWE-22</span>
                 <span class="cve-badge is-muted">Affects &lt;= 4.2.1</span>
@@ -273,7 +283,7 @@
                 <a class="source-link" href="https://github.com/kevva/decompress/issues/115" target="_blank" rel="noopener">GitHub disclosure</a>
               </div>
             </article>
-            <article class="item is-static" id="cve-2026-39243">
+            <article class="item is-static" id="cve-2026-39243" data-severity="medium">
               <div class="title-row">
                 <div class="title">CVE-2026-39243</div>
                 <div class="year">2026</div>
@@ -281,7 +291,7 @@
               <div class="subtitle">decompress &lt;= 4.2.1 - Arbitrary Hardlink Creation, File Disclosure and Corruption</div>
               <p class="summary">The package passes an archive-controlled hardlink target directly to fs.link(). A crafted archive can expose a file on the same filesystem through the extraction directory, and changes made through that hardlink can corrupt the original file.</p>
               <div class="cve-meta" aria-label="CVE metadata">
-                <span class="cve-badge">CVSS 5.5 Medium</span>
+                <span class="cve-badge is-medium">CVSS 5.5 Medium</span>
                 <span class="cve-badge is-muted">Hardlink</span>
                 <span class="cve-badge is-muted">CWE-59</span>
                 <span class="cve-badge is-muted">Affects &lt;= 4.2.1</span>
@@ -293,7 +303,7 @@
                 <a class="source-link" href="https://github.com/kevva/decompress/issues/113" target="_blank" rel="noopener">GitHub disclosure</a>
               </div>
             </article>
-            <article class="item is-static" id="cve-2026-11367">
+            <article class="item is-static" id="cve-2026-11367" data-severity="medium">
               <div class="title-row">
                 <div class="title">CVE-2026-11367</div>
                 <div class="year">2026</div>
@@ -301,7 +311,7 @@
               <div class="subtitle">PixMagix &lt;= 1.7.2 - Authenticated (Author+) Path Traversal in &#39;layers[].id&#39; Parameter</div>
               <p class="summary">The plugin&#39;s move_image_on_server function concatenates an unsanitized layer ID into a filesystem path passed to PHP&#39;s copy(), allowing authenticated Author-level attackers to use traversal sequences to write attacker-controlled files to arbitrary locations on the server.</p>
               <div class="cve-meta" aria-label="CVE metadata">
-                <span class="cve-badge">CVSS 6.5 Medium</span>
+                <span class="cve-badge is-medium">CVSS 6.5 Medium</span>
                 <span class="cve-badge is-muted">Path Traversal</span>
                 <span class="cve-badge is-muted">CWE-22</span>
                 <span class="cve-badge is-muted">Affects &lt;= 1.7.2</span>
@@ -313,7 +323,7 @@
                 <a class="source-link" href="https://www.wordfence.com/threat-intel/vulnerabilities/wordpress-plugins/pixmagix/pixmagix-172-authenticated-author-path-traversal-in-layersid-parameter" target="_blank" rel="noopener">Wordfence advisory</a>
               </div>
             </article>
-            <article class="item is-static" id="cve-2026-39447">
+            <article class="item is-static" id="cve-2026-39447" data-severity="high">
               <div class="title-row">
                 <div class="title">CVE-2026-39447</div>
                 <div class="year">2026</div>
@@ -321,7 +331,7 @@
               <div class="subtitle">Simply Schedule Appointments &lt;= 1.6.10.6 - Cross Site Scripting (XSS)</div>
               <p class="summary">The plugin fails to properly neutralize input during page generation, allowing attackers to inject JavaScript through a cross-site scripting vulnerability in affected WordPress installations.</p>
               <div class="cve-meta" aria-label="CVE metadata">
-                <span class="cve-badge">CVSS 7.1 High</span>
+                <span class="cve-badge is-high">CVSS 7.1 High</span>
                 <span class="cve-badge is-muted">XSS</span>
                 <span class="cve-badge is-muted">CWE-79</span>
                 <span class="cve-badge is-muted">Fixed in 1.6.11.0</span>
@@ -333,7 +343,7 @@
                 <a class="source-link" href="https://vdp.patchstack.com/database/wordpress/plugin/simply-schedule-appointments/vulnerability/wordpress-simply-schedule-appointments-plugin-1-6-10-6-cross-site-scripting-xss-vulnerability" target="_blank" rel="noopener">Patchstack advisory</a>
               </div>
             </article>
-            <article class="item is-static" id="cve-2026-42725">
+            <article class="item is-static" id="cve-2026-42725" data-severity="medium">
               <div class="title-row">
                 <div class="title">CVE-2026-42725</div>
                 <div class="year">2026</div>
@@ -341,7 +351,7 @@
               <div class="subtitle">Checkout Files Upload for WooCommerce &lt;= 2.2.5 - Unauthenticated Insecure Direct Object References (IDOR)</div>
               <p class="summary">The plugin fails to properly validate object ownership on file access, allowing unauthenticated attackers to bypass authorization and access files uploaded by other users during checkout.</p>
               <div class="cve-meta" aria-label="CVE metadata">
-                <span class="cve-badge">CVSS 6.5 Medium</span>
+                <span class="cve-badge is-medium">CVSS 6.5 Medium</span>
                 <span class="cve-badge is-muted">IDOR</span>
                 <span class="cve-badge is-muted">CWE-639</span>
                 <span class="cve-badge is-muted">Affects &lt;= 2.2.5</span>
@@ -353,7 +363,7 @@
                 <a class="source-link" href="https://patchstack.com/database/wordpress/plugin/checkout-files-upload-woocommerce/vulnerability/wordpress-checkout-files-upload-for-woocommerce-plugin-2-2-5-insecure-direct-object-references-idor-vulnerability" target="_blank" rel="noopener">Patchstack advisory</a>
               </div>
             </article>
-            <article class="item is-static" id="cve-2026-6379">
+            <article class="item is-static" id="cve-2026-6379" data-severity="high">
               <div class="title-row">
                 <div class="title">CVE-2026-6379</div>
                 <div class="year">2026</div>
@@ -361,7 +371,7 @@
               <div class="subtitle">WP Photo Album Plus &lt; 9.1.11.001 - Unauthenticated SQL Injection via &#39;wppa-supersearch&#39; Parameter</div>
               <p class="summary">The plugin does not properly sanitize and escape a parameter before using it in a SQL query, allowing unauthenticated users to perform SQL injection attacks.</p>
               <div class="cve-meta" aria-label="CVE metadata">
-                <span class="cve-badge">CVSS 8.6 High</span>
+                <span class="cve-badge is-high">CVSS 8.6 High</span>
                 <span class="cve-badge is-muted">SQLI</span>
                 <span class="cve-badge is-muted">CWE-89</span>
                 <span class="cve-badge is-muted">Fixed in 9.1.11.001</span>
@@ -373,7 +383,7 @@
                 <a class="source-link" href="https://wpscan.com/vulnerability/60b88fd2-4048-4773-b319-63caaf5bd8eb" target="_blank" rel="noopener">WPScan advisory</a>
               </div>
             </article>
-            <article class="item is-static" id="cve-2026-6449">
+            <article class="item is-static" id="cve-2026-6449" data-severity="medium">
               <div class="title-row">
                 <div class="title">CVE-2026-6449</div>
                 <div class="year">2026</div>
@@ -381,7 +391,7 @@
               <div class="subtitle">Amelia &lt; 2.3 - Unauthenticated Improper Authorization on Booking Status</div>
               <p class="summary">A logical flaw in the booking authorization check skips token validation when the booking status is &#39;waiting&#39;, allowing unauthenticated attackers to approve arbitrary bookings via the admin-ajax endpoint.</p>
               <div class="cve-meta" aria-label="CVE metadata">
-                <span class="cve-badge">CVSS 5.3 Medium</span>
+                <span class="cve-badge is-medium">CVSS 5.3 Medium</span>
                 <span class="cve-badge is-muted">AuthZ</span>
                 <span class="cve-badge is-muted">CWE-285</span>
                 <span class="cve-badge is-muted">Fixed in 2.3</span>
