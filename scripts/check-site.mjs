@@ -75,6 +75,23 @@ if (!admZip || admZip.cvss?.score !== 7.5 || admZip.cvss?.severity !== 'High') {
   failures.push('CVE-2026-39244 must use the official CVSS 7.5 High score');
 }
 
+const projects = JSON.parse(await readFile(path.join(root, 'assets/data/projects.json'), 'utf8'));
+const projectIds = [...projects.products, ...projects.openSource].map((project) => project.id);
+if (new Set(projectIds).size !== projectIds.length) failures.push('assets/data/projects.json has duplicate project identifiers');
+const productsSection = indexSource.match(/<!-- PRODUCTS_HOME:START -->([\s\S]*?)<!-- PRODUCTS_HOME:END -->/)?.[1] ?? '';
+const openSourceSection = indexSource.match(/<!-- OSS_HOME:START -->([\s\S]*?)<!-- OSS_HOME:END -->/)?.[1] ?? '';
+for (const product of projects.products) {
+  if (!product.url.startsWith('https://')) failures.push(`Product ${product.id} must use an https URL`);
+  if (product.highlights.length !== 3) failures.push(`Product ${product.id} must have exactly three highlights`);
+  if (!['orange', 'violet', 'sky'].includes(product.accent)) failures.push(`Product ${product.id} has an unknown accent ${product.accent}`);
+  if (!productsSection.includes(`href="${product.url}"`)) failures.push(`index.html products section is missing ${product.url}`);
+}
+for (const project of projects.openSource) {
+  if (!openSourceSection.includes(`href="${project.url}"`)) failures.push(`index.html open-source section is missing ${project.url}`);
+}
+if (!indexSource.includes('href="#products"')) failures.push('index.html navigation is missing the products link');
+if (!homeScript.includes('#products')) failures.push('home.js active-section observer does not include #products');
+
 const cloudflareRule = JSON.parse(await readFile(path.join(root, 'cloudflare/security-headers-rule.json'), 'utf8'));
 const configuredHeaders = cloudflareRule.action_parameters?.headers || {};
 for (const header of [

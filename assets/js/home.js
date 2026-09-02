@@ -26,6 +26,23 @@
       'Live Hacking Events'
     ]
   };
+  /* Products are single-sourced in the rendered cards (assets/data/projects.json),
+     so the structured data reads them from the DOM instead of duplicating them. */
+  var productCards = Array.prototype.slice.call(document.querySelectorAll('[data-product-url]'));
+  if (productCards.length) {
+    structuredData.owns = productCards.map(function (card) {
+      return {
+        '@type': 'SoftwareApplication',
+        name: card.getAttribute('data-product-name'),
+        url: card.getAttribute('data-product-url'),
+        description: card.getAttribute('data-product-tagline'),
+        applicationCategory: 'SecurityApplication',
+        operatingSystem: 'Web',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        author: { '@type': 'Person', name: 'Daniel Púa', url: 'https://devploit.dev' }
+      };
+    });
+  }
   var structuredDataElement = document.createElement('script');
   structuredDataElement.type = 'application/ld+json';
   structuredDataElement.textContent = JSON.stringify(structuredData);
@@ -36,7 +53,7 @@
 
   /* Active navigation */
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
-  var sections = Array.prototype.slice.call(document.querySelectorAll('#work, #tools, #contact'));
+  var sections = Array.prototype.slice.call(document.querySelectorAll('#work, #products, #tools, #contact'));
   var visibleSections = {};
 
   function setActiveNav(id) {

@@ -1,0 +1,81 @@
+{
+  "products": [
+    {
+      "id": "jwtforge",
+      "name": "JWTForge",
+      "domain": "jwtforge.com",
+      "url": "https://jwtforge.com",
+      "status": "live",
+      "accent": "violet",
+      "tagline": "Decode, audit and break JWTs, entirely in your browser.",
+      "highlights": [
+        "Decode and verify with a secret, a public key or a JWKS URL",
+        "Audit signals: alg:none, weak algorithms, kid / jku / x5u injection",
+        "Six attack generators with curl, Burp, nuclei and jwt_tool exports"
+      ],
+      "tags": ["client-side", "pentest", "free"],
+      "metric": { "value": "6", "label": "attack generators, zero requests sent" }
+    },
+    {
+      "id": "pwny",
+      "name": "pwny.cc",
+      "domain": "pwny.cc",
+      "url": "https://pwny.cc",
+      "status": "live",
+      "accent": "orange",
+      "tagline": "Payload repository for security researchers.",
+      "highlights": [
+        "Curated payloads organised by technique and target",
+        "Copy-ready snippets for engagements and CTFs",
+        "Kept current from real-world testing"
+      ],
+      "tags": ["reference", "payloads", "ctf"],
+      "metric": { "value": "24/7", "label": "payload reference, always online" }
+    },
+    {
+      "id": "x-utils",
+      "name": "x-utils",
+      "domain": "x-utils.com",
+      "url": "https://x-utils.com",
+      "status": "live",
+      "accent": "sky",
+      "tagline": "Metrics from X without paying for the API.",
+      "highlights": [
+        "Twelve copy-paste console tools: non-followers, engagement, exports",
+        "Read-only, never asks for a password, no server involved",
+        "Interactive HTML report plus CSV and JSON exports"
+      ],
+      "tags": ["javascript", "read-only", "open source"],
+      "metric": { "value": "12", "label": "tools, zero servers, zero API keys" }
+    }
+  ],
+  "openSource": [
+    {
+      "id": "nomore403",
+      "name": "nomore403",
+      "repo": "devploit/nomore403",
+      "url": "https://github.com/devploit/nomore403",
+      "starsLabel": "+1700 ★",
+      "description": "Tool to bypass 403/40X HTTP responses",
+      "tags": ["Go", "ctf"]
+    },
+    {
+      "id": "awesome-ctf-resources",
+      "name": "awesome-ctf-resources",
+      "repo": "devploit/awesome-ctf-resources",
+      "url": "https://github.com/devploit/awesome-ctf-resources",
+      "starsLabel": "+700 ★",
+      "description": "CTF frameworks, libraries, resources and software for CTF players",
+      "tags": ["reference", "ctf"]
+    },
+    {
+      "id": "debugHunter",
+      "name": "debugHunter",
+      "repo": "devploit/debugHunter",
+      "url": "https://github.com/devploit/debugHunter",
+      "starsLabel": "+200 ★",
+      "description": "Discover hidden debugging parameters and uncover web application secrets",
+      "tags": ["JS", "recon"]
+    }
+  ]
+}

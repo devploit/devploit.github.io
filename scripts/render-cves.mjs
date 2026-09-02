@@ -1,6 +1,7 @@
 /* Renders all data-driven site content (CVEs, CTF results, live hacking
-   events) from assets/data/*.json into the marked HTML sections, and keeps
-   sitemap.xml lastmod dates in sync with actual page changes.
+   events, products and open-source repos) from assets/data/*.json into the
+   marked HTML sections, and keeps sitemap.xml lastmod dates in sync with
+   actual page changes.
    Kept under its historical name so existing tooling keeps working. */
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -11,6 +12,7 @@ const checkOnly = process.argv.includes('--check');
 const data = JSON.parse(await readFile(path.join(root, 'assets/data/cves.json'), 'utf8'));
 const ctfData = JSON.parse(await readFile(path.join(root, 'assets/data/ctf.json'), 'utf8'));
 const liveData = JSON.parse(await readFile(path.join(root, 'assets/data/live.json'), 'utf8'));
+const projectsData = JSON.parse(await readFile(path.join(root, 'assets/data/projects.json'), 'utf8'));
 const recordsById = new Map(data.records.map((record) => [record.id, record]));
 const ctfById = new Map(ctfData.results.map((result) => [result.id, result]));
 
@@ -291,6 +293,71 @@ function renderLiveHomeFeatured() {
   ].join('\n')).join('\n');
 }
 
+/* ── Products & open source ── */
+
+function renderProductCard(product) {
+  const highlights = product.highlights.map((highlight) =>
+    `              <li>${escapeHtml(highlight)}</li>`
+  ).join('\n');
+  const tags = product.tags.map((tag) =>
+    `              <span class="tool-tag">${escapeHtml(tag)}</span>`
+  ).join('\n');
+
+  return [
+    `          <a href="${escapeHtml(product.url)}" target="_blank" rel="noopener" class="product-card" data-accent="${escapeHtml(product.accent)}" data-product-name="${escapeHtml(product.name)}" data-product-url="${escapeHtml(product.url)}" data-product-tagline="${escapeHtml(product.tagline)}" aria-label="${escapeHtml(product.name)}, ${escapeHtml(product.domain)} (opens in new tab)">`,
+    '            <div class="product-chrome" aria-hidden="true">',
+    '              <span class="product-dots"><i></i><i></i><i></i></span>',
+    `              <span class="product-domain">${escapeHtml(product.domain)}</span>`,
+    `              <span class="product-status">${escapeHtml(product.status)}</span>`,
+    '            </div>',
+    '            <div class="product-body">',
+    `              <h3 class="product-name">${escapeHtml(product.name)}</h3>`,
+    `              <p class="product-tagline">${escapeHtml(product.tagline)}</p>`,
+    '              <ul class="product-highlights" role="list">',
+    highlights,
+    '              </ul>',
+    '            </div>',
+    '            <div class="product-foot">',
+    '              <div class="product-metric">',
+    `                <span class="product-metric-value">${escapeHtml(product.metric.value)}</span>`,
+    `                <span class="product-metric-label">${escapeHtml(product.metric.label)}</span>`,
+    '              </div>',
+    '              <span class="product-open">open</span>',
+    '            </div>',
+    '            <div class="tool-tags product-tags">',
+    tags,
+    '            </div>',
+    '          </a>'
+  ].join('\n');
+}
+
+function renderProductsHome() {
+  return projectsData.products.map(renderProductCard).join('\n\n');
+}
+
+function renderOpenSourceCard(project) {
+  const tags = project.tags.map((tag) =>
+    `              <span class="tool-tag">${escapeHtml(tag)}</span>`
+  ).join('\n');
+
+  return [
+    `          <a href="${escapeHtml(project.url)}" target="_blank" rel="noopener" class="tool-card" aria-label="${escapeHtml(project.name)} on GitHub (opens in new tab)">`,
+    '            <div class="tool-header">',
+    `              <span class="tool-name">${escapeHtml(project.name)}</span>`,
+    `              <span class="tool-badge" data-star-repo="${escapeHtml(project.repo)}">${escapeHtml(project.starsLabel)}</span>`,
+    '            </div>',
+    `            <p class="tool-desc">${escapeHtml(project.description)}</p>`,
+    '            <div class="tool-tags">',
+    tags,
+    '            </div>',
+    '          </a>'
+  ].join('\n');
+}
+
+function renderOpenSourceHome() {
+  return projectsData.openSource.map(renderOpenSourceCard).join('\n\n');
+}
+
 /* ── File updates ── */
 
 async function updateSections(relativePath, sections) {
@@ -358,7 +425,9 @@ const pageSections = {
     CTF_HOME_KICKER: renderCtfHomeKicker(),
     CTF_HOME_FEATURED: renderCtfHomeFeatured(),
     LIVE_HOME_KICKER: renderLiveHomeKicker(),
-    LIVE_HOME_FEATURED: renderLiveHomeFeatured()
+    LIVE_HOME_FEATURED: renderLiveHomeFeatured(),
+    PRODUCTS_HOME: renderProductsHome(),
+    OSS_HOME: renderOpenSourceHome()
   }
 };
 
