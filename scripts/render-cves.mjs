@@ -338,7 +338,7 @@ function renderProductCard(product) {
   ).join('\n');
 
   return [
-    `          <a href="${escapeHtml(product.url)}" target="_blank" rel="noopener" class="product-card" data-accent="${escapeHtml(product.accent)}" data-product-name="${escapeHtml(product.name)}" data-product-url="${escapeHtml(product.url)}" data-product-tagline="${escapeHtml(product.tagline)}" aria-label="${escapeHtml(product.name)}, ${escapeHtml(product.domain)} (opens in new tab)">`,
+    `          <a href="${escapeHtml(product.url)}" target="_blank" rel="noopener" class="product-card" data-product-name="${escapeHtml(product.name)}" data-product-url="${escapeHtml(product.url)}" data-product-tagline="${escapeHtml(product.tagline)}" aria-label="${escapeHtml(product.name)}, ${escapeHtml(product.domain)} (opens in new tab)">`,
     '            <div class="product-chrome" aria-hidden="true">',
     '              <span class="product-dots"><i></i><i></i><i></i></span>',
     `              <span class="product-domain">${escapeHtml(product.domain)}</span>`,

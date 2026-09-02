@@ -841,21 +841,11 @@
   border: 1px solid var(--color-border);
   border-radius: 16px;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.008) 40%),
+    linear-gradient(180deg, rgba(232, 140, 64, 0.05), rgba(255,255,255,0.01) 34%),
     var(--color-surface);
   color: var(--color-text);
   overflow: hidden;
   transition: border-color 180ms, transform 180ms, box-shadow 180ms;
-}
-
-.product-card[data-accent="violet"] {
-  --p-accent: #b39cff;
-  --p-accent-soft: rgba(179, 156, 255, 0.14);
-}
-
-.product-card[data-accent="sky"] {
-  --p-accent: #5cb8ff;
-  --p-accent-soft: rgba(92, 184, 255, 0.14);
 }
 
 .product-card::before {
@@ -870,9 +860,8 @@
 
 .product-card:hover,
 .product-card:focus-visible {
-  border-color: var(--p-accent);
-  transform: translateY(-5px);
-  box-shadow: 0 24px 50px -30px var(--p-accent);
+  border-color: var(--color-accent-dim);
+  transform: translateY(-4px);
 }
 
 .product-card:hover::before {

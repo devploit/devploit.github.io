@@ -84,7 +84,6 @@ const openSourceSection = indexSource.match(/<!-- OSS_HOME:START -->([\s\S]*?)<!
 for (const product of projects.products) {
   if (!product.url.startsWith('https://')) failures.push(`Product ${product.id} must use an https URL`);
   if (product.highlights.length !== 3) failures.push(`Product ${product.id} must have exactly three highlights`);
-  if (!['orange', 'violet', 'sky'].includes(product.accent)) failures.push(`Product ${product.id} has an unknown accent ${product.accent}`);
   if (!productsSection.includes(`href="${product.url}"`)) failures.push(`index.html products section is missing ${product.url}`);
 }
 for (const project of projects.openSource) {

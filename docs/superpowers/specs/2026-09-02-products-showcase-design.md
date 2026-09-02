@@ -27,7 +27,7 @@ New file `assets/data/projects.json`:
   "products": [
     { "id": "jwtforge", "name": "JWTForge", "domain": "jwtforge.com", "url": "https://jwtforge.com", "status": "live",
       "tagline": "...", "highlights": ["...", "...", "..."], "tags": ["client-side", "free"],
-      "metric": { "value": "6", "label": "attack generators" }, "accent": "violet" }
+      "metric": { "value": "6", "label": "attack generators" } }
   ],
   "openSource": [
     { "id": "nomore403", "name": "nomore403", "repo": "devploit/nomore403", "url": "https://github.com/devploit/nomore403",
@@ -36,7 +36,7 @@ New file `assets/data/projects.json`:
 }
 ```
 
-`accent` is one of `orange`, `violet`, `sky` and maps to a CSS custom property on the card. `status` is rendered as a label; only `live` is used today.
+`status` is rendered as a label; only `live` is used today.
 
 ## Rendering
 
@@ -49,7 +49,7 @@ Markers follow the existing `<!-- NAME:START --> ... <!-- NAME:END -->` conventi
 
 ## Markup and layout
 
-Section order on the home becomes: hero, proof of work + posts, **products**, research & recognition, open source, footer. Products sit above recognition because they are the new headline and recognition already has its own strong block.
+Section order on the home becomes: hero, proof of work + posts, research & recognition, **products**, open source, footer. Recognition stays first because it is the stronger signal for the site's audience; products follow it and sit directly above the open-source repos they belong with.
 
 Products section structure mirrors the recognition section: `section-label`, kicker "Built and running", h2 "Tools I ship and keep online.", short mono paragraph, then a three-column grid.
 
@@ -61,9 +61,9 @@ Each product card is an `<a>` wrapping:
 - Footer row: metric (large value, small label) on the left, `open ↗` on the right.
 - Tags row.
 
-Per-card accent via `data-accent` sets `--p-accent`; used only for the window glow, the status dot and the metric value, so the page stays coherent with the orange brand.
+All cards use the single orange accent of the site. Per-product colours were tried and rejected: they made the products read as a different site from the recognition cards next to them.
 
-Proof of work gets one new `project` item: "pwny.cc · JWTForge · x-utils", subtitle "Products built and run in production", link `see products` to `#products`.
+Proof of work is trimmed to what is not repeated further down the page (role, research, team, community); the nomore403, products and CTF entries were removed because each has its own section below.
 
 Nav gains `products` (`#products`) after `work`; `tools` stays and keeps pointing to `#tools`. `home.js` active-section observer includes `#products`.
 
@@ -80,7 +80,7 @@ Responsive: three columns above 1024px, two between 768 and 1024, one below 768.
 
 `scripts/check-site.mjs` adds:
 
-- `projects.json` ids unique, every product has `url` starting with `https://`, exactly three highlights, `accent` in the allowed set.
+- `projects.json` ids unique, every product has `url` starting with `https://`, exactly three highlights.
 - Rendered `index.html` contains each product URL inside the `PRODUCTS_HOME` markers and each repo URL inside `OSS_HOME`.
 - Nav contains `href="#products"` and `home.js` observes `#products`.
 
