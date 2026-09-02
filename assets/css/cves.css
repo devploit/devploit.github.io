@@ -53,6 +53,17 @@
   background: rgba(255,255,255,0.02);
 }
 
+.cve-badge.is-medium {
+  border-color: var(--color-accent-dim);
+}
+
+.cve-badge.is-pending {
+  border-style: dashed;
+  border-color: var(--color-border-md);
+  color: var(--color-muted);
+  background: transparent;
+}
+
 .source-links {
   display: flex;
   flex-wrap: wrap;

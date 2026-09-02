@@ -1,6 +1,7 @@
 /* Renders all data-driven site content (CVEs, CTF results, live hacking
-   events) from assets/data/*.json into the marked HTML sections, and keeps
-   sitemap.xml lastmod dates in sync with actual page changes.
+   events, products and open-source repos) from assets/data/*.json into the
+   marked HTML sections, and keeps sitemap.xml lastmod dates in sync with
+   actual page changes.
    Kept under its historical name so existing tooling keeps working. */
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -11,6 +12,7 @@ const checkOnly = process.argv.includes('--check');
 const data = JSON.parse(await readFile(path.join(root, 'assets/data/cves.json'), 'utf8'));
 const ctfData = JSON.parse(await readFile(path.join(root, 'assets/data/ctf.json'), 'utf8'));
 const liveData = JSON.parse(await readFile(path.join(root, 'assets/data/live.json'), 'utf8'));
+const projectsData = JSON.parse(await readFile(path.join(root, 'assets/data/projects.json'), 'utf8'));
 const recordsById = new Map(data.records.map((record) => [record.id, record]));
 const ctfById = new Map(ctfData.results.map((result) => [result.id, result]));
 
@@ -51,16 +53,33 @@ function requireCtfResult(id, collectionName) {
 
 /* ── CVEs ── */
 
+/* Shared hero stat tiles: a large value with a short label underneath. */
+function renderStatTiles(label, tiles) {
+  return [
+    `        <div class="stats" aria-label="${escapeHtml(label)}">`,
+    ...tiles.map(([value, text]) => [
+      '          <div class="stat">',
+      `            <span class="stat-value">${escapeHtml(value)}</span>`,
+      `            <span class="stat-label">${escapeHtml(text)}</span>`,
+      '          </div>'
+    ].join('\n')),
+    '        </div>'
+  ].join('\n');
+}
+
+function severityKey(record) {
+  if (!record.cvss) return 'pending';
+  return record.cvss.severity.toLowerCase();
+}
+
 function renderStats() {
   const published = data.records.filter((record) => record.publicationStatus === 'published').length;
   const pending = data.records.length - published;
-  return [
-    '        <div class="stats" aria-label="CVE track record">',
-    `          <span class="badge">${data.records.length} CVE identifiers</span>`,
-    `          <span class="badge">${published} published CVE records</span>`,
-    `          <span class="badge">${publicationCountLabel(pending)}</span>`,
-    '        </div>'
-  ].join('\n');
+  return renderStatTiles('CVE track record', [
+    [String(data.records.length), 'CVE identifiers'],
+    [String(published), 'published records'],
+    [String(pending), publicationCountLabel(pending).replace(/^\d+ /, '')]
+  ]);
 }
 
 function renderKeyFindings() {
@@ -68,7 +87,7 @@ function renderKeyFindings() {
     const record = requireRecord(id, 'keyFindings');
     const score = ` · ${cvssLabel(record)}`;
     return [
-      '            <article class="item">',
+      `            <article class="item" data-severity="${severityKey(record)}">`,
       `              <a class="item-link" href="#${slug(record)}">`,
       '                <div class="title-row">',
       `                  <div class="title">${escapeHtml(record.id)} · ${escapeHtml(record.keyTitle)}</div>`,
@@ -96,7 +115,7 @@ function renderRecord(record) {
   }
 
   const badges = metadata.map(({ label, emphasized }) =>
-    `                <span class="cve-badge${emphasized ? '' : ' is-muted'}">${escapeHtml(label)}</span>`
+    `                <span class="cve-badge${emphasized ? ` is-${severityKey(record)}` : ' is-muted'}">${escapeHtml(label)}</span>`
   ).join('\n');
 
   const references = record.references.map((reference) =>
@@ -104,7 +123,7 @@ function renderRecord(record) {
   ).join('\n');
 
   return [
-    `            <article class="item is-static" id="${slug(record)}">`,
+    `            <article class="item is-static" id="${slug(record)}" data-severity="${severityKey(record)}">`,
     '              <div class="title-row">',
     `                <div class="title">${escapeHtml(record.id)}</div>`,
     `                <div class="year">${record.year}</div>`,
@@ -246,15 +265,14 @@ function liveTitle(event) {
 }
 
 function renderLiveStats() {
-  const badges = [
-    `${liveData.events.length} public event result${liveData.events.length === 1 ? '' : 's'}`,
-    ...liveData.events.map((event) => `Top ${parseInt(event.rankLabel, 10)} in ${event.city} ${event.year}`)
-  ];
-  return [
-    '        <div class="stats" aria-label="Live hacking track record">',
-    ...badges.map((badge) => `          <span class="badge">${escapeHtml(badge)}</span>`),
-    '        </div>'
-  ].join('\n');
+  const events = liveData.events;
+  const best = events.reduce((top, event) => (parseInt(event.rankLabel, 10) < parseInt(top.rankLabel, 10) ? event : top), events[0]);
+  const platforms = new Set(events.map((event) => event.platform)).size;
+  return renderStatTiles('Live hacking track record', [
+    [String(events.length), `public event result${events.length === 1 ? '' : 's'}`],
+    [best.rankLabel, `best placement, ${best.city} ${best.year}`],
+    [String(platforms), `platform${platforms === 1 ? '' : 's'}, all onsite`]
+  ]);
 }
 
 function renderLiveResults() {
@@ -265,10 +283,28 @@ function renderLiveResults() {
     '              <div class="item-meta">',
     `                <span class="tag">${escapeHtml(event.platform)}</span>`,
     `                <span class="tag is-muted">${escapeHtml(event.format)}</span>`,
-    `                <span class="tag is-muted">${escapeHtml(event.rankLabel)} place</span>`,
     '              </div>',
     '            </div>'
   ].join('\n')).join('\n');
+}
+
+/* ── CTF hero stats, derived from the placement prefix in each title ── */
+
+function ctfRank(result) {
+  const match = /^(\d+)(?:st|nd|rd|th)\b/.exec(result.title);
+  return match ? parseInt(match[1], 10) : null;
+}
+
+function renderCtfStats() {
+  const ranks = ctfData.results.map(ctfRank).filter((rank) => rank !== null);
+  const firsts = ranks.filter((rank) => rank === 1).length;
+  const podiums = ranks.filter((rank) => rank <= 3).length;
+  const since = Math.min(...ctfData.results.map((result) => result.year));
+  return renderStatTiles('CTF track record', [
+    [String(firsts), `first place${firsts === 1 ? '' : 's'}`],
+    [String(podiums), `podium finishes, solo and team`],
+    [String(since), 'competing since']
+  ]);
 }
 
 function renderLiveHomeKicker() {
@@ -289,6 +325,71 @@ function renderLiveHomeFeatured() {
     '                </div>',
     '              </li>'
   ].join('\n')).join('\n');
+}
+
+/* ── Products & open source ── */
+
+function renderProductCard(product) {
+  const highlights = product.highlights.map((highlight) =>
+    `              <li>${escapeHtml(highlight)}</li>`
+  ).join('\n');
+  const tags = product.tags.map((tag) =>
+    `              <span class="tool-tag">${escapeHtml(tag)}</span>`
+  ).join('\n');
+
+  return [
+    `          <a href="${escapeHtml(product.url)}" target="_blank" rel="noopener" class="product-card" data-product-name="${escapeHtml(product.name)}" data-product-url="${escapeHtml(product.url)}" data-product-tagline="${escapeHtml(product.tagline)}" aria-label="${escapeHtml(product.name)}, ${escapeHtml(product.domain)} (opens in new tab)">`,
+    '            <div class="product-chrome" aria-hidden="true">',
+    '              <span class="product-dots"><i></i><i></i><i></i></span>',
+    `              <span class="product-domain">${escapeHtml(product.domain)}</span>`,
+    `              <span class="product-status">${escapeHtml(product.status)}</span>`,
+    '            </div>',
+    '            <div class="product-body">',
+    `              <h3 class="product-name">${escapeHtml(product.name)}</h3>`,
+    `              <p class="product-tagline">${escapeHtml(product.tagline)}</p>`,
+    '              <ul class="product-highlights" role="list">',
+    highlights,
+    '              </ul>',
+    '            </div>',
+    '            <div class="product-foot">',
+    '              <div class="product-metric">',
+    `                <span class="product-metric-value">${escapeHtml(product.metric.value)}</span>`,
+    `                <span class="product-metric-label">${escapeHtml(product.metric.label)}</span>`,
+    '              </div>',
+    '              <span class="product-open">open</span>',
+    '            </div>',
+    '            <div class="tool-tags product-tags">',
+    tags,
+    '            </div>',
+    '          </a>'
+  ].join('\n');
+}
+
+function renderProductsHome() {
+  return projectsData.products.map(renderProductCard).join('\n\n');
+}
+
+function renderOpenSourceCard(project) {
+  const tags = project.tags.map((tag) =>
+    `              <span class="tool-tag">${escapeHtml(tag)}</span>`
+  ).join('\n');
+
+  return [
+    `          <a href="${escapeHtml(project.url)}" target="_blank" rel="noopener" class="tool-card" aria-label="${escapeHtml(project.name)} on GitHub (opens in new tab)">`,
+    '            <div class="tool-header">',
+    `              <span class="tool-name">${escapeHtml(project.name)}</span>`,
+    `              <span class="tool-badge" data-star-repo="${escapeHtml(project.repo)}">${escapeHtml(project.starsLabel)}</span>`,
+    '            </div>',
+    `            <p class="tool-desc">${escapeHtml(project.description)}</p>`,
+    '            <div class="tool-tags">',
+    tags,
+    '            </div>',
+    '          </a>'
+  ].join('\n');
+}
+
+function renderOpenSourceHome() {
+  return projectsData.openSource.map(renderOpenSourceCard).join('\n\n');
 }
 
 /* ── File updates ── */
@@ -343,6 +444,7 @@ const pageSections = {
     CVE_RECORDS: renderRecords()
   },
   'ctf.html': {
+    CTF_STATS: renderCtfStats(),
     CTF_KEY_RESULTS: renderCtfKeyResults(),
     CTF_INDIVIDUAL_META: renderCtfIndividualMeta(),
     CTF_INDIVIDUAL: renderCtfScope('individual'),
@@ -358,7 +460,9 @@ const pageSections = {
     CTF_HOME_KICKER: renderCtfHomeKicker(),
     CTF_HOME_FEATURED: renderCtfHomeFeatured(),
     LIVE_HOME_KICKER: renderLiveHomeKicker(),
-    LIVE_HOME_FEATURED: renderLiveHomeFeatured()
+    LIVE_HOME_FEATURED: renderLiveHomeFeatured(),
+    PRODUCTS_HOME: renderProductsHome(),
+    OSS_HOME: renderOpenSourceHome()
   }
 };
 

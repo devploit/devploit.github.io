@@ -7,7 +7,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="Permissions-Policy" content="accelerometer=(), autoplay=(), camera=(), display-capture=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
   <title>Daniel Púa · devploit · Security Researcher</title>
-  <meta name="description" content="Head of Security at Magnific. Security Researcher. Offensive security, CTF player. Creator of nomore403. Real-world infosec, no hype.">
+  <meta name="description" content="Head of Security at Magnific. Security Researcher. Offensive security, CTF player. Builds pwny.cc, JWTForge and x-utils. Creator of nomore403. Real-world infosec, no hype.">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="author" content="Daniel Púa">
   <meta name="theme-color" content="#0c0c0e">
@@ -18,7 +18,7 @@
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="es_ES">
   <meta property="og:title" content="Daniel Púa · devploit · Security Researcher">
-  <meta property="og:description" content="Head of Security at Magnific. Security Researcher. Offensive security & CTF.">
+  <meta property="og:description" content="Head of Security at Magnific. Security Researcher. Builds pwny.cc, JWTForge and x-utils. Offensive security & CTF.">
   <meta property="og:url" content="https://devploit.dev">
   <meta property="og:image" content="https://devploit.dev/og-image.png">
   <meta property="og:image:alt" content="Daniel Púa / devploit">
@@ -30,7 +30,7 @@
   <meta name="twitter:site" content="@devploit">
   <meta name="twitter:creator" content="@devploit">
   <meta name="twitter:title" content="Daniel Púa · devploit · Security Researcher">
-  <meta name="twitter:description" content="Head of Security at Magnific. Security Researcher. Offensive security & CTF.">
+  <meta name="twitter:description" content="Head of Security at Magnific. Security Researcher. Builds pwny.cc, JWTForge and x-utils. Offensive security & CTF.">
   <meta name="twitter:image" content="https://devploit.dev/og-image.png">
 
   <link rel="canonical" href="https://devploit.dev">
@@ -74,6 +74,7 @@
       <div class="nav-right" id="nav-menu">
         <div class="nav-links">
           <a href="#work" data-nav="work">work</a>
+          <a href="#products" data-nav="products">products</a>
           <a href="https://blog.devploit.dev" target="_blank" rel="noopener" aria-label="Blog (opens in new tab)">blog</a>
           <a href="/ctf.html">ctf</a>
           <a href="/livehackingevents.html">live</a>
@@ -95,12 +96,10 @@
           <div class="hero-handle">@devploit</div>
           <p class="hero-tagline">
             Real-world infosec, no hype.<br>
-            <em>Never trust a fox.</em>
+            <em>Never trust a fox.</em><span class="hero-caret" aria-hidden="true"></span>
           </p>
-          <ul class="hero-pills" role="list" aria-label="Roles">
+          <ul class="hero-pills" role="list" aria-label="Affiliations">
             <li class="pill pill--accent pill--link"><a href="https://www.magnific.com" target="_blank" rel="noopener" aria-label="Head of Security at Magnific (opens in new tab)">Head of Security @ Magnific</a></li>
-            <li class="pill pill--accent">Security Researcher</li>
-            <li class="pill">Penetration Testing</li>
             <li class="pill pill--link"><a href="https://hackandbeers.es/" target="_blank" rel="noopener" aria-label="Hack&amp;Beers Málaga (opens in new tab)">Hack&amp;Beers Málaga</a></li>
             <li class="pill">ECSC Spain 2021</li>
             <li class="pill">ripp3rsCTF / SFPE</li>
@@ -139,25 +138,6 @@
               <h3>Security Researcher · Freelance</h3>
               <p>Bug Bounty · Penetration Testing · Consulting</p>
               <a class="proof-link" href="#contact">get in touch</a>
-            </div>
-          </div>
-
-          <div class="proof-item is-link">
-            <div class="proof-icon" aria-hidden="true">{;}</div>
-            <div class="proof-text">
-              <div class="proof-meta">project</div>
-              <h3>nomore403 · <span class="proof-stars" data-star-repo="devploit/nomore403">+1700 ★</span> GitHub</h3>
-              <p>Tool to bypass 403/40X responses</p>
-              <a class="proof-link" href="https://github.com/devploit/nomore403" target="_blank" rel="noopener">open project</a>
-            </div>
-          </div>
-
-          <div class="proof-item">
-            <div class="proof-icon" aria-hidden="true">DC</div>
-            <div class="proof-text">
-              <div class="proof-meta">ctf</div>
-              <h3>DEFCON Quals · Navaja Negra · Google CTF</h3>
-              <p>CTF competitor since 2017</p>
             </div>
           </div>
 
@@ -210,7 +190,7 @@
           <article class="recognition-card">
             <div class="recognition-card-head">
               <div>
-                <h3>CTF Awards</h3>
+                <h3><a class="recognition-title-link" href="/ctf.html">CTF Awards</a></h3>
                 <p>Selected wins and podiums across solo and team CTFs.</p>
               </div>
 <!-- CTF_HOME_KICKER:START -->
@@ -266,7 +246,7 @@
           <article class="recognition-card">
             <div class="recognition-card-head">
               <div>
-                <h3>Live Hacking Events</h3>
+                <h3><a class="recognition-title-link" href="/livehackingevents.html">Live Hacking Events</a></h3>
                 <p>Selected onsite bug bounty event results.</p>
               </div>
 <!-- LIVE_HOME_KICKER:START -->
@@ -307,7 +287,7 @@
           <article class="recognition-card">
             <div class="recognition-card-head">
               <div>
-                <h3>CVEs</h3>
+                <h3><a class="recognition-title-link" href="/cves.html">CVEs</a></h3>
                 <p>Selected assigned vulnerabilities and public advisory references.</p>
               </div>
 <!-- CVE_HOME_KICKER:START -->
@@ -368,16 +348,119 @@
       </div>
     </section>
 
+    <!-- PRODUCTS -->
+    <section class="products-section reveal" id="products">
+      <div class="shell">
+        <div class="section-label">// products</div>
+        <div class="recognition-intro products-intro">
+          <span class="recognition-kicker">Built and running</span>
+          <h2>Tools I ship and keep online.</h2>
+          <p>Free, browser-first security and data tools used daily by pentesters and researchers. Each one runs in production, with no accounts and no data leaving your machine.</p>
+        </div>
+
+        <div class="products-grid">
+          <!-- PRODUCTS_HOME:START -->
+          <a href="https://jwtforge.com" target="_blank" rel="noopener" class="product-card" data-product-name="JWTForge" data-product-url="https://jwtforge.com" data-product-tagline="Decode, audit and break JWTs, entirely in your browser." aria-label="JWTForge, jwtforge.com (opens in new tab)">
+            <div class="product-chrome" aria-hidden="true">
+              <span class="product-dots"><i></i><i></i><i></i></span>
+              <span class="product-domain">jwtforge.com</span>
+              <span class="product-status">live</span>
+            </div>
+            <div class="product-body">
+              <h3 class="product-name">JWTForge</h3>
+              <p class="product-tagline">Decode, audit and break JWTs, entirely in your browser.</p>
+              <ul class="product-highlights" role="list">
+              <li>Decode and verify with a secret, a public key or a JWKS URL</li>
+              <li>Audit signals: alg:none, weak algorithms, kid / jku / x5u injection</li>
+              <li>Six attack generators with curl, Burp, nuclei and jwt_tool exports</li>
+              </ul>
+            </div>
+            <div class="product-foot">
+              <div class="product-metric">
+                <span class="product-metric-value">6</span>
+                <span class="product-metric-label">attack generators, zero requests sent</span>
+              </div>
+              <span class="product-open">open</span>
+            </div>
+            <div class="tool-tags product-tags">
+              <span class="tool-tag">client-side</span>
+              <span class="tool-tag">pentest</span>
+              <span class="tool-tag">free</span>
+            </div>
+          </a>
+
+          <a href="https://pwny.cc" target="_blank" rel="noopener" class="product-card" data-product-name="pwny.cc" data-product-url="https://pwny.cc" data-product-tagline="Payload repository for security researchers." aria-label="pwny.cc, pwny.cc (opens in new tab)">
+            <div class="product-chrome" aria-hidden="true">
+              <span class="product-dots"><i></i><i></i><i></i></span>
+              <span class="product-domain">pwny.cc</span>
+              <span class="product-status">live</span>
+            </div>
+            <div class="product-body">
+              <h3 class="product-name">pwny.cc</h3>
+              <p class="product-tagline">Payload repository for security researchers.</p>
+              <ul class="product-highlights" role="list">
+              <li>Curated payloads organised by technique and target</li>
+              <li>Copy-ready snippets for engagements and CTFs</li>
+              <li>Kept current from real-world testing</li>
+              </ul>
+            </div>
+            <div class="product-foot">
+              <div class="product-metric">
+                <span class="product-metric-value">24/7</span>
+                <span class="product-metric-label">payload reference, always online</span>
+              </div>
+              <span class="product-open">open</span>
+            </div>
+            <div class="tool-tags product-tags">
+              <span class="tool-tag">reference</span>
+              <span class="tool-tag">payloads</span>
+              <span class="tool-tag">ctf</span>
+            </div>
+          </a>
+
+          <a href="https://x-utils.com" target="_blank" rel="noopener" class="product-card" data-product-name="x-utils" data-product-url="https://x-utils.com" data-product-tagline="Metrics from X without paying for the API." aria-label="x-utils, x-utils.com (opens in new tab)">
+            <div class="product-chrome" aria-hidden="true">
+              <span class="product-dots"><i></i><i></i><i></i></span>
+              <span class="product-domain">x-utils.com</span>
+              <span class="product-status">live</span>
+            </div>
+            <div class="product-body">
+              <h3 class="product-name">x-utils</h3>
+              <p class="product-tagline">Metrics from X without paying for the API.</p>
+              <ul class="product-highlights" role="list">
+              <li>Twelve copy-paste console tools: non-followers, engagement, exports</li>
+              <li>Read-only, never asks for a password, no server involved</li>
+              <li>Interactive HTML report plus CSV and JSON exports</li>
+              </ul>
+            </div>
+            <div class="product-foot">
+              <div class="product-metric">
+                <span class="product-metric-value">12</span>
+                <span class="product-metric-label">tools, zero servers, zero API keys</span>
+              </div>
+              <span class="product-open">open</span>
+            </div>
+            <div class="tool-tags product-tags">
+              <span class="tool-tag">javascript</span>
+              <span class="tool-tag">read-only</span>
+              <span class="tool-tag">open source</span>
+            </div>
+          </a>
+<!-- PRODUCTS_HOME:END -->
+        </div>
+      </div>
+    </section>
+
     <!-- TOOLS -->
     <section class="tools-section reveal" id="tools">
       <div class="shell">
-        <h2 class="section-label">// tools &amp; projects</h2>
-        <div class="tools-grid">
-
+        <h2 class="section-label">// open source</h2>
+        <div class="tools-grid tools-grid--three">
+          <!-- OSS_HOME:START -->
           <a href="https://github.com/devploit/nomore403" target="_blank" rel="noopener" class="tool-card" aria-label="nomore403 on GitHub (opens in new tab)">
             <div class="tool-header">
               <span class="tool-name">nomore403</span>
-              <span class="tool-badge">+1700 ★</span>
+              <span class="tool-badge" data-star-repo="devploit/nomore403">+1700 ★</span>
             </div>
             <p class="tool-desc">Tool to bypass 403/40X HTTP responses</p>
             <div class="tool-tags">
@@ -386,21 +469,10 @@
             </div>
           </a>
 
-          <a href="https://pwny.cc" target="_blank" rel="noopener" class="tool-card" aria-label="pwny.cc (opens in new tab)">
-            <div class="tool-header">
-              <span class="tool-name">pwny.cc</span>
-            </div>
-            <p class="tool-desc">Payload repository for security researchers</p>
-            <div class="tool-tags">
-              <span class="tool-tag">reference</span>
-              <span class="tool-tag">payloads</span>
-            </div>
-          </a>
-
           <a href="https://github.com/devploit/awesome-ctf-resources" target="_blank" rel="noopener" class="tool-card" aria-label="awesome-ctf-resources on GitHub (opens in new tab)">
             <div class="tool-header">
               <span class="tool-name">awesome-ctf-resources</span>
-              <span class="tool-badge">+700 ★</span>
+              <span class="tool-badge" data-star-repo="devploit/awesome-ctf-resources">+700 ★</span>
             </div>
             <p class="tool-desc">CTF frameworks, libraries, resources and software for CTF players</p>
             <div class="tool-tags">
@@ -412,7 +484,7 @@
           <a href="https://github.com/devploit/debugHunter" target="_blank" rel="noopener" class="tool-card" aria-label="debugHunter on GitHub (opens in new tab)">
             <div class="tool-header">
               <span class="tool-name">debugHunter</span>
-              <span class="tool-badge">+200 ★</span>
+              <span class="tool-badge" data-star-repo="devploit/debugHunter">+200 ★</span>
             </div>
             <p class="tool-desc">Discover hidden debugging parameters and uncover web application secrets</p>
             <div class="tool-tags">
@@ -420,6 +492,7 @@
               <span class="tool-tag">recon</span>
             </div>
           </a>
+<!-- OSS_HOME:END -->
         </div>
       </div>
     </section>

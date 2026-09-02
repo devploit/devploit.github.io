@@ -32,11 +32,18 @@
 
 .eyebrow {
   margin-bottom: 16px;
-  color: var(--color-accent);
+  color: var(--color-subtle);
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  text-transform: uppercase;
+  font-size: 12px;
   letter-spacing: 0.08em;
+}
+
+.eyebrow::before {
+  content: '// ';
+}
+
+.hero .eyebrow {
+  color: var(--color-accent);
 }
 
 h1 {
@@ -56,20 +63,37 @@ h1 {
 }
 
 .stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 32px;
+  max-width: 640px;
 }
 
-.badge {
-  padding: 6px 12px;
-  border: 1px solid var(--color-border-md);
-  border-radius: 999px;
-  color: var(--color-muted);
-  background: rgba(255,255,255,0.02);
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 18px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.008)), var(--color-surface);
+}
+
+.stat-value {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(26px, 3vw, 34px);
+  line-height: 1;
+  letter-spacing: -1px;
+  color: var(--color-accent);
+}
+
+.stat-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--color-muted);
 }
 
 .section {
@@ -113,6 +137,21 @@ h2 {
   display: block;
   padding-left: 12px;
   border-left: 2px solid rgba(232,140,64,0.18);
+}
+
+/* Severity is encoded in the left rule: solid accent for High, dimmed
+   accent for Medium, dashed neutral while a CVE is still pending. */
+.item[data-severity="high"] {
+  border-left-color: var(--color-accent);
+}
+
+.item[data-severity="medium"] {
+  border-left-color: var(--color-accent-dim);
+}
+
+.item[data-severity="pending"] {
+  border-left-style: dashed;
+  border-left-color: var(--color-border-md);
 }
 
 .item a {
@@ -165,5 +204,25 @@ h2 {
   .section-head {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .stats {
+    gap: 10px;
+  }
+
+  .stat {
+    padding: 12px 12px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .stat {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 12px;
   }
 }
