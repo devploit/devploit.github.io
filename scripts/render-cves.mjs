@@ -1,5 +1,5 @@
 /* Renders all data-driven site content (CVEs, CTF results, live hacking
-   events, products and open-source repos) from assets/data/*.json into the
+   events, products, blog posts and profile metadata) from assets/data/*.json into the
    marked HTML sections, and keeps sitemap.xml lastmod dates in sync with
    actual page changes.
    Kept under its historical name so existing tooling keeps working. */
@@ -13,6 +13,7 @@ const data = JSON.parse(await readFile(path.join(root, 'assets/data/cves.json'),
 const ctfData = JSON.parse(await readFile(path.join(root, 'assets/data/ctf.json'), 'utf8'));
 const liveData = JSON.parse(await readFile(path.join(root, 'assets/data/live.json'), 'utf8'));
 const projectsData = JSON.parse(await readFile(path.join(root, 'assets/data/projects.json'), 'utf8'));
+const postsData = JSON.parse(await readFile(path.join(root, 'assets/data/posts.json'), 'utf8'));
 const recordsById = new Map(data.records.map((record) => [record.id, record]));
 const ctfById = new Map(ctfData.results.map((result) => [result.id, result]));
 
@@ -338,7 +339,7 @@ function renderProductCard(product) {
   ).join('\n');
 
   return [
-    `          <a href="${escapeHtml(product.url)}" target="_blank" rel="noopener" class="product-card" data-product-name="${escapeHtml(product.name)}" data-product-url="${escapeHtml(product.url)}" data-product-tagline="${escapeHtml(product.tagline)}" aria-label="${escapeHtml(product.name)}, ${escapeHtml(product.domain)} (opens in new tab)">`,
+    `          <a href="${escapeHtml(product.url)}" target="_blank" rel="noopener" class="product-card" aria-label="${escapeHtml(product.name)}, ${escapeHtml(product.domain)} (opens in new tab)">`,
     '            <div class="product-chrome" aria-hidden="true">',
     '              <span class="product-dots"><i></i><i></i><i></i></span>',
     `              <span class="product-domain">${escapeHtml(product.domain)}</span>`,
@@ -392,6 +393,88 @@ function renderOpenSourceHome() {
   return projectsData.openSource.map(renderOpenSourceCard).join('\n\n');
 }
 
+/* ── Blog posts & profile ── */
+
+const postDateFormatter = new Intl.DateTimeFormat('en-US', {
+  month: 'short', year: 'numeric', timeZone: 'UTC'
+});
+
+if (!Array.isArray(postsData) || !postsData.length || postsData.length > 4) {
+  throw new Error('assets/data/posts.json must contain one to four featured posts');
+}
+for (const post of postsData) {
+  const url = new URL(post.url);
+  if (url.origin !== 'https://blog.devploit.dev' || !url.pathname.startsWith('/posts/') ||
+      typeof post.title !== 'string' || !post.title.trim() ||
+      typeof post.category !== 'string' || !post.category.trim() ||
+      typeof post.published !== 'string' || Number.isNaN(Date.parse(post.published))) {
+    throw new Error(`Invalid featured blog post: ${post.url}`);
+  }
+}
+if (new Set(postsData.map((post) => post.url)).size !== postsData.length) {
+  throw new Error('assets/data/posts.json has duplicate post URLs');
+}
+
+function renderBlogHome() {
+  return postsData.map((post) => [
+    `            <a href="${escapeHtml(post.url)}" target="_blank" rel="noopener" class="post-item">`,
+    `              <div class="post-tag">${escapeHtml(post.category)}</div>`,
+    `              <div class="post-title">${escapeHtml(post.title)}</div>`,
+    `              <time class="post-date" datetime="${escapeHtml(post.published)}">${postDateFormatter.format(new Date(post.published))}</time>`,
+    '            </a>'
+  ].join('\n')).join('\n');
+}
+
+function renderProfileSchema() {
+  const personId = 'https://devploit.dev/#person';
+  const profile = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    '@id': 'https://devploit.dev/#profile',
+    url: 'https://devploit.dev/',
+    name: 'Daniel Púa · devploit · Security Researcher',
+    inLanguage: 'en',
+    mainEntity: {
+      '@type': 'Person',
+      '@id': personId,
+      name: 'Daniel Púa',
+      alternateName: 'devploit',
+      url: 'https://devploit.dev/',
+      image: 'https://devploit.dev/assets/img/favicons/avatar.png',
+      jobTitle: ['Head of Security', 'Security Researcher'],
+      worksFor: { '@type': 'Organization', name: 'Magnific', url: 'https://www.magnific.com' },
+      sameAs: [
+        'https://github.com/devploit',
+        'https://twitter.com/devploit',
+        'https://www.linkedin.com/in/daniel-pua/',
+        'https://blog.devploit.dev'
+      ],
+      knowsAbout: [
+        'Offensive Security', 'Penetration Testing', 'CTF',
+        'Application Security', 'Bug Bounty', 'Live Hacking Events'
+      ]
+    },
+    hasPart: postsData.map((post) => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      url: post.url,
+      datePublished: post.published,
+      author: { '@id': personId }
+    })),
+    mentions: projectsData.products.map((product) => ({
+      '@type': 'SoftwareApplication',
+      name: product.name,
+      url: product.url,
+      description: product.tagline,
+      operatingSystem: 'Web',
+      author: { '@id': personId }
+    }))
+  };
+  // JSON-LD is inert data; escaping '<' keeps content inside its script element.
+  const json = JSON.stringify(profile, null, 2).replaceAll('<', '\\u003c');
+  return `  <script type="application/ld+json">\n${json}\n  </script>`;
+}
+
 /* ── File updates ── */
 
 async function updateSections(relativePath, sections) {
@@ -404,7 +487,7 @@ async function updateSections(relativePath, sections) {
     const end = `<!-- ${name}:END -->`;
     const pattern = new RegExp(`${start}[\\s\\S]*?${end}`);
     if (!pattern.test(output)) throw new Error(`Missing ${name} markers in ${relativePath}`);
-    output = output.replace(pattern, `${start}\n${content}\n${end}`);
+    output = output.replace(pattern, () => `${start}\n${content}\n${end}`);
   }
 
   if (checkOnly) {
@@ -455,6 +538,8 @@ const pageSections = {
     LIVE_RESULTS: renderLiveResults()
   },
   'index.html': {
+    PROFILE_SCHEMA: renderProfileSchema(),
+    BLOG_HOME: renderBlogHome(),
     CVE_HOME_KICKER: renderHomeKicker(),
     CVE_HOME_FEATURED: renderHomeFeatured(),
     CTF_HOME_KICKER: renderCtfHomeKicker(),

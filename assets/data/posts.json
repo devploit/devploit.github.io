@@ -1,0 +1,20 @@
+[
+  {
+    "title": "The Bug Was Four Layers Down: Five CVEs in npm Dependencies",
+    "url": "https://blog.devploit.dev/posts/five-cves-hidden-in-npm-dependencies/",
+    "published": "2026-07-13T00:00:00+02:00",
+    "category": "Security Research"
+  },
+  {
+    "title": "Reading Contact Photos Without READ_CONTACTS: A Google Messages Confused Deputy Bug",
+    "url": "https://blog.devploit.dev/posts/google-messages-avatarcontentprovider-contacts-bypass/",
+    "published": "2026-07-02T00:00:00+02:00",
+    "category": "Mobile Security"
+  },
+  {
+    "title": "DEFCON Quals 2025 - Memory Bank CTF Challenge Writeup",
+    "url": "https://blog.devploit.dev/posts/defcon-quals-2025-memorybank/",
+    "published": "2025-04-14T00:00:00+02:00",
+    "category": "Exploitation"
+  }
+]

@@ -17,6 +17,15 @@ for (const page of pages) {
   if (!/<nav[^>]+aria-label="Main navigation"/.test(source)) failures.push(`${page} is missing a labelled main navigation`);
   if (!source.includes('Content-Security-Policy')) failures.push(`${page} is missing its CSP fallback`);
   if (source.includes('unsafe-inline')) failures.push(`${page} CSP still allows unsafe-inline`);
+  if (/href="\/index\.html(?:["#?])/.test(source)) failures.push(`${page} links to the non-canonical homepage`);
+
+  if (page !== '404.html') {
+    const canonical = page === 'index.html' ? 'https://devploit.dev/' : `https://devploit.dev/${page}`;
+    if (!source.includes(`<link rel="canonical" href="${canonical}">`)) failures.push(`${page} has an unexpected canonical URL`);
+    if (!source.includes(`<meta property="og:url" content="${canonical}">`)) failures.push(`${page} Open Graph URL does not match its canonical`);
+    if ([...source.matchAll(/<h1\b/g)].length !== 1) failures.push(`${page} must have one main heading`);
+    if (!/<meta name="description" content="[^"]+"/.test(source)) failures.push(`${page} needs a description`);
+  }
 
   for (const match of source.matchAll(/(?:href|src)="(\/[^"?#]*)/g)) {
     const target = match[1] === '/' ? 'index.html' : match[1].slice(1);
@@ -35,8 +44,41 @@ for (const page of innerPages) {
 }
 
 const indexSource = await readFile(path.join(root, 'index.html'), 'utf8');
-if (/<script(?![^>]+src=)[^>]*>/.test(indexSource)) failures.push('index.html contains an inline script');
+for (const match of indexSource.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)) {
+  if (/\bsrc=/.test(match[1])) continue;
+  if (match[1].trim() !== 'type="application/ld+json"') {
+    failures.push('index.html contains an inline executable script');
+    continue;
+  }
+  try {
+    JSON.parse(match[2]);
+  } catch {
+    failures.push('index.html contains invalid JSON-LD');
+  }
+}
 if (/<style[^>]*>/.test(indexSource)) failures.push('index.html contains an inline style block');
+
+const schemas = [...indexSource.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+if (schemas.length !== 1) failures.push('index.html must have one static profile schema');
+if (schemas.length === 1) {
+  try {
+    const profile = JSON.parse(schemas[0][1]);
+    if (profile['@type'] !== 'ProfilePage' || profile.mainEntity?.['@type'] !== 'Person' ||
+        profile.mainEntity?.name !== 'Daniel Púa' || profile.url !== 'https://devploit.dev/') {
+      failures.push('Homepage schema does not describe the canonical personal profile');
+    }
+    const posts = JSON.parse(await readFile(path.join(root, 'assets/data/posts.json'), 'utf8'));
+    const blogSection = indexSource.match(/<!-- BLOG_HOME:START -->([\s\S]*?)<!-- BLOG_HOME:END -->/)?.[1] ?? '';
+    for (const post of posts) {
+      if (!blogSection.includes(`href="${post.url}"`)) failures.push(`Missing static article link: ${post.url}`);
+      if (!profile.hasPart?.some((article) => article.url === post.url && article.headline === post.title)) {
+        failures.push(`Profile schema is missing featured article: ${post.url}`);
+      }
+    }
+  } catch (error) {
+    failures.push(`Unable to validate homepage profile: ${error.message}`);
+  }
+}
 
 const homeScript = await readFile(path.join(root, 'assets/js/home.js'), 'utf8');
 if (homeScript.includes('api.allorigins.win')) failures.push('The home feed still depends on AllOrigins');
@@ -118,3 +160,4 @@ if (failures.length) {
 }
 
 console.log('Local paths, IDs, and CVE anchors are valid.');
+console.log('Canonical URLs, static article links, and profile metadata are valid.');

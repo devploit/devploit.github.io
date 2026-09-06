@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "node scripts/render-cves.mjs",
-    "check": "node scripts/render-cves.mjs --check && node scripts/check-site.mjs"
+    "check": "node scripts/render-cves.mjs --check && node scripts/check-site.mjs",
+    "check:browser": "node scripts/check-browser.mjs"
   }
 }

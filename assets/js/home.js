@@ -1,55 +1,5 @@
 (function () {
-  var structuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: 'Daniel Púa',
-    alternateName: 'devploit',
-    url: 'https://devploit.dev',
-    image: 'https://devploit.dev/assets/img/favicons/avatar.png',
-    jobTitle: ['Head of Security', 'Security Researcher'],
-    worksFor: {
-      '@type': 'Organization',
-      name: 'Magnific'
-    },
-    sameAs: [
-      'https://github.com/devploit',
-      'https://twitter.com/devploit',
-      'https://www.linkedin.com/in/daniel-pua/',
-      'https://blog.devploit.dev'
-    ],
-    knowsAbout: [
-      'Offensive Security',
-      'Penetration Testing',
-      'CTF',
-      'Application Security',
-      'Bug Bounty',
-      'Live Hacking Events'
-    ]
-  };
-  /* Products are single-sourced in the rendered cards (assets/data/projects.json),
-     so the structured data reads them from the DOM instead of duplicating them. */
-  var productCards = Array.prototype.slice.call(document.querySelectorAll('[data-product-url]'));
-  if (productCards.length) {
-    structuredData.owns = productCards.map(function (card) {
-      return {
-        '@type': 'SoftwareApplication',
-        name: card.getAttribute('data-product-name'),
-        url: card.getAttribute('data-product-url'),
-        description: card.getAttribute('data-product-tagline'),
-        applicationCategory: 'SecurityApplication',
-        operatingSystem: 'Web',
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-        author: { '@type': 'Person', name: 'Daniel Púa', url: 'https://devploit.dev' }
-      };
-    });
-  }
-  var structuredDataElement = document.createElement('script');
-  structuredDataElement.type = 'application/ld+json';
-  structuredDataElement.textContent = JSON.stringify(structuredData);
-  document.head.appendChild(structuredDataElement);
-
   var postsStatusEl = document.getElementById('posts-status');
-  var postsState = 'loading';
 
   /* Active navigation */
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
@@ -137,11 +87,6 @@
   var container = document.getElementById('posts-container');
   var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var blogOrigin = 'https://blog.devploit.dev';
-  var fallbackPosts = [
-    { tag: 'CTF · Exploitation', title: 'DEFCON Quals 2025 — Memory Bank writeup', date: 'Apr 2025', link: blogOrigin },
-    { tag: 'AI Security', title: 'Cracking Gandalf: the Lakera AI challenge', date: 'Jul 2024', link: blogOrigin },
-    { tag: 'AI Security', title: 'Hacking the Mind of AI: Pentesting LLMs', date: 'Jun 2024', link: blogOrigin }
-  ];
 
   function formatDate(dateString) {
     var date = new Date(dateString);
@@ -152,11 +97,11 @@
   function safeBlogUrl(value) {
     try {
       var url = new URL(value, blogOrigin);
-      if (url.protocol === 'https:' && url.origin === blogOrigin) return url.href;
+      if (url.protocol === 'https:' && url.origin === blogOrigin && url.pathname.startsWith('/posts/')) return url.href;
     } catch (error) {
-      return blogOrigin;
+      return null;
     }
-    return blogOrigin;
+    return null;
   }
 
   function createPostField(className, value) {
@@ -170,7 +115,7 @@
     container.replaceChildren();
     posts.forEach(function (post) {
       var link = document.createElement('a');
-      link.href = safeBlogUrl(post.link);
+      link.href = post.link;
       link.target = '_blank';
       link.rel = 'noopener';
       link.className = 'post-item';
@@ -182,14 +127,11 @@
   }
 
   function setPostsState(state) {
-    postsState = state;
     if (!postsStatusEl) return;
     postsStatusEl.classList.toggle('is-live', state === 'live');
     postsStatusEl.textContent = state === 'live'
       ? 'live from blog'
-      : state === 'fallback'
-        ? 'featured posts'
-        : 'loading feed';
+      : 'featured posts';
   }
 
   function loadFeed() {
@@ -215,20 +157,23 @@
           var category = item.querySelector('category');
           var rawLink = itemLink ? (itemLink.getAttribute('href') || itemLink.textContent || '') : '';
 
+          var postUrl = safeBlogUrl(rawLink);
+          if (!title || !title.textContent.trim() || !postUrl) throw new Error('Invalid feed entry');
+
           posts.push({
             tag: category ? (category.getAttribute('term') || category.textContent || '') : '',
             title: title ? title.textContent : '',
             date: published ? formatDate(published.textContent) : '',
-            link: safeBlogUrl(rawLink)
+            link: postUrl
           });
         }
 
-        setPostsState('live');
         renderPosts(posts);
+        setPostsState('live');
       })
       .catch(function () {
+        /* Keep the build-time article links when the feed is unavailable. */
         setPostsState('fallback');
-        renderPosts(fallbackPosts);
       });
   }
 
