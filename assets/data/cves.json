@@ -1,11 +1,10 @@
 {
   "homeFeatured": [
     "CVE-2026-39244",
-    "CVE-2026-49030",
+    "CVE-2026-39246",
     "CVE-2026-6379"
   ],
   "keyFindings": [
-    "CVE-2026-49030",
     "CVE-2026-39244",
     "CVE-2026-39245",
     "CVE-2026-6379",
@@ -35,28 +34,6 @@
         {
           "label": "WPScan advisory",
           "url": "https://wpscan.com/vulnerability/2a353964-9f4c-4528-b187-42766f0cfaed/"
-        }
-      ]
-    },
-    {
-      "id": "CVE-2026-49030",
-      "year": 2026,
-      "publicationStatus": "pending",
-      "title": "pathe <= 2.0.3 - Path Traversal via Cross-Platform Backslash Normalization",
-      "summary": "On POSIX systems, pathe unconditionally converts backslashes to forward slashes before resolving a path. Inputs such as ..\\..\\..\\etc\\passwd can bypass validation that only blocks ../, then escape the intended base directory through join(), resolve() or normalize(), enabling arbitrary file read or write when the resolved path is used.",
-      "cvss": null,
-      "type": "Path Traversal",
-      "cwes": ["CWE-22"],
-      "version": "Affects <= 2.0.3",
-      "publication": "Reported Apr 2026",
-      "verification": "CNA: MITRE",
-      "homeSubtitle": "pathe <= 2.0.3 · Path Traversal via Cross-Platform Backslash Normalization",
-      "keyTitle": "Path Traversal",
-      "keySubtitle": "pathe · Backslash normalization bypasses POSIX traversal filters",
-      "references": [
-        {
-          "label": "CVE.org status",
-          "url": "https://www.cve.org/CVERecord?id=CVE-2026-49030"
         }
       ]
     },
@@ -131,6 +108,7 @@
       "version": "Affects <= 4.2.1",
       "publication": "Published Jul 9, 2026",
       "verification": "CNA: MITRE",
+      "homeSubtitle": "decompress <= 4.2.1 · Arbitrary Symlink Creation and Information Disclosure",
       "references": [
         {
           "label": "CVE.org record",

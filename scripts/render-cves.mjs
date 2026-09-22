@@ -76,11 +76,13 @@ function severityKey(record) {
 function renderStats() {
   const published = data.records.filter((record) => record.publicationStatus === 'published').length;
   const pending = data.records.length - published;
-  return renderStatTiles('CVE track record', [
+  const tiles = [
     [String(data.records.length), 'CVE identifiers'],
-    [String(published), 'published records'],
-    [String(pending), publicationCountLabel(pending).replace(/^\d+ /, '')]
-  ]);
+    [String(published), 'published records']
+  ];
+  // A "0 pending" tile adds nothing, so it only appears while a publication is outstanding.
+  if (pending) tiles.push([String(pending), publicationCountLabel(pending).replace(/^\d+ /, '')]);
+  return renderStatTiles('CVE track record', tiles);
 }
 
 function renderKeyFindings() {
@@ -148,7 +150,8 @@ function renderRecords() {
 function renderRecordsMeta() {
   const published = data.records.filter((record) => record.publicationStatus === 'published').length;
   const pending = data.records.length - published;
-  return `          <div class="meta">${published} published · ${publicationCountLabel(pending)}</div>`;
+  const pendingSuffix = pending ? ` · ${publicationCountLabel(pending)}` : '';
+  return `          <div class="meta">${published} published${pendingSuffix}</div>`;
 }
 
 function renderHomeKicker() {

@@ -103,10 +103,11 @@ const cveIds = cveData.records.map((record) => record.id);
 if (new Set(cveIds).size !== cveIds.length) failures.push('assets/data/cves.json has duplicate CVE identifiers');
 const published = cveData.records.filter((record) => record.publicationStatus === 'published').length;
 const pending = cveData.records.length - published;
-if (published !== 11 || pending !== 1) failures.push(`Expected 11 published and 1 pending CVEs, found ${published} and ${pending}`);
+if (published !== 11 || pending !== 0) failures.push(`Expected 11 published and 0 pending CVEs, found ${published} and ${pending}`);
 const pendingLabel = `CVE ${pending === 1 ? 'publication' : 'publications'} pending`;
 const statTile = (value, label) => `<span class="stat-value">${value}</span>\n            <span class="stat-label">${label}</span>`;
-if (!cves.includes(statTile(published, 'published records')) || !cves.includes(statTile(pending, pendingLabel))) {
+if (!cves.includes(statTile(published, 'published records')) || cves.includes(pendingLabel) !== (pending > 0) ||
+    (pending && !cves.includes(statTile(pending, pendingLabel)))) {
   failures.push('Rendered CVE status counts do not match the source data');
 }
 const amelia = cveData.records.find((record) => record.id === 'CVE-2026-6449');
