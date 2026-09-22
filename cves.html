@@ -70,16 +70,12 @@
 <!-- CVE_STATS:START -->
         <div class="stats" aria-label="CVE track record">
           <div class="stat">
-            <span class="stat-value">12</span>
+            <span class="stat-value">11</span>
             <span class="stat-label">CVE identifiers</span>
           </div>
           <div class="stat">
             <span class="stat-value">11</span>
             <span class="stat-label">published records</span>
-          </div>
-          <div class="stat">
-            <span class="stat-value">1</span>
-            <span class="stat-label">CVE publication pending</span>
           </div>
         </div>
 <!-- CVE_STATS:END -->
@@ -98,15 +94,6 @@
         <div class="card">
           <div class="list">
 <!-- CVE_KEY_FINDINGS:START -->
-            <article class="item" data-severity="pending">
-              <a class="item-link" href="#cve-2026-49030">
-                <div class="title-row">
-                  <div class="title">CVE-2026-49030 · Path Traversal</div>
-                  <div class="year">2026</div>
-                </div>
-                <div class="subtitle">pathe · Backslash normalization bypasses POSIX traversal filters · CVSS Pending</div>
-              </a>
-            </article>
             <article class="item" data-severity="high">
               <a class="item-link" href="#cve-2026-39244">
                 <div class="title-row">
@@ -157,7 +144,7 @@
             <h2>All CVE records</h2>
           </div>
 <!-- CVE_RECORDS_META:START -->
-          <div class="meta">11 published · 1 CVE publication pending</div>
+          <div class="meta">11 published</div>
 <!-- CVE_RECORDS_META:END -->
         </div>
         <div class="card">
@@ -181,26 +168,6 @@
               <div class="source-links" aria-label="External references">
                 <a class="source-link" href="https://www.cve.org/CVERecord?id=CVE-2026-14231" target="_blank" rel="noopener">CVE.org record</a>
                 <a class="source-link" href="https://wpscan.com/vulnerability/2a353964-9f4c-4528-b187-42766f0cfaed/" target="_blank" rel="noopener">WPScan advisory</a>
-              </div>
-            </article>
-            <article class="item is-static" id="cve-2026-49030" data-severity="pending">
-              <div class="title-row">
-                <div class="title">CVE-2026-49030</div>
-                <div class="year">2026</div>
-              </div>
-              <div class="subtitle">pathe &lt;= 2.0.3 - Path Traversal via Cross-Platform Backslash Normalization</div>
-              <p class="summary">On POSIX systems, pathe unconditionally converts backslashes to forward slashes before resolving a path. Inputs such as ..\..\..\etc\passwd can bypass validation that only blocks ../, then escape the intended base directory through join(), resolve() or normalize(), enabling arbitrary file read or write when the resolved path is used.</p>
-              <div class="cve-meta" aria-label="CVE metadata">
-                <span class="cve-badge is-muted">CVSS Pending</span>
-                <span class="cve-badge is-muted">Path Traversal</span>
-                <span class="cve-badge is-muted">CWE-22</span>
-                <span class="cve-badge is-muted">Affects &lt;= 2.0.3</span>
-                <span class="cve-badge is-muted">Reported Apr 2026</span>
-                <span class="cve-badge is-muted">CNA: MITRE</span>
-                <span class="cve-badge is-muted">CVE publication pending</span>
-              </div>
-              <div class="source-links" aria-label="External references">
-                <a class="source-link" href="https://www.cve.org/CVERecord?id=CVE-2026-49030" target="_blank" rel="noopener">CVE.org status</a>
               </div>
             </article>
             <article class="item is-static" id="cve-2026-11966" data-severity="medium">
