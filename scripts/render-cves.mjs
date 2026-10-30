@@ -445,7 +445,16 @@ function renderProfileSchema() {
       url: 'https://devploit.dev/',
       image: 'https://devploit.dev/assets/img/favicons/avatar.png',
       jobTitle: ['Head of Security', 'Security Researcher'],
-      worksFor: { '@type': 'Organization', name: 'Magnific', url: 'https://www.magnific.com' },
+      homeLocation: {
+        '@type': 'Place',
+        address: { '@type': 'PostalAddress', addressLocality: 'San Francisco', addressRegion: 'CA', addressCountry: 'US' }
+      },
+      worksFor: {
+        '@type': 'Organization',
+        name: 'Magnific',
+        url: 'https://www.magnific.com',
+        location: { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: 'San Francisco', addressRegion: 'CA', addressCountry: 'US' } }
+      },
       sameAs: [
         'https://github.com/devploit',
         'https://twitter.com/devploit',
