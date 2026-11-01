@@ -103,7 +103,7 @@ const cveIds = cveData.records.map((record) => record.id);
 if (new Set(cveIds).size !== cveIds.length) failures.push('assets/data/cves.json has duplicate CVE identifiers');
 const published = cveData.records.filter((record) => record.publicationStatus === 'published').length;
 const pending = cveData.records.length - published;
-if (published !== 11 || pending !== 0) failures.push(`Expected 11 published and 0 pending CVEs, found ${published} and ${pending}`);
+if (published !== 11 || pending !== 2) failures.push(`Expected 11 published and 2 pending CVEs, found ${published} and ${pending}`);
 const pendingLabel = `CVE ${pending === 1 ? 'publication' : 'publications'} pending`;
 const statTile = (value, label) => `<span class="stat-value">${value}</span>\n            <span class="stat-label">${label}</span>`;
 if (!cves.includes(statTile(published, 'published records')) || cves.includes(pendingLabel) !== (pending > 0) ||

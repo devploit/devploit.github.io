@@ -70,12 +70,16 @@
 <!-- CVE_STATS:START -->
         <div class="stats" aria-label="CVE track record">
           <div class="stat">
-            <span class="stat-value">11</span>
+            <span class="stat-value">13</span>
             <span class="stat-label">CVE identifiers</span>
           </div>
           <div class="stat">
             <span class="stat-value">11</span>
             <span class="stat-label">published records</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">2</span>
+            <span class="stat-label">CVE publications pending</span>
           </div>
         </div>
 <!-- CVE_STATS:END -->
@@ -144,12 +148,54 @@
             <h2>All CVE records</h2>
           </div>
 <!-- CVE_RECORDS_META:START -->
-          <div class="meta">11 published</div>
+          <div class="meta">11 published · 2 CVE publications pending</div>
 <!-- CVE_RECORDS_META:END -->
         </div>
         <div class="card">
           <div class="list">
 <!-- CVE_RECORDS:START -->
+            <article class="item is-static" id="cve-2026-93406" data-severity="pending">
+              <div class="title-row">
+                <div class="title">CVE-2026-93406</div>
+                <div class="year">2026</div>
+              </div>
+              <div class="subtitle">matrix-android-sdk2 &lt; 1.6.62 - Arbitrary File Creation via Malicious Attachment Filenames</div>
+              <p class="summary">The SDK&#39;s safeFileName() helper does not strip the / separator or .. sequences from attachment filenames. A malicious or compromised homeserver, or any user who shares a room with the victim, can use path traversal to make the SDK create files at arbitrary paths. The impact is limited to file creation: existing files are not overwritten or leaked.</p>
+              <div class="cve-meta" aria-label="CVE metadata">
+                <span class="cve-badge is-muted">CVSS Pending</span>
+                <span class="cve-badge is-muted">Path Traversal</span>
+                <span class="cve-badge is-muted">CWE-22</span>
+                <span class="cve-badge is-muted">Fixed in 1.6.62</span>
+                <span class="cve-badge is-muted">Advisory published Jul 27, 2026</span>
+                <span class="cve-badge is-muted">CNA: GitHub</span>
+                <span class="cve-badge is-muted">CVE publication pending</span>
+              </div>
+              <div class="source-links" aria-label="External references">
+                <a class="source-link" href="https://www.cve.org/CVERecord?id=CVE-2026-93406" target="_blank" rel="noopener">CVE.org status</a>
+                <a class="source-link" href="https://github.com/matrix-org/matrix-android-sdk2/security/advisories/GHSA-fr74-76wm-x6pp" target="_blank" rel="noopener">GitHub advisory</a>
+              </div>
+            </article>
+            <article class="item is-static" id="cve-2026-68509" data-severity="medium">
+              <div class="title-row">
+                <div class="title">CVE-2026-68509</div>
+                <div class="year">2026</div>
+              </div>
+              <div class="subtitle">FairEmail &lt;= 1.2324 - Path Traversal in Shared Attachment Handling</div>
+              <p class="summary">The app builds the destination file for a shared attachment from its unsanitized display name. When the app lock (PIN or biometrics) is enabled, a malicious local app can write outside the intended shared directory once the user unlocks FairEmail, overwriting or corrupting private files such as the accounts and messages database.</p>
+              <div class="cve-meta" aria-label="CVE metadata">
+                <span class="cve-badge is-medium">CVSS 6.3 Medium</span>
+                <span class="cve-badge is-muted">Path Traversal</span>
+                <span class="cve-badge is-muted">CWE-22</span>
+                <span class="cve-badge is-muted">Fixed in 1.2325</span>
+                <span class="cve-badge is-muted">Advisory published Jul 4, 2026</span>
+                <span class="cve-badge is-muted">CNA: GitHub</span>
+                <span class="cve-badge is-muted">CVE publication pending</span>
+              </div>
+              <div class="source-links" aria-label="External references">
+                <a class="source-link" href="https://www.cve.org/CVERecord?id=CVE-2026-68509" target="_blank" rel="noopener">CVE.org status</a>
+                <a class="source-link" href="https://github.com/M66B/FairEmail/security/advisories/GHSA-w92m-2v27-mvg9" target="_blank" rel="noopener">GitHub advisory</a>
+              </div>
+            </article>
             <article class="item is-static" id="cve-2026-14231" data-severity="medium">
               <div class="title-row">
                 <div class="title">CVE-2026-14231</div>

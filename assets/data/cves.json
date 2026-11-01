@@ -12,6 +12,55 @@
   ],
   "records": [
     {
+      "id": "CVE-2026-93406",
+      "year": 2026,
+      "publicationStatus": "pending",
+      "title": "matrix-android-sdk2 < 1.6.62 - Arbitrary File Creation via Malicious Attachment Filenames",
+      "summary": "The SDK's safeFileName() helper does not strip the / separator or .. sequences from attachment filenames. A malicious or compromised homeserver, or any user who shares a room with the victim, can use path traversal to make the SDK create files at arbitrary paths. The impact is limited to file creation: existing files are not overwritten or leaked.",
+      "cvss": null,
+      "type": "Path Traversal",
+      "cwes": ["CWE-22"],
+      "version": "Fixed in 1.6.62",
+      "publication": "Advisory published Jul 27, 2026",
+      "verification": "CNA: GitHub",
+      "references": [
+        {
+          "label": "CVE.org status",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-93406"
+        },
+        {
+          "label": "GitHub advisory",
+          "url": "https://github.com/matrix-org/matrix-android-sdk2/security/advisories/GHSA-fr74-76wm-x6pp"
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-68509",
+      "year": 2026,
+      "publicationStatus": "pending",
+      "title": "FairEmail <= 1.2324 - Path Traversal in Shared Attachment Handling",
+      "summary": "The app builds the destination file for a shared attachment from its unsanitized display name. When the app lock (PIN or biometrics) is enabled, a malicious local app can write outside the intended shared directory once the user unlocks FairEmail, overwriting or corrupting private files such as the accounts and messages database.",
+      "cvss": {
+        "score": 6.3,
+        "severity": "Medium"
+      },
+      "type": "Path Traversal",
+      "cwes": ["CWE-22"],
+      "version": "Fixed in 1.2325",
+      "publication": "Advisory published Jul 4, 2026",
+      "verification": "CNA: GitHub",
+      "references": [
+        {
+          "label": "CVE.org status",
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-68509"
+        },
+        {
+          "label": "GitHub advisory",
+          "url": "https://github.com/M66B/FairEmail/security/advisories/GHSA-w92m-2v27-mvg9"
+        }
+      ]
+    },
+    {
       "id": "CVE-2026-14231",
       "year": 2026,
       "publicationStatus": "published",
